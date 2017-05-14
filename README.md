@@ -1,8 +1,6 @@
 # Yip Yip
 
-This is the repo for our Yip Yip client.
-
-TODO: short project description, some sample screenshots or mockups
+**Yip Yip** is a real-time, localized, anonymous feed for short comments, jokes, images, and discussion..
 
 ![](screenshots/login.png)
 
@@ -38,6 +36,67 @@ Armin Mahban, Byrne Hollander, Ellis Guo, Jenny Seong, Ying Liu
 We're using the [Pepperoni / Futurice React Native Starter Kit](https://github.com/futurice/pepperoni-app-kit).
 
 Tim and Irene, probably
+
+## Feature Spec
+
+### Front End Features
+
+#### Realtime feed
+
+- Based on location, includes all posts from within a certain radius
+- Can join in channels/communities to narrow down your feed
+
+#### Posts
+
+- Approx. 280 chars
+- Potentially include titles, tags, images
+- Can be voted on
+- Can be commented on, comments also have votes
+
+#### Other Front End details
+
+- All posts, comments, and votes are anonymous, no identifying information or ability to link a user to another comment or post
+- Potential: Incorporate AI-based content moderation
+- Every user can have “karma” points/scores as a way of seeing how much they use the app and how much people like their content, but will not be shared with others
+- Can set a homebase (“tribe”) that is linked to your account, can view/post to it from anywhere
+- Potentially filter feed by tags/topic (eg. #events, #food, #memes)
+
+### Back End Features
+
+- Store users, settings, saved locations
+- Store feeds, posts, comments, all information, but clear all data regularly based on how many posts a location gets/a certain time constraint
+
+
+### User Flow
+
+#### Login/Signup
+
+- User enters their phone number, enters a 4-digit code to sign up
+- Once signed in, navigated to the main feed
+
+#### Main View
+
+- Contains all of the posts within the user’s area in a long listview
+- Tabs at the top of the page allow users to sort by votes, posting time, etc.
+- Settings button on top right, brings user to settings page
+- Bottom tabs are the app’s main navigation method, can toggle between different feeds (current location vs. your “tribe”) and open a search bar
+
+#### Search View
+
+- Search bar at the top
+- Trending topics and suggestions below the bar (eg. user can click the #food topic to filter the main view by all posts tagged with #food)
+
+#### Post
+
+- Rectangular card containing content of the post with voting buttons on the right-hand side
+- Bottom of the card has tags, location posted from, and a timestamp
+- Tapping the post will bring you to its detail view
+
+#### Detail view
+
+- Same information/layout as the post from the main feed, but with a comments section below it
+- Comment bar at the very top with existing comments below it
+- Heart on the top right of the page allowing you to save a post for later viewing
 
 ===
 
