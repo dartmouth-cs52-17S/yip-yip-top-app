@@ -4,6 +4,12 @@ This is the repo for our Yip Yip client.
 
 TODO: short project description, some sample screenshots or mockups
 
+![](screenshots/login.png)
+
+![](screenshots/main.png)
+
+![](screenshots/userPersonas.png)
+
 ## Architecture
 
 TODO:  descriptions of code organization and tools and libraries used
