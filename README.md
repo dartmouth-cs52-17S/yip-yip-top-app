@@ -37,14 +37,14 @@ Once the iOS simulator is running, you can open the developer tools menu by pres
 
 ## Deployment
 
-We can deploy the app to heroku
-
-$ heroku login
-$ heroku create -a yip yip
-$ git push heroku master
-$ heroku open
-
-Heroku will follow the build command in the package.json and compile assets with webpack.prod.config.js. It runs the Express web server in server.js.
+We can use CodePush to deploy our app.
+  $ npm install -g code-push-cli
+  After creating a CodePush account, you can simply use the following command via the CLI and authenticate with either your GitHub or Microsoft account:
+  $ code-push register
+  $ code-push app add Yip Yip
+  Add the appropriate CodePush client SDKs to your app, and configure them to query for updates against the app deployment created above.
+  For the react-native platform, follow https://github.com/Microsoft/react-native-code-push#getting-started
+  For updates, run the release-react comand in the CodePush CLI, which will handle bundling your JavaScript and asset files and releasing the update to the CodePush server. For example: code-push release-react MyApp ios.
 
 ## Authors
 
