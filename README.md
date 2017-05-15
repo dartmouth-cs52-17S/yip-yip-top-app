@@ -37,7 +37,14 @@ Once the iOS simulator is running, you can open the developer tools menu by pres
 
 ## Deployment
 
-TODO: how to deploy the project
+We can deploy the app to heroku
+
+$ heroku login
+$ heroku create -a yip yip
+$ git push heroku master
+$ heroku open
+
+Heroku will follow the build command in the package.json and compile assets with webpack.prod.config.js. It runs the Express web server in server.js.
 
 ## Authors
 
