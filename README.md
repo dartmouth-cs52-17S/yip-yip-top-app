@@ -12,9 +12,15 @@
 
 TODO:  descriptions of code organization and tools and libraries used
 
+Styling on app:
+Also, I think the standard for styles on React Native is inline (`const styles = StyleSheet.create({ everyStyleIsAnObject })`) and we `import { StyleSheet } from ‘react-native’;` In general, `docs/ARCHITECTURE.md` is very helpful for understanding the project’s setup and some of the differences between React and React Native.
+
+Authentication:
+The starter pack I think is best once used Auth0 instead of Passport ([comparison here](https://auth0.com/learn/lp-auth0-vs-passport/)) and there are [instructions here](https://github.com/futurice/pepperoni-app-kit/blob/master/docs/AUTH0.md) if we want to bring that back.
+
 ## Setup
 
-TODO: how to get the project dev environment up and running, npm install etc
+First, follow the [React Native getting started page instructions](https://facebook.github.io/react-native/docs/getting-started.html) to install all the required dependencies.
 
 ```
 git clone https://github.com/dartmouth-cs52-17S/project-client-yip-yip.git
@@ -22,6 +28,12 @@ cd project-client-yip-yip
 yarn install
 react-native run-ios
 ```
+
+If you want to run the simulator on a specific iPhone model you can run a similar command: `react-native run-ios --simulator="iPhone 7 Plus"`
+
+Reloading:
+
+Once the iOS simulator is running, you can open the developer tools menu by pressing `cmd+ctrl+Z` or going to `Hardware > Shake Gesture`. From this screen, you can enable hot reloading. You can also just reload the simulator with `cmd+r`.
 
 ## Deployment
 

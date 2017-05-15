@@ -1,13 +1,13 @@
 {
   "name": "YipYip",
-  "author": "Futurice",
-  "description": "React Native App Starter Kit for Android and iOS",
+  "author": "YipYip",
+  "description": "Social location-based mobile app",
   "license": "MIT",
-  "homepage": "http://getpepperoni.com",
-  "bugs": "https://github.com/futurice/pepperoni-app-kit/issues",
+  "homepage": "http://cs52.me",
+  "bugs": "https://github.com/dartmouth-cs52-17S/project-client-yip-yip/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/futurice/pepperoni-app-kit"
+    "url": "https://github.com/dartmouth-cs52-17S/project-client-yip-yip"
   },
   "keywords": [
     "React Native",
