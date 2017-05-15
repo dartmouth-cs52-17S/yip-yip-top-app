@@ -1,4 +1,4 @@
-package com.pepperoniapptemplate;
+package com.yipyip;
 
 import android.app.Application;
 
