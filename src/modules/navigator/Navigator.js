@@ -31,7 +31,7 @@ export const MainScreenNavigator = TabNavigator({
 MainScreenNavigator.navigationOptions = {
   title: 'Yip Yip!',
   header: {
-    titleStyle: {color: 'white'},
+    titleStyle: {color: 'purple'},
     style: {
       backgroundColor: headerColor,
       elevation: 0 // disable header elevation when TabNavigator visible
