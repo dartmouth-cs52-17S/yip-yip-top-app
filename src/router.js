@@ -1,5 +1,7 @@
 import React from 'react';
 
+/* eslint-disable */
+
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
