@@ -12,10 +12,10 @@ import {
   Button
 } from 'react-native';
 
-import Feed from '../screens/Feed';
-import DummyComponent from '../screens/dummy';
-import Settings from '../screens/settings';
-import Tutorial from '../screens/tutorial';
+import Feed from './screens/Feed';
+import DummyComponent from './screens/dummy';
+import Settings from './screens/settings';
+import Tutorial from './screens/tutorial';
 
 const navBarMainColor='#474BB3';
 const navBarTintColor='#FFFFFF';
