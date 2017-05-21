@@ -1,18 +1,13 @@
-import {Provider} from 'react-redux';
-import store from './src/redux/store';
-import AppViewContainer from './src/modules/AppViewContainer';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */
+import React from 'react';
+import {
+  AppRegistry,
+} from 'react-native';
+import App from './app/index';
 
-import React, {Component} from 'react';
-import {AppRegistry} from 'react-native';
 
-class YipYip extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <AppViewContainer />
-      </Provider>
-    );
-  }
-}
-
-AppRegistry.registerComponent('YipYip', () => YipYip);
+AppRegistry.registerComponent('YipYip', () => App);
