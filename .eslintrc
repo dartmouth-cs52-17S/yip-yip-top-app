@@ -4,6 +4,8 @@
         "browser": true
     },
     rules: {
+        no-trailing-spaces: "error",
+        indent: ["error", 2],
         react/no-danger: 0,
         react/jsx-filename-extension: 0,
         react/prefer-stateless-function: 0,
@@ -12,7 +14,7 @@
         no-else-return: 0,
         new-cap: ["error", {"capIsNewExceptions": ["Router"]}],
         no-console: 0,
-        import/no-unresolved: [2, { commonjs: true}],
+        import/no-unresolved: 0,
         no-unused-vars: ["error", { "vars": "all", "args": "none" }],
         no-underscore-dangle: 0,
         arrow-body-style: 0,
