@@ -5,7 +5,7 @@ import {
   Button,
   SegmentedControlIOS
 } from 'react-native';
-
+import styles from '../styles';
 
 class Feed extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class Feed extends Component {
             this.setState({
               selectedTab: val
             })
-        }} />
+          }} />
         <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
       </View>
     );
