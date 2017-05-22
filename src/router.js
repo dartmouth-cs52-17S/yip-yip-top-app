@@ -98,16 +98,16 @@ export const NewPostStack = StackNavigator({
 })
 
 export const FeedStack = StackNavigator({
-  Dummy: {
-    screen: DummyComponent,
-    navigationOptions: {
-      title: 'DummyFeed',
-    }
-  },
   Feed: {
     screen: Feed,
     navigationOptions: {
       title: 'Feed',
+    }
+  },
+  Dummy: {
+    screen: DummyComponent,
+    navigationOptions: {
+      title: 'DummyFeed',
     }
   },
 }, {
@@ -166,11 +166,11 @@ export const Tabs = TabNavigator({
 });
 
 export const Root = StackNavigator({
-  Tutorial: {
-    screen: Tutorial,
-  },
   Tabs: {
     screen: Tabs,
+  },
+  Tutorial: {
+    screen: Tutorial,
   },
   Settings: {
     screen: SettingsStack,

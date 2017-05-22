@@ -3,6 +3,36 @@
     "env": {
         "browser": true
     },
+    rules: {
+        no-trailing-spaces: "error",
+        indent: ["error", 2],
+        react/no-danger: 0,
+        react/jsx-filename-extension: 0,
+        react/prefer-stateless-function: 0,
+        strict: 0,
+        quotes: [2, "single"],
+        no-else-return: 0,
+        new-cap: ["error", {"capIsNewExceptions": ["Router"]}],
+        no-console: 0,
+        no-unused-vars: ["error", { "vars": "all", "args": "none" }],
+        no-underscore-dangle: 0,
+        arrow-body-style: 0,
+        one-var: ["error", { uninitialized: "always", initialized: "never" }],
+        one-var-declaration-per-line: ["error", "initializations"],
+        max-len: ["error", 200],
+        no-extra-parens: 0,
+        no-named-as-default: 0,
+        no-restricted-syntax: [
+          0,
+          'DebuggerStatement'
+        ],
+        no-debugger: "warn",
+        react/jsx-uses-react: 2,
+        react/jsx-uses-vars: 2,
+        react/react-in-jsx-scope: 2,
+        react/prop-types: 0,
+        react/jsx-first-prop-new-line: 0
+    },
     "plugins": [
         "react"
     ],
@@ -10,7 +40,4 @@
         "eslint:recommended",
         "plugin:react/recommended"
     ],
-    "rules": {
-        // overrides
-    }
 }
