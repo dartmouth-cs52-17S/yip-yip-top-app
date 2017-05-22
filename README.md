@@ -1,9 +1,10 @@
-# yip-yip-top-app
-
-0:07 hrs
-# Yip Yip
+# Yip Yip (Top App)
 
 **Yip Yip** is a real-time, localized, anonymous feed for short comments, jokes, images, and discussion..
+
+![](screenshots/newFeed.png)
+
+We once had gradients...
 
 ![](screenshots/login.png)
 
