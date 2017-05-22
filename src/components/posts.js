@@ -29,7 +29,7 @@ class Posts extends Component {
   fetchPosts() {
     axios.get(`${ROOT_URL}/posts`).then((response) => {
       this.setState({
-         dataSource: this.state.dataSource.cloneWithRows(responseData),
+         dataSource: this.state.dataSource.cloneWithRows(response.data),
          isLoading: false,
          empty: false,
       });

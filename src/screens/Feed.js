@@ -5,7 +5,7 @@ import {
   Button,
   SegmentedControlIOS
 } from 'react-native';
-import styles from '../styles';
+// import styles from '../styles';
 
 class Feed extends Component {
   constructor(props) {
