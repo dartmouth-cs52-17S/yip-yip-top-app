@@ -52,9 +52,22 @@ export function deletePost(post_id, cb) {
   });
 }
 
-export function editPost(post,fields,cb) {
+export function editPost(post, fields, action, cb) {
   const url = `${ROOT_URL}/posts/${post._id}`;
-  axios.put(url, {params: {id: post._id, fields}}).
+  let params;
+  if (action == 'COMMENT_ACTION') {
+    params = {
+      id: post.post_id,
+      commentId: fields.commentId,
+      user: fields.user_id,
+    }
+  } else {
+    params = {
+      id: post.post_id,
+      user: fields.user_id,
+    }
+  }
+  axios.put(url,params).
   then((response) => {
     console.log(response.data);
     cb(response.data);
