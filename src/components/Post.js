@@ -18,22 +18,7 @@ class Post extends Component {
   }
 
   componentWillMount() {
-    fetchPost(this.props._id);
-  }
-  fetchPost(id) {
-    axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
-      this.setState({
-        text: response.data.text,
-        score: response.data.score,
-        timestamp: response.data.timestamp,
-        tags: response.data.tags,
-        location: response.data.location,
-      });r
-    }).catch((error) => {
-      this.setState({
-        error: true,
-      });
-    });
+
   }
   render() {
     console.log('in render');
