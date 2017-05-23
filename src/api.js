@@ -30,7 +30,7 @@ export function createPost(text, tags, coordinates, user_id, cb) {
 }
 
 export function getPost(post_id, cb) {
-  const url = `${ROOT_URL}/post/${post_id}`;
+  const url = `${ROOT_URL}/posts/${post_id}`;
   axios.get(url, {params: {post_id}}).
   then((response) => {
     console.log(response.data);
@@ -42,8 +42,19 @@ export function getPost(post_id, cb) {
 }
 
 export function deletePost(post_id, cb) {
-  const url = `${ROOT_URL}/post/${post_id}`;
+  const url = `${ROOT_URL}/posts/${post_id}`;
   axios.delete(url, {params: {post_id}}).
+  then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+export function editPost(post,fields,cb) {
+  const url = `${ROOT_URL}/posts/${post._id}`;
+  axios.put(url, {params: {id: post._id, fields}}).
   then((response) => {
     console.log(response.data);
     cb(response.data);
