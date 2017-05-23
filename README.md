@@ -2,11 +2,9 @@
 
 **Yip Yip** is a real-time, localized, anonymous feed for short comments, jokes, images, and discussion..
 
-![](screenshots/newFeed.png)
+![](screenshots/Herd Feed.png)
 
-We once had gradients...
-
-![](screenshots/login.png)
+We once had gradients... but React Native does not support them so we had to do a redesign. 🤓
 
 ![](screenshots/main.png)
 
@@ -16,10 +14,10 @@ We once had gradients...
 
 TODO:  descriptions of code organization and tools and libraries used
 
-Styling on app:
+#### Styling on app
 Also, I think the standard for styles on React Native is inline (`const styles = StyleSheet.create({ everyStyleIsAnObject })`) and we `import { StyleSheet } from ‘react-native’;` In general, `docs/ARCHITECTURE.md` is very helpful for understanding the project’s setup and some of the differences between React and React Native.
 
-Authentication:
+#### Authentication
 The starter pack I think is best once used Auth0 instead of Passport ([comparison here](https://auth0.com/learn/lp-auth0-vs-passport/)) and there are [instructions here](https://github.com/futurice/pepperoni-app-kit/blob/master/docs/AUTH0.md) if we want to bring that back.
 
 ### Front End Features
