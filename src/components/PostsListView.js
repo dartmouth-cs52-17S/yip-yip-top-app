@@ -13,19 +13,27 @@ import GiftedSpinner from 'react-native-gifted-spinner';
 import { fetchPosts } from '../api.js';
 import PostRow from './PostRow';
 
-
-
-
-
 class PostsListView extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      numPosts: 0
+    }
+
+    this._onFetch = this._onFetch.bind(this);
+  }
 
   _onFetch(page = 1, callback, options) {
     // let rows = [];
-    fetchPosts(5,6, (posts) => {
-      console.log(posts);
+    fetchPosts(5, 6, (posts) => {
+      // console.log(posts);
+      this.setState({numPosts: this.state.numPosts + posts.length});
+      console.log('current number of posts: ' + this.state.numPosts);
       callback(posts);
     });
+
     // setTimeout(() => {
     //
     //   const fakePost = {
@@ -44,7 +52,6 @@ class PostsListView extends Component {
     //   }
     // }, 1000); // simulating network fetching
   }
-
 
   /**
    * Render a row
