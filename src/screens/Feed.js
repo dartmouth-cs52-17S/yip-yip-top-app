@@ -4,7 +4,6 @@ import {
   View,
   Button,
   SegmentedControlIOS,
-  ScrollView
 } from 'react-native';
 import PostsListView from '../components/PostsListView';
 

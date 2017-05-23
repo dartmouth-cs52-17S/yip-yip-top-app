@@ -5,20 +5,63 @@ import {
   Text,
   View,
   TouchableHighlight,
-  Platform
 } from 'react-native' ;
 
 import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
+import { Icon } from 'react-native-elements';
+
+
+const PostRow = (props) => {
+
+  return (
+    <TouchableHighlight
+      underlayColor='#c8c7cc'
+      onPress={(rowData) => {
+        console.log(rowData);
+      }}
+    >
+      <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{flex: 4, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'blue'}}>
+          <Text>{props.post.text}</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{ flexDirection: 'row'}}>
+              <Icon type='ionicon' name='ios-clock-outline' size={20} color={'white'} />
+              <Text>{props.post.location}</Text>
+            </View>
+
+            <View style={{ flexDirection: 'row'}}>
+            <Icon type='ionicon' name='ios-clock-outline' size={20} color={'white'} />
+              <Text>{props.post.time}</Text>
+            </View>
+
+          </View>
+        </View>
+        <View style={{flex: 1, alignItems: 'center'}}>
+          <Icon type="ionicon" name='ios-arrow-up' size={30} color={'blue'} />
+          <Text> 135 </Text>
+          <Icon type="ionicon" name='ios-arrow-down' size={30} color={'blue'} />
+        </View>
+      </View>
+    </TouchableHighlight>
+  );
+};
+
 
 class PostsListView extends Component {
 
+
   _onFetch(page = 1, callback, options) {
     setTimeout(() => {
-      var header = 'Header '+page;
-      var rows = {};
-      rows[header] = ['row '+((page - 1) * 3 + 1), 'row '+((page - 1) * 3 + 2), 'row '+((page - 1) * 3 + 3)];
-      if (page === 5) {
+
+      const fakePost = {
+        text: 'Wow that party was so lit',
+        location: 'Hanover, NH',
+        time: '1 min ago',
+      }
+
+      var rows = [fakePost];
+      if (page === 3) {
         callback(rows, {
           allLoaded: true, // the end of the list is reached
         });
@@ -30,83 +73,12 @@ class PostsListView extends Component {
 
 
   /**
-   * When a row is touched
-   * @param {object} rowData Row data
-   */
-  _onPress(rowData) {
-    console.log(rowData+' pressed');
-  }
-
-  /**
    * Render a row
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
     return (
-      <TouchableHighlight
-        style={customStyles.row}
-        underlayColor='#c8c7cc'
-        onPress={() => this._onPress(rowData)}
-      >
-        <Text>{rowData}</Text>
-      </TouchableHighlight>
-    );
-  }
-
-  /**
-   * Render a row
-   * @param {object} rowData Row data
-   */
-  _renderSectionHeaderView(sectionData, sectionID) {
-    return (
-      <View style={customStyles.header}>
-        <Text style={customStyles.headerTitle}>
-          {sectionID}
-        </Text>
-      </View>
-    );
-  }
-
-  /**
-   * Render the refreshable view when waiting for refresh
-   * On Android, the view should be touchable to trigger the refreshCallback
-   * @param {function} refreshCallback The function to call to refresh the listview
-   */
-  _renderRefreshableWaitingView(refreshCallback) {
-    if (Platform.OS !== 'android') {
-      return (
-        <View style={customStyles.refreshableView}>
-          <Text style={customStyles.actionsLabel}>
-            ↓
-          </Text>
-        </View>
-      );
-    } else {
-      return (
-        <TouchableHighlight
-          underlayColor='#c8c7cc'
-          onPress={refreshCallback}
-          style={customStyles.refreshableView}
-        >
-          <Text style={customStyles.actionsLabel}>
-            ↻
-          </Text>
-        </TouchableHighlight>
-      );
-    }
-  }
-
-  /**
-   * Render the refreshable view when the pull to refresh has been activated
-   * @platform ios
-   */
-  _renderRefreshableWillRefreshView() {
-    return (
-      <View style={customStyles.refreshableView}>
-        <Text style={customStyles.actionsLabel}>
-          ↻
-        </Text>
-      </View>
+      <PostRow post={rowData} />
     );
   }
 
@@ -149,8 +121,6 @@ class PostsListView extends Component {
       </View>
     );
   }
-
-
 
   /**
    * Render the pagination view when end of list is reached
@@ -200,35 +170,22 @@ class PostsListView extends Component {
   render() {
     return (
       <View style={screenStyles.container}>
-        <View style={screenStyles.navBar}>
-          <Text style={screenStyles.navBarTitle}>Gifted ListView</Text>
-        </View>
         <GiftedListView
+
           rowView={this._renderRowView}
-
           onFetch={this._onFetch}
-          initialListSize={12} // the maximum number of rows displayable without scrolling (height of the listview / height of row)
-
-          firstLoader={true} // display a loader for the first fetching
 
           pagination={true} // enable infinite scrolling using touch to load more
-          paginationFetchingView={this.paginationFetchingView}
-          paginationAllLoadedView={this._renderPaginationAllLoadedView}
-          paginationWaitingView={this._renderPaginationWaitingView}
-
           refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
-          refreshableViewHeight={50} // correct height is mandatory
-          refreshableDistance={40} // the distance to trigger the pull-to-refresh - better to have it lower than refreshableViewHeight
-          refreshableFetchingView={this._renderRefreshableFetchingView}
-          refreshableWillRefreshView={this._renderRefreshableWillRefreshView}
-          refreshableWaitingView={this._renderRefreshableWaitingView}
+          enableEmptySections={true}
 
+          paginationFetchingView={this.paginationFetchingView}
+          paginationAllLoadedView={this._renderPaginationAllLoadedView} // view when you reach end of list
+          paginationWaitingView={this._renderPaginationWaitingView} // the 'load more' view
           emptyView={this._renderEmptyView}
 
           renderSeparator={this._renderSeparatorView}
-
-          withSections={true} // enable sections
-          sectionHeaderView={this._renderSectionHeaderView}
+          withSections={false} // enable sections
 
           PullToRefreshViewAndroidProps={{
             colors: ['#fff'],
@@ -237,19 +194,6 @@ class PostsListView extends Component {
 
           rowHasChanged={(r1,r2)=>{
             r1.id !== r2.id
-          }}
-          distinctRows={(rows)=>{
-            var indentitis = {};
-            var newRows = [];
-            for(var i = 0;i<rows.length; i++){
-              if(indentitis[rows[i].id]){
-                console.log('wat');
-              }else{
-                indentitis[rows[i].id]=true;
-                newRows.push(rows[i]);
-              }
-            }
-            return newRows;
           }}
         />
       </View>
