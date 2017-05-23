@@ -2,7 +2,7 @@
 
 **Yip Yip** is a real-time, localized, anonymous feed for short comments, jokes, images, and discussion..
 
-![](screenshots/Herd Feed.png)
+![](screenshots/HerdFeed.png)
 
 We once had gradients... but React Native does not support them so we had to do a redesign. 🤓
 
