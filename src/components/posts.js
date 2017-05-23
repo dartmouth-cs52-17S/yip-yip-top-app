@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
     ListView,
     Text,
-    View
+    View,
 } from 'react-native';
 
 // const ROOT_URL;

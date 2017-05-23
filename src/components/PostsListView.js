@@ -30,6 +30,7 @@ class PostsListView extends Component {
     fetchPosts(5, 6, (posts) => {
       // console.log(posts);
       this.setState({numPosts: this.state.numPosts + posts.length});
+      // TODO: need to make this only the case for the "Load more" option
       console.log('current number of posts: ' + this.state.numPosts);
       callback(posts);
     });
