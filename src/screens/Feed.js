@@ -5,7 +5,9 @@ import {
   Button,
   SegmentedControlIOS,
 } from 'react-native';
+
 import PostsListView from '../components/PostsListView';
+import ActionButton from 'react-native-action-button';
 
 class Feed extends Component {
   constructor(props) {
@@ -34,11 +36,18 @@ class Feed extends Component {
 
     const modalButton = <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
 
+    const actionButton = <ActionButton
+      buttonColor='#FF906F'
+      onPress={() => { this.props.navigation.navigate('NewPost')}}          hideShadow={false}
+      size={50}
+    />
+
     return (
       <View style={{flex: 1}}>
         {segmented}
         {modalButton}
         <PostsListView />
+        {actionButton}
       </View>
     );
   }
