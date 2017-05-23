@@ -34,7 +34,6 @@ class PostsListView extends Component {
       console.log('current number of posts: ' + this.state.numPosts);
       callback(posts);
     });
-
     // setTimeout(() => {
     //
     //   const fakePost = {

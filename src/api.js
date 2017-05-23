@@ -5,14 +5,73 @@ const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
 
 // yip-yip.herokuapp.com/api/posts/?long=5.000001&lat=6.000001
 
-export function fetchPosts(long, lat, callback) {
+export function fetchPosts(long, lat, cb) {
   const url = `${ROOT_URL}/posts/`;
   axios.get(url, {params: {long, lat}}).
   then((response) => {
     console.log(response.data);
-    callback(response.data);
+    cb(response.data);
   }).catch((error) => {
     console.log(error);
 
-  })
+  });
+}
+
+export function createPost(text, tags, coordinates, user_id, cb) {
+  const url = `${ROOT_URL}/posts/`;
+  axios.post(url, {params: {text, tags, coordinates, user_id}}).
+  then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+
+  });
+}
+
+export function getPost(post_id, cb) {
+  const url = `${ROOT_URL}/posts/${post_id}`;
+  axios.get(url, {params: {post_id}}).
+  then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+
+  });
+}
+
+export function deletePost(post_id, cb) {
+  const url = `${ROOT_URL}/posts/${post_id}`;
+  axios.delete(url, {params: {post_id}}).
+  then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+export function editPost(post, fields, action, cb) {
+  const url = `${ROOT_URL}/posts/${post._id}`;
+  let params;
+  if (action == 'COMMENT_ACTION') {
+    params = {
+      id: post.post_id,
+      commentId: fields.commentId,
+      user: fields.user_id,
+    }
+  } else {
+    params = {
+      id: post.post_id,
+      user: fields.user_id,
+    }
+  }
+  axios.put(url,params).
+  then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+  });
 }
