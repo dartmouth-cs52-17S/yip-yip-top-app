@@ -2,11 +2,9 @@
 
 **Yip Yip** is a real-time, localized, anonymous feed for short comments, jokes, images, and discussion..
 
-![](screenshots/newFeed.png)
+![](screenshots/HerdFeed.png)
 
-We once had gradients...
-
-![](screenshots/login.png)
+We once had gradients... but React Native does not support them so we had to do a redesign. 🤓
 
 ![](screenshots/main.png)
 
@@ -16,49 +14,11 @@ We once had gradients...
 
 TODO:  descriptions of code organization and tools and libraries used
 
-Styling on app:
+#### Styling on app
 Also, I think the standard for styles on React Native is inline (`const styles = StyleSheet.create({ everyStyleIsAnObject })`) and we `import { StyleSheet } from ‘react-native’;` In general, `docs/ARCHITECTURE.md` is very helpful for understanding the project’s setup and some of the differences between React and React Native.
 
-Authentication:
+#### Authentication
 The starter pack I think is best once used Auth0 instead of Passport ([comparison here](https://auth0.com/learn/lp-auth0-vs-passport/)) and there are [instructions here](https://github.com/futurice/pepperoni-app-kit/blob/master/docs/AUTH0.md) if we want to bring that back.
-
-## Setup
-
-First, follow the [React Native getting started page instructions](https://facebook.github.io/react-native/docs/getting-started.html) to install all the required dependencies.
-
-```
-git clone https://github.com/dartmouth-cs52-17S/yip-yip-top-app.git
-cd yip-yip-top-app
-yarn install
-react-native run-ios
-```
-
-If you want to run the simulator on a specific iPhone model you can run a similar command: `react-native run-ios --simulator="iPhone 7 Plus"`
-
-Reloading:
-
-Once the iOS simulator is running, you can open the developer tools menu by pressing `cmd+ctrl+Z` or going to `Hardware > Shake Gesture`. From this screen, you can enable hot reloading. You can also just reload the simulator with `cmd+r`.
-
-## Deployment
-
-We can use CodePush to deploy our app.
-  $ npm install -g code-push-cli
-  After creating a CodePush account, you can simply use the following command via the CLI and authenticate with either your GitHub or Microsoft account:
-  $ code-push register
-  $ code-push app add Yip Yip
-  Add the appropriate CodePush client SDKs to your app, and configure them to query for updates against the app deployment created above.
-  For the react-native platform, follow https://github.com/Microsoft/react-native-code-push#getting-started
-  For updates, run the release-react comand in the CodePush CLI, which will handle bundling your JavaScript and asset files and releasing the update to the CodePush server. For example: code-push release-react MyApp ios.
-
-## Authors
-
-Armin Mahban, Byrne Hollander, Ellis Guo, Jenny Seong, Ying Liu
-
-## Acknowledgments
-
-Tim and Irene, probably
-
-## Feature Spec
 
 ### Front End Features
 
@@ -118,3 +78,43 @@ Tim and Irene, probably
 - Same information/layout as the post from the main feed, but with a comments section below it
 - Comment bar at the very top with existing comments below it
 - Heart on the top right of the page allowing you to save a post for later viewing
+
+## Setup
+
+First, follow the [React Native getting started page instructions](https://facebook.github.io/react-native/docs/getting-started.html) to install all the required dependencies.
+
+```
+git clone https://github.com/dartmouth-cs52-17S/yip-yip-top-app.git
+cd yip-yip-top-app
+yarn install
+react-native run-ios
+```
+
+If you want to run the simulator on a specific iPhone model you can run a similar command: `react-native run-ios --simulator="iPhone 7 Plus"`
+
+Reloading:
+
+Once the iOS simulator is running, you can open the developer tools menu by pressing `cmd+ctrl+Z` or going to `Hardware > Shake Gesture`. From this screen, you can enable hot reloading. You can also just reload the simulator with `cmd+r`.
+
+## Deployment
+
+We can use CodePush to deploy our app.
+  ```
+  npm install -g code-push-cli
+  ```
+  After creating a CodePush account, you can simply use the following commands via the CLI and authenticate with either your GitHub or Microsoft account:
+  ```
+  code-push register
+  code-push app add Yip Yip
+  ```
+  Add the appropriate CodePush client SDKs to your app, and configure them to query for updates against the app deployment created above.
+  For the react-native platform, follow https://github.com/Microsoft/react-native-code-push#getting-started
+  For updates, run the release-react comand in the CodePush CLI, which will handle bundling your JavaScript and asset files and releasing the update to the CodePush server. For example: code-push release-react MyApp ios.
+
+## Authors
+
+Armin Mahban, Byrne Hollander, Ellis Guo, Jenny Seong, Ying Liu
+
+## Acknowledgments
+
+Tim and Irene, probably

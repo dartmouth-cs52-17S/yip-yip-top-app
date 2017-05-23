@@ -5,7 +5,9 @@ import {
     Text,
     View
 } from 'react-native';
-const ROOT_URL;
+
+// const ROOT_URL;
+
 class Posts extends Component {
 
   constructor(props) {
@@ -29,9 +31,10 @@ class Posts extends Component {
   fetchPosts() {
     axios.get(`${ROOT_URL}/posts`).then((response) => {
       this.setState({
-         dataSource: this.state.dataSource.cloneWithRows(response.data),
-         isLoading: false,
-         empty: false,
+        dataSource: this.state.dataSource.cloneWithRows(response.data),
+        isLoading: false,
+        empty: false,
+
       });
     }).catch((error) => {
       this.setState({
