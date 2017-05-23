@@ -27,7 +27,6 @@ class Feed extends Component {
       selectedIndex={0}
       tintColor={'#D6573D'}
       onValueChange={(val) => {
-        console.log(`changed tab to ${val}`);
         this.setState({
           selectedTab: val
         })

@@ -9,66 +9,40 @@ import {
 
 import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
-import { Icon } from 'react-native-elements';
+
+import { fetchPosts } from '../api.js';
+import PostRow from './PostRow';
 
 
-const PostRow = (props) => {
 
-  return (
-    <TouchableHighlight
-      underlayColor='#c8c7cc'
-      onPress={(rowData) => {
-        console.log(rowData);
-      }}
-    >
-      <View style={{flex: 1, flexDirection: 'row'}}>
-        <View style={{flex: 4, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'blue'}}>
-          <Text>{props.post.text}</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View style={{ flexDirection: 'row'}}>
-              <Icon type='ionicon' name='ios-clock-outline' size={20} color={'white'} />
-              <Text>{props.post.location}</Text>
-            </View>
-
-            <View style={{ flexDirection: 'row'}}>
-            <Icon type='ionicon' name='ios-clock-outline' size={20} color={'white'} />
-              <Text>{props.post.time}</Text>
-            </View>
-
-          </View>
-        </View>
-        <View style={{flex: 1, alignItems: 'center'}}>
-          <Icon type="ionicon" name='ios-arrow-up' size={30} color={'blue'} />
-          <Text> 135 </Text>
-          <Icon type="ionicon" name='ios-arrow-down' size={30} color={'blue'} />
-        </View>
-      </View>
-    </TouchableHighlight>
-  );
-};
 
 
 class PostsListView extends Component {
 
 
   _onFetch(page = 1, callback, options) {
-    setTimeout(() => {
-
-      const fakePost = {
-        text: 'Wow that party was so lit',
-        location: 'Hanover, NH',
-        time: '1 min ago',
-      }
-
-      var rows = [fakePost];
-      if (page === 3) {
-        callback(rows, {
-          allLoaded: true, // the end of the list is reached
-        });
-      } else {
-        callback(rows);
-      }
-    }, 1000); // simulating network fetching
+    // let rows = [];
+    fetchPosts(5,6, (posts) => {
+      console.log(posts);
+      callback(posts);
+    });
+    // setTimeout(() => {
+    //
+    //   const fakePost = {
+    //     text: 'Wow that party was so lit',
+    //     location: 'Hanover, NH',
+    //     time: '1 min ago',
+    //   }
+    //
+    //   var rows = [fakePost];
+    //   if (page === 3) {
+    //     callback(rows, {
+    //       allLoaded: true, // the end of the list is reached
+    //     });
+    //   } else {
+    //     callback(rows);
+    //   }
+    // }, 1000); // simulating network fetching
   }
 
 
