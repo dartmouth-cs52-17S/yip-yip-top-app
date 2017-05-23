@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import {
   View,
   Button,
-  SegmentedControlIOS
+  SegmentedControlIOS,
+  ScrollView
 } from 'react-native';
-import styles from '../styles';
+import PostsListView from '../components/PostsListView';
 
 class Feed extends Component {
   constructor(props) {
@@ -21,19 +22,25 @@ class Feed extends Component {
   }
 
   render() {
+
+    const segmented = <SegmentedControlIOS
+      values={['New', 'Top', 'Comments']}
+      selectedIndex={0}
+      tintColor={'#D6573D'}
+      onValueChange={(val) => {
+        console.log(`changed tab to ${val}`);
+        this.setState({
+          selectedTab: val
+        })
+      }} />
+
+    const modalButton = <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
+
     return (
-      <View>
-        <SegmentedControlIOS
-          values={['New', 'Top', 'Comments']}
-          selectedIndex={0}
-          tintColor={'#D6573D'}
-          onValueChange={(val) => {
-            console.log(`changed tab to ${val}`);
-            this.setState({
-              selectedTab: val
-            })
-          }} />
-        <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
+      <View style={{flex: 1}}>
+        {segmented}
+        {modalButton}
+        <PostsListView />
       </View>
     );
   }
