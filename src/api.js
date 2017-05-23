@@ -28,3 +28,26 @@ export function createPost(text, tags, coordinates, user_id, cb) {
 
   });
 }
+
+export function getPost(post_id, cb) {
+  const url = `${ROOT_URL}/post/${post_id}`;
+  axios.get(url, {params: {post_id}}).
+  then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+
+  });
+}
+
+export function deletePost(post_id, cb) {
+  const url = `${ROOT_URL}/post/${post_id}`;
+  axios.delete(url, {params: {post_id}}).
+  then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+  });
+}
