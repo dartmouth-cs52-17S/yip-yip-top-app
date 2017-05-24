@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     ListView,
     Text,
-    View
+    View,
 } from 'react-native';
 
 // const ROOT_URL;
