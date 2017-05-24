@@ -174,6 +174,8 @@ class PostsListView extends Component {
             progressBackgroundColor: '#003e82',
           }}
 
+          style={{ backgroundColor: '#F4F5F9'}}
+
           rowHasChanged={(r1,r2)=>{
             r1.id !== r2.id
           }}
@@ -186,12 +188,12 @@ class PostsListView extends Component {
 
 const customStyles = StyleSheet.create({
   separator: {
-    height: 1,
+    height: 0,
     backgroundColor: '#CCC'
   },
   refreshableView: {
     height: 50,
-    backgroundColor: '#fff',
+    backgroundColor: 'blue',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -203,7 +205,7 @@ const customStyles = StyleSheet.create({
     height: 44,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: '#F4F5F9',
   },
   defaultView: {
     justifyContent: 'center',
