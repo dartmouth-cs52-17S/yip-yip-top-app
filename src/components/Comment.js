@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
-
 import {
-  Text,
-  View
+    Text,
+    View
 } from 'react-native';
-import styles from '../styles';
-
-class Post extends Component {
+class Comment extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+    }
   }
 
+  componentWillMount() {
+
+  }
   render() {
     console.log('in render');
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to Posts page!
+      <View>
+        <Text>
+          This is the comment.
         </Text>
       </View>
     );
   }
 }
 
-export default Post;
+export default Comment;

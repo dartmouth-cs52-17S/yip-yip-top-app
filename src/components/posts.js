@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {
     ListView,
     Text,
-    View
+    View,
 } from 'react-native';
 
 // const ROOT_URL;
@@ -24,23 +23,8 @@ class Posts extends Component {
   }
 
   componentWillMount() {
-    fetchPosts();
   }
 
-  //TODO
-  fetchPosts() {
-    axios.get(`${ROOT_URL}/posts`).then((response) => {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(responseData),
-        isLoading: false,
-        empty: false,
-      });
-    }).catch((error) => {
-      this.setState({
-        error: true,
-      })
-    });
-  }
   renderLoadingView() {
     return (
       <View>
@@ -71,13 +55,11 @@ class Posts extends Component {
   renderPostCell(post) {
     return (
         <View>
-            <View>
-              //----- TableView Content -----//
-              <Text>{post.text}</Text>
-              <Text>{post.location}</Text>
-              <Text>{post.timeStamp}</Text>
-            </View>
-          </View>
+          <Text>{post.text}</Text>
+          <Text>{post.location}</Text>
+          <Text>{post.timeStamp}</Text>
+        </View>
+
     );
   }
 
@@ -91,7 +73,6 @@ class Posts extends Component {
     }
     return (
       <View style={{marginBottom: 150}}>
-        // Load the list of posts
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this.renderPostCell.bind(this)}
@@ -101,4 +82,4 @@ class Posts extends Component {
 
   }
 }
-module.exports = Posts;
+export default Posts;

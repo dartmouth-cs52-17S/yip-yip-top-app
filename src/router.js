@@ -18,17 +18,17 @@ import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
 import NewPostScreen from './screens/newPost';
 
-const navBarMainColor='#474BB3';
-const navBarTintColor='#FFFFFF';
-const accentColor='#DD6EEF';
-const mainColor='#333343';
+const navBarMainColor='#F4F5F9';
+const navBarTintColor='#3C3559';
+const accentColor='#D0CCDF';
+const mainColor='#F4F5F9';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F4F5F9',
   },
   welcome: {
     fontSize: 20,
@@ -103,6 +103,7 @@ export const FeedStack = StackNavigator({
     screen: Feed,
     navigationOptions: {
       title: 'Feed',
+      headerTintColor: '#3C3559'
     }
   },
   Dummy: {
@@ -121,7 +122,7 @@ export const FeedStack = StackNavigator({
     headerRight:
       <Icon type='ionicon'
         name='ios-glasses-outline'
-        color='white'
+        color='#3C3559'
         size={30}
         onPress={()=>{ navigation.navigate('Settings'); }}
         style={{ marginRight: 10, padding: 5}}

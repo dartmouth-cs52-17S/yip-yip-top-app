@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {
   View,
-  Button,
+  // Button,
   SegmentedControlIOS,
 } from 'react-native';
 
@@ -27,14 +27,15 @@ class Feed extends Component {
     const segmented = <SegmentedControlIOS
       values={['New', 'Top', 'Comments']}
       selectedIndex={0}
-      tintColor={'#D6573D'}
+      margin={10}
+      tintColor={'#6C56BA'}
       onValueChange={(val) => {
         this.setState({
           selectedTab: val
         })
       }} />
 
-    const modalButton = <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
+    // const modalButton = <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
 
     const actionButton = <ActionButton
       buttonColor='#FF906F'
@@ -43,9 +44,8 @@ class Feed extends Component {
     />
 
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#F4F5F9',}}>
         {segmented}
-        {modalButton}
         <PostsListView />
         {actionButton}
       </View>
