@@ -48,10 +48,8 @@ class NewPostScreen extends Component {
   }
 
   render() {
-
     return (
-
-      <View style={{flex: 1, padding: 20, backgroundColor: 'green'}}>
+      <View style={{flex: 1, padding: 20}}>
         <KeyboardAvoidingView
           behavior={'height'}
           key={this.state.keyboardCounter}
@@ -70,7 +68,7 @@ class NewPostScreen extends Component {
             }}
             blurOnSubmit={true}
 
-            style={{height: '60%', backgroundColor: 'blue', fontSize: 30, padding: 20, paddingTop: 30, marginBottom: 20}}
+            style={{height: '65%', backgroundColor: 'blue', fontSize: 30, padding: 20, paddingTop: 30, marginBottom: 20}}
           />
           <Text> {this.state.remainingCharacters} </Text>
           <Text style={{paddingBottom: 50}}> Harrassment will not be tolerated </Text>
