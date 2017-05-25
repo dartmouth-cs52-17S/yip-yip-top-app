@@ -92,9 +92,6 @@ export const SettingsStack = StackNavigator({
 export const NewPostStack = StackNavigator({
   NewPost: {
     screen: NewPostScreen,
-    navigationOptions: {
-      title: 'New Post',
-    }
   }
 })
 
