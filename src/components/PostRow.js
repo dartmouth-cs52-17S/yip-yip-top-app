@@ -16,8 +16,27 @@ class PostRow extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      score: this.props.post.score,
+    // TODO: define username from app!!!
+    let user = 'Hello';
+
+    if (this.props.post.upvoters.includes(user)) {
+      this.state = {
+        score: this.props.post.score,
+        upvote: true,
+        downvote: false
+      }
+    } else if (this.props.post.downvoters.includes(user)) {
+      this.state = {
+        score: this.props.post.score,
+        upvote: false,
+        downvote: true
+      }
+    } else {
+      this.state = {
+        score: this.props.post.score,
+        upvote: false,
+        downvote: false
+      }
     }
 
     this.upVote = this.upVote.bind(this);
@@ -33,7 +52,20 @@ class PostRow extends Component {
       // this.props.refresh();
       console.log('upvote');
     });
-    this.setState({score: this.state.score + 1});
+    if (!this.state.upvote) {
+      if (this.state.downvote) {
+        this.setState({
+          upvote: true,
+          downvote: false,
+          score: this.state.score + 2
+        })
+      } else {
+        this.setState({
+          upvote: true,
+          score: this.state.score + 1
+        })
+      }
+    }
   }
 
   downVote() {
@@ -41,10 +73,24 @@ class PostRow extends Component {
       // this.props.refresh();
       console.log('downvote');
     });
-    this.setState({score: this.state.score - 1});
+    if (!this.state.downvote) {
+      if (this.state.upvote) {
+        this.setState({
+          upvote: false,
+          downvote: true,
+          score: this.state.score - 2
+        })
+      } else {
+        this.setState({
+          downvote: true,
+          score: this.state.score - 1
+        })
+      }
+    }
   }
 
   render() {
+    console.log(this.state);
     return (
       <TouchableHighlight underlayColor = '#c8c7cc' backgroundColor = 'F4F5F9'
         /* TODO: Link onPress with post detail */
@@ -67,9 +113,9 @@ class PostRow extends Component {
             </View>
           </View>
           <View style={customStyles.vote}>
-            <Icon type="ionicon" name='ios-arrow-up' size={35} color={'#6C56BA'} onPress={this.upVote}/>
+            <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} onPress={this.upVote}/>
             <Text style={customStyles.score}> {this.state.score} </Text>
-            <Icon type="ionicon" name='ios-arrow-down' size={35} color={'#6C56BA'} onPress={this.downVote}/>
+            <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
           </View>
         </View>
       </TouchableHighlight>
