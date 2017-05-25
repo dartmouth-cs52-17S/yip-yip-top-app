@@ -28,7 +28,7 @@ class PostsListView extends Component {
   _onFetch(page = 1, callback, options) {
     // let rows = [];
     fetchPosts(5, 6, (posts) => {
-      // console.log(posts);
+      console.log(posts);
       this.setState({numPosts: this.state.numPosts + posts.length});
       // TODO: need to make this only the case for the "Load more" option
       console.log('current number of posts: ' + this.state.numPosts);
@@ -59,7 +59,9 @@ class PostsListView extends Component {
    */
   _renderRowView(rowData) {
     return (
-      <PostRow post={rowData} />
+      <PostRow post={rowData} refresh={()=> {
+        this.listview._refresh();
+      }}/>
     );
   }
 
@@ -86,7 +88,7 @@ class PostsListView extends Component {
         style={customStyles.paginationView}
       >
         <Text style={[customStyles.actionsLabel, {fontSize: 13}]}>
-          Load more
+          Load More
         </Text>
       </TouchableHighlight>
     );
@@ -152,8 +154,8 @@ class PostsListView extends Component {
     return (
       <View style={screenStyles.container}>
         <GiftedListView
-
-          rowView={this._renderRowView}
+          ref={ref => this.listview = ref}
+          rowView={this._renderRowView.bind(this)}
           onFetch={this._onFetch}
 
           pagination={true} // enable infinite scrolling using touch to load more
@@ -192,13 +194,13 @@ const customStyles = StyleSheet.create({
   },
   refreshableView: {
     height: 50,
-    backgroundColor: 'blue',
+    backgroundColor: '#F4F5F9',
     justifyContent: 'center',
     alignItems: 'center',
   },
   actionsLabel: {
     fontSize: 20,
-    color: '#007aff',
+    color: '#6C56BA',
   },
   paginationView: {
     height: 44,

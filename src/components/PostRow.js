@@ -9,6 +9,7 @@ import {
 
 import { Icon } from 'react-native-elements';
 
+import { editPost } from '../api'
 
 class PostRow extends Component {
 
@@ -23,19 +24,31 @@ class PostRow extends Component {
     this.downVote = this.downVote.bind(this);
   }
 
-  // TODO: Link with API
+  componentWillReceiveProps() {
+    this.setState({score: this.props.post.score});
+  }
+
   upVote() {
-    console.log('up pressed');
+    editPost(this.props.post, null, 'UPVOTE_POST', () => {
+      // this.props.refresh();
+      console.log('upvote');
+    });
     this.setState({score: this.state.score + 1});
   }
 
   downVote() {
-    // console.log('down pressed');
+    editPost(this.props.post, null, 'DOWNVOTE_POST', () => {
+      // this.props.refresh();
+      console.log('downvote');
+    });
     this.setState({score: this.state.score - 1});
   }
 
   render() {
     return (
+      <TouchableHighlight underlayColor = '#c8c7cc' backgroundColor = 'F4F5F9'
+        /* TODO: Link onPress with post detail */
+        onPress={() => {console.log(this.props.post);}}>
         <View style={customStyles.main}>
           <View style={customStyles.content}>
             <Text style={customStyles.mainText}>{this.props.post.text}</Text>
@@ -44,11 +57,11 @@ class PostRow extends Component {
             </Text>
             <View style={customStyles.info}>
               <View style={customStyles.infoDetail}>
-                <Icon type='ionicon' name='ios-clock-outline' size={20} color={'#6C56BA'} margin={3} />
-                <Text>{this.props.post.location.city || 'n/a'}</Text>
+                <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
+                <Text>{this.props.post.commentsLen}</Text>
               </View>
               <View style={customStyles.infoDetail}>
-                <Icon type='ionicon' name='ios-clock-outline' size={20} color={'#6C56BA'} margin={3} />
+                <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
                 <Text>{this.props.post.timestamp}</Text>
               </View>
             </View>
@@ -59,6 +72,7 @@ class PostRow extends Component {
             <Icon type="ionicon" name='ios-arrow-down' size={35} color={'#6C56BA'} onPress={this.downVote}/>
           </View>
         </View>
+      </TouchableHighlight>
     );
   }
 
@@ -70,7 +84,7 @@ const customStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    width: 350,
+    width: 340,
     margin: 7,
     borderRadius: 10,
     alignItems: 'center',
@@ -100,14 +114,15 @@ const customStyles = StyleSheet.create({
     color: '#3C3559',
     fontSize: 15,
     letterSpacing: -0.1,
-    lineHeight: 30
+    lineHeight: 20,
+    paddingLeft: 5
   },
   tags: {
     fontSize: 12,
     color: '#DA5AA4',
     letterSpacing: -0.03,
     margin: 5,
-    marginLeft: 0
+    marginTop: 10
   },
 
   vote: {
