@@ -46,7 +46,8 @@ The starter pack I think is best once used Auth0 instead of Passport ([compariso
 
 - Store users, settings, saved locations
 - Store feeds, posts, comments, all information, but clear all data regularly based on how many posts a location gets/a certain time constraint
-
+- fetching data example:
+    ![fetch](screenshots/fetchingData.gif)
 
 ### User Flow
 
