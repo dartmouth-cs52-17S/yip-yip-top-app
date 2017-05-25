@@ -19,6 +19,8 @@ class PostDetail extends Component {
     this.state = {
       loading: true,
       post: '',
+      upvote: false,
+      downvote: false,
     };
   }
 
@@ -52,7 +54,9 @@ class PostDetail extends Component {
           </View>
         </View>
         <View style={customStyles.vote}>
+          <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} />
           <Text style={customStyles.score}> {post.score} </Text>
+          <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
         </View>
       </View>
     )
