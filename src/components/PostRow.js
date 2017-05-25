@@ -36,13 +36,6 @@ class PostRow extends Component {
 
   render() {
     return (
-      <TouchableHighlight
-        underlayColor = '#c8c7cc'
-        backgroundColor = 'F4F5F9'
-        onPress={(rowData) => {
-          console.log(rowData);
-        }}
-      >
         <View style={customStyles.main}>
           <View style={customStyles.content}>
             <Text style={customStyles.mainText}>{this.props.post.text}</Text>
@@ -66,7 +59,6 @@ class PostRow extends Component {
             <Icon type="ionicon" name='ios-arrow-down' size={35} color={'#6C56BA'} onPress={this.downVote}/>
           </View>
         </View>
-      </TouchableHighlight>
     );
   }
 
@@ -78,10 +70,8 @@ const customStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    // TODO: Make the height responsive to the content in case of overflow
-    height: 100,
     width: 350,
-    margin: 10,
+    margin: 7,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'space-around',
