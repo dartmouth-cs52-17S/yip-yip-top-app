@@ -7,6 +7,11 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      text: String,
+      timestamp: Date,
+      user:String,
+      upvoters:[String],
+      downvoters:[String],
     }
   }
 
