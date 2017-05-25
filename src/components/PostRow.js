@@ -10,7 +10,6 @@ import {
 import moment from 'moment';
 
 import { Icon } from 'react-native-elements';
-
 import { editPost } from '../api'
 
 class PostRow extends Component {

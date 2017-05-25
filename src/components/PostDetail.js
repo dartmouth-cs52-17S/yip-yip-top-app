@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getPost } from '../api.js';
 import {
     Text,
     View
@@ -7,12 +8,14 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: false,
       text: '',
       score: 0,
       tags: [],
       location:'',
       timestamp:'',
+      comments: [],
+      upvoters:[],
+      downvoters: [],
     }
     this.fetchPost = this.fetchPost.bind(this);
   }
@@ -20,6 +23,14 @@ class Post extends Component {
   componentWillMount() {
 
   }
+
+  fetchPost(id, callback) {
+  // let rows = [];
+    getPost(id, (post) => {
+      callback(post);
+    });
+  }
+
   render() {
     console.log('in render');
     return (

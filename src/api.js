@@ -5,27 +5,24 @@ const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
 
 // yip-yip.herokuapp.com/api/posts/?long=5.000001&lat=6.000001
 
-export function fetchPosts(long, lat, cb) {
-  const url = `${ROOT_URL}/posts/`;
-  axios.get(url, {params: {long, lat}}).
+export function fetchPosts(lat, long, cb) {
+  axios.get(`${ROOT_URL}/posts/`, { params: { lat, long } }).
   then((response) => {
     console.log(response.data);
     cb(response.data);
   }).catch((error) => {
     console.log(error);
-
   });
 }
 
-export function createPost(text, tags, coordinates, user_id, cb) {
-  const url = `${ROOT_URL}/posts/`;
-  axios.post(url, {params: {text, tags, coordinates, user_id}}).
+export function createPost(post, cb) {
+  console.log(`post is ${JSON.stringify(post)}`);
+  axios.post(`${ROOT_URL}/posts/`, post).
   then((response) => {
-    console.log(response.data);
+    console.log(`Post created. ${response.data}`);
     cb(response.data);
   }).catch((error) => {
-    console.log(error);
-
+    console.log(`error creating posts. ${error}`);
   });
 }
 

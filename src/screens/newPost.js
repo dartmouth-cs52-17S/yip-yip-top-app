@@ -1,4 +1,3 @@
-/* eslint-disable */
 
 import React, { Component } from 'react';
 
@@ -8,11 +7,11 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Keyboard,
-  Button
+  StyleSheet
 } from 'react-native';
 
-import ActionButton from 'react-native-action-button';
-import { height } from 'react-native-dimension';
+// import ActionButton from 'react-native-action-button';
+// import { height } from 'react-native-dimension';
 import { Icon } from 'react-native-elements';
 import { createPost } from '../api';
 
@@ -24,13 +23,13 @@ class NewPostScreen extends Component {
     title: 'New Post',
     headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: '',
     headerLeft: <Icon type='ionicon'
-      name='ios-glasses-outline'
-      color='#3C3559'
-      size={30}
+      name='ios-close'
+      color='#6C56BA'
+      size={40}
       onPress={()=>{ navigation.goBack(null); }}
       style={{ marginLeft: 10, padding: 5}}
     />
-   })
+  })
 
 
   constructor(props) {
@@ -51,10 +50,10 @@ class NewPostScreen extends Component {
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
     console.log('setting params');
     this.props.navigation.setParams({
-      headerRight: <Icon type='ionicon'
-        name='ios-glasses-outline'
-        color='#3C3559'
-        size={30}
+      headerRight: <Icon type='font-awesome'
+        name='send-o'
+        color='#6C56BA'
+        size={20}
         onPress={this.postSubmitPressed}
         style={{ marginRight: 10, padding: 5}}
       />
@@ -91,19 +90,19 @@ class NewPostScreen extends Component {
   }
 
   render() {
-
-    const actionButton = (
-     <ActionButton
-        buttonColor='#FF906F'
-        onPress={this.postSubmitPressed}
-        hideShadow={false}
-        size={50}
-        offsetY={height(30)}
-        icon={<Icon type='font-awesome' name='send-o' size={20} color={'white'}/>}
-       />)
+    // const actionButton = (
+    //  <ActionButton
+    //     buttonColor='#FF906F'
+    //     onPress={this.postSubmitPressed}
+    //     hideShadow={false}
+    //     shadowRadius={1}
+    //     size={50}
+    //     offsetY={height(30)}
+    //     icon={<Icon type='font-awesome' name='send-o' size={20} color={'white'}/>}
+    //    />)
 
     return (
-      <View style={{flex: 1, padding: 20}}>
+      <View style={customStyles.main}>
         <KeyboardAvoidingView
           behavior={'height'}
           key={this.state.keyboardCounter}
@@ -113,7 +112,8 @@ class NewPostScreen extends Component {
             numberOfLines={5}
             multiline={true}
             maxLength={CHAR_LIMIT}
-            placeholder="Send a Yip out to your location!\nkjkl\njklj\nlkjj\njlkj"
+            placeholder="Send a Yip out to your location!"
+            placeholderTextColor="#D0CCDF"
             value={this.state.text}
             onChangeText={(text) => {
               this.setState({
@@ -122,12 +122,10 @@ class NewPostScreen extends Component {
               });
             }}
             blurOnSubmit={true}
-            style={{height: '60%', fontSize: 30, padding: 20, paddingTop: 30, marginBottom: 20, backgroundColor: 'blue'}}
+            style={customStyles.textBox}
           />
-
-          <Text> {this.state.remainingCharacters} </Text>
-          <Text style={{paddingBottom: 50}}> Harrassment will not be tolerated </Text>
-          {actionButton}
+          <Text style={customStyles.remainCount}> {this.state.remainingCharacters} </Text>
+          <Text style={customStyles.bottomText}> Harrassment of any form will not be tolerated. </Text>
 
         </KeyboardAvoidingView>
       </View>
@@ -135,4 +133,45 @@ class NewPostScreen extends Component {
   }
 }
 
-module.exports = NewPostScreen;
+
+const customStyles = StyleSheet.create({
+  main: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#F4F5F9'
+  },
+
+  textBox: {
+    height: '60%',
+    fontSize: 24,
+    padding: 20,
+    paddingTop: 20,
+    lineHeight: 33,
+    fontFamily: 'Gill Sans',
+    color: '#3C3559',
+    marginBottom: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
+  },
+
+  remainCount: {
+    fontFamily: 'Gill Sans',
+    marginTop: 10,
+    fontSize: 20,
+    color: '#9C8FC4',
+    paddingLeft: 10
+  },
+  bottomText: {
+    fontFamily: 'Gill Sans',
+    fontSize: 14,
+    color: '#9C8FC4',
+    padding: 10,
+    paddingTop: 5
+  }
+});
+
+export default NewPostScreen;
