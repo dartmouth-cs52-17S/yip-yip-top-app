@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component } from 'react';
 
 import {
@@ -5,7 +7,8 @@ import {
   View,
   TextInput,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
+  Button
 } from 'react-native';
 
 import ActionButton from 'react-native-action-button';
@@ -16,9 +19,12 @@ import { createPost } from '../api';
 const CHAR_LIMIT = 50;
 
 class NewPostScreen extends Component {
-  static navigationOptions = {
-    title: 'wow',
-  }
+
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: 'New Post',
+    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: ''
+   })
+
 
   constructor(props) {
     super(props);
@@ -36,6 +42,20 @@ class NewPostScreen extends Component {
 
   componentWillMount () {
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
+    console.log('setting params');
+    this.props.navigation.setParams({
+      headerRight: <Icon type='ionicon'
+        name='ios-glasses-outline'
+        color='#3C3559'
+        size={30}
+        onPress={this.postSubmitPressed}
+        style={{ marginRight: 10, padding: 5}}
+      />
+    })
+  }
+
+  componentDidMount() {
+
   }
 
   componentWillUnmount () {
@@ -61,7 +81,6 @@ class NewPostScreen extends Component {
         this.props.navigation.goBack(null);
       })
     }
-    // this.props.navigation.goBack(null);
   }
 
   render() {
