@@ -7,6 +7,8 @@ import {
   StyleSheet
 } from 'react-native' ;
 
+import moment from 'moment';
+
 import { Icon } from 'react-native-elements';
 
 import { editPost } from '../api'
@@ -92,7 +94,7 @@ class PostRow extends Component {
   render() {
     console.log(this.state);
     return (
-      <TouchableHighlight underlayColor = '#c8c7cc' backgroundColor = 'F4F5F9'
+      <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
         /* TODO: Link onPress with post detail */
         onPress={() => {console.log(this.props.post);}}>
         <View style={customStyles.main}>
@@ -108,7 +110,7 @@ class PostRow extends Component {
               </View>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
-                <Text>{this.props.post.timestamp}</Text>
+                <Text>{moment(this.props.post.timestamp).fromNow()}</Text>
               </View>
             </View>
           </View>

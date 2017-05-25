@@ -27,8 +27,7 @@ class PostsListView extends Component {
 
   _onFetch(page = 1, callback, options) {
     // let rows = [];
-    fetchPosts(5, 6, (posts) => {
-      console.log(posts);
+    fetchPosts(6, 5, (posts) => {
       this.setState({numPosts: this.state.numPosts + posts.length});
       // TODO: need to make this only the case for the "Load more" option
       console.log('current number of posts: ' + this.state.numPosts);
@@ -83,7 +82,7 @@ class PostsListView extends Component {
   _renderPaginationWaitingView(paginateCallback) {
     return (
       <TouchableHighlight
-        underlayColor='#c8c7cc'
+        underlayColor='#D0CCDF'
         onPress={paginateCallback}
         style={customStyles.paginationView}
       >

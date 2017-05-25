@@ -10,6 +10,7 @@
     "axios": "^0.16.1",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^7.0.1",
+    "moment": "^2.18.1",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-action-button": "^2.6.9",
