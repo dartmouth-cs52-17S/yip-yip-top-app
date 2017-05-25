@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import {
   Text,
   StyleSheet,
-  View
+  View,
+  ListView
 } from 'react-native';
 
 import moment from 'moment';
@@ -21,6 +22,9 @@ class PostDetail extends Component {
       post: '',
       upvote: false,
       downvote: false,
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
     };
   }
 
@@ -30,10 +34,18 @@ class PostDetail extends Component {
 
   fetchPost(id) {
     getPost(id, (post) => {
-      this.setState({ post, loading: false });
+      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(post.comments)});
     })
   }
 
+  renderCommentCell(comment) {
+    return (
+      <View>
+        <Text> {comment.text} </Text>
+
+      </View>
+    );
+  }
   renderPostDetailView(post) {
     return (
       <View style={customStyles.main}>
@@ -53,6 +65,10 @@ class PostDetail extends Component {
             </View>
           </View>
         </View>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderCommentCell.bind(this)}
+        />
         <View style={customStyles.vote}>
           <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} />
           <Text style={customStyles.score}> {post.score} </Text>
