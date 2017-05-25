@@ -16,6 +16,7 @@ import Feed from './screens/Feed';
 import DummyComponent from './screens/dummy';
 import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
+import NewPostScreen from './screens/newPost';
 
 const navBarMainColor='#F4F5F9';
 const navBarTintColor='#3C3559';
@@ -90,10 +91,7 @@ export const SettingsStack = StackNavigator({
 
 export const NewPostStack = StackNavigator({
   NewPost: {
-    screen: Settings,
-    navigationOptions: {
-      title: 'New Post',
-    }
+    screen: NewPostScreen,
   }
 })
 

@@ -93,6 +93,20 @@ class PostRow extends Component {
 
   render() {
     console.log(this.state);
+    let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
+    timeSince.splice(-1,1);
+    if (timeSince[0] === 'an' | timeSince[0] === 'a') {
+      timeSince[0] = '1'
+    }
+    if (timeSince[1] === 'minutes') {
+      timeSince[1] = 'mins'
+    } else if (timeSince[1] === 'seconds') {
+      timeSince[1] = 'secs'
+    }
+    if (timeSince[2] === 'seconds') {
+      timeSince[2] = 'secs'
+    }
+    const time = timeSince.join(' ');
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
         /* TODO: Link onPress with post detail */
@@ -106,11 +120,11 @@ class PostRow extends Component {
             <View style={customStyles.info}>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
-                <Text>{this.props.post.commentsLen}</Text>
+                <Text style={customStyles.mainText}>{this.props.post.commentsLen}</Text>
               </View>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
-                <Text>{moment(this.props.post.timestamp).fromNow()}</Text>
+                <Text style={customStyles.mainText}>{time}</Text>
               </View>
             </View>
           </View>
@@ -159,6 +173,7 @@ const customStyles = StyleSheet.create({
     alignItems: 'center'
   },
   mainText: {
+    fontFamily: 'Gill Sans',
     color: '#3C3559',
     fontSize: 15,
     letterSpacing: -0.1,
@@ -166,6 +181,7 @@ const customStyles = StyleSheet.create({
     paddingLeft: 5
   },
   tags: {
+    fontFamily: 'Gill Sans',
     fontSize: 12,
     color: '#DA5AA4',
     letterSpacing: -0.03,
@@ -178,6 +194,7 @@ const customStyles = StyleSheet.create({
     alignItems: 'center'
   },
   score: {
+    fontFamily: 'Gill Sans',
     fontSize: 18,
     color: '#3C3559',
     letterSpacing: -0.03
