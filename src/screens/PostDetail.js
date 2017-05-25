@@ -34,20 +34,22 @@ class PostDetail extends Component {
 
   fetchPost(id) {
     getPost(id, (post) => {
-      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(post.comments)});
+      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(['comment 1', 'comment 2']) });
     })
   }
 
   renderCommentCell(comment) {
+    console.log(comment);
     return (
       <View>
-        <Text> {comment.text} </Text>
+        <Text> {comment} </Text>
 
       </View>
     );
   }
   renderPostDetailView(post) {
-    return (
+
+    const postDetail = (
       <View style={customStyles.main}>
         <View style={customStyles.content}>
           <Text style={customStyles.mainText}>{post.text}</Text>
@@ -65,15 +67,26 @@ class PostDetail extends Component {
             </View>
           </View>
         </View>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderCommentCell.bind(this)}
-        />
         <View style={customStyles.vote}>
           <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} />
           <Text style={customStyles.score}> {post.score} </Text>
           <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
         </View>
+      </View>
+    );
+
+    const commentListView = (
+      <ListView
+      dataSource={this.state.dataSource}
+      renderRow={this.renderCommentCell.bind(this)}
+      style={{flex: 1}}
+      />
+    );
+
+    return (
+      <View style={{flex:1}}>
+        {postDetail}
+        {commentListView}
       </View>
     )
   }

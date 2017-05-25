@@ -41,7 +41,6 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
-    console.log(this.props.navigation);
     return (
       <PostRow post={rowData} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
