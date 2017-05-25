@@ -76,11 +76,10 @@ class NewPostScreen extends Component {
   postSubmitPressed() {
     if (this.state.text) {
       // need to set up user
-      console.log(`long prop ${this.props.navigation.state.params.long}`)
       const post = {
         text: this.state.text,
-        tags: ['#still', '#need', '#tags'],
-        coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
+        tags: findHashtags(this.state.text),
+        coordinates: [6, 5],
       }
       createPost(post, (callback) => {
         // console.log(`callback from create: ${JSON.stringify(callback)}`);
@@ -131,6 +130,18 @@ class NewPostScreen extends Component {
         </KeyboardAvoidingView>
       </View>
     );
+  }
+}
+
+// code referenced from https://stackoverflow.com/questions/25693456/get-hashtags-from-string-with-trim-spaces-and-new-lines
+function findHashtags(text) {
+  var regexp = /\B\#\w\w+\b/g;
+  let result = text.match(regexp);
+  if (result) {
+    console.log(result);
+    return result;
+  } else {
+    return false;
   }
 }
 
