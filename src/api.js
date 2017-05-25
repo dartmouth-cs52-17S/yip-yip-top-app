@@ -19,13 +19,15 @@ export function fetchPosts(long, lat, cb) {
 
 export function createPost(text, tags, coordinates, user_id, cb) {
   const url = `${ROOT_URL}/posts/`;
+  console.log(url);
+  console.log(text, tags, coordinates, user_id);
   axios.post(url, {params: {text, tags, coordinates, user_id}}).
   then((response) => {
     console.log(response.data);
     cb(response.data);
   }).catch((error) => {
+    console.log('error creating posts');
     console.log(error);
-
   });
 }
 

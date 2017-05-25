@@ -1,23 +1,24 @@
-/* eslint-disable */
-
 import React, { Component } from 'react';
 
 import {
-  StyleSheet,
   Text,
   View,
-  Button,
   TextInput,
   KeyboardAvoidingView,
   Keyboard
 } from 'react-native';
 
 import ActionButton from 'react-native-action-button';
-import { width, height, totalSize } from 'react-native-dimension';
+import { height } from 'react-native-dimension';
+import { Icon } from 'react-native-elements';
+import { createPost } from '../api';
 
 const CHAR_LIMIT = 50;
 
 class NewPostScreen extends Component {
+  static navigationOptions = {
+    title: 'wow',
+  }
 
   constructor(props) {
     super(props);
@@ -29,31 +30,53 @@ class NewPostScreen extends Component {
       remainingCharacters: CHAR_LIMIT
     }
 
-    this._keyboardWillHide = this._keyboardWillHide.bind(this);
+    this.keyboardWillHide = this.keyboardWillHide.bind(this);
+    this.postSubmitPressed = this.postSubmitPressed.bind(this);
   }
 
   componentWillMount () {
-    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
+    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
   }
 
   componentWillUnmount () {
-    this.keyboardWillHideListender.remove();
+    this.keyboardWillHideListener.remove();
   }
 
-  _keyboardWillHide () {
-    console.log("hide");
+  keyboardWillHide () {
     this.setState({
       keyboardCounter: this.state.keyboardCounter + 1
     });
   }
 
+  postSubmitPressed() {
+    if (this.state.text) {
+      createPost(this.state.text, ['wow'], {lat: 5, long: 6}, '12345', (callback) => {
+        console.log('callback from create');
+        console.log(callback);
+      })
+    }
+    // this.props.navigation.goBack(null);
+  }
+
   render() {
+
+    const actionButton = (
+     <ActionButton
+        buttonColor='#FF906F'
+        onPress={this.postSubmitPressed}
+        hideShadow={false}
+        size={50}
+        offsetY={height(30)}
+        icon={<Icon type='font-awesome' name='send-o' size={20} color={'white'}/>}
+       />)
+
     return (
       <View style={{flex: 1, padding: 20}}>
         <KeyboardAvoidingView
           behavior={'height'}
           key={this.state.keyboardCounter}
           style={{flex: 1}}>
+
           <TextInput
             numberOfLines={5}
             multiline={true}
@@ -67,34 +90,17 @@ class NewPostScreen extends Component {
               });
             }}
             blurOnSubmit={true}
-
-            style={{height: '65%', backgroundColor: 'blue', fontSize: 30, padding: 20, paddingTop: 30, marginBottom: 20}}
+            style={{height: '60%', fontSize: 30, padding: 20, paddingTop: 30, marginBottom: 20, backgroundColor: 'blue'}}
           />
+
           <Text> {this.state.remainingCharacters} </Text>
           <Text style={{paddingBottom: 50}}> Harrassment will not be tolerated </Text>
+          {actionButton}
+
         </KeyboardAvoidingView>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 module.exports = NewPostScreen;
