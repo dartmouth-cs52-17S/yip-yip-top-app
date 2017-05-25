@@ -38,7 +38,7 @@ class Feed extends Component {
     return (
       <View style={{flex: 1, backgroundColor: '#F4F5F9',}}>
         {segmented}
-        <PostsListView />
+        <PostsListView navigation={this.props.navigation}/>
       </View>
     );
   }

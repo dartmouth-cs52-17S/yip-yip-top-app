@@ -92,11 +92,11 @@ class PostRow extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
-        /* TODO: Link onPress with post detail */
-        onPress={() => {console.log(this.props.post);}}>
+        onPress={() => {
+          this.props.navigation.navigate('PostDetail', {postId: this.props.post.id});
+        }}>
         <View style={customStyles.main}>
           <View style={customStyles.content}>
             <Text style={customStyles.mainText}>{this.props.post.text}</Text>

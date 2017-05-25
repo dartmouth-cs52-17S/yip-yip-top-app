@@ -16,6 +16,7 @@ import Feed from './screens/Feed';
 import DummyComponent from './screens/dummy';
 import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
+import PostDetail from './screens/PostDetail';
 
 const navBarMainColor='#F4F5F9';
 const navBarTintColor='#3C3559';
@@ -105,16 +106,15 @@ export const FeedStack = StackNavigator({
       headerTintColor: '#3C3559'
     }
   },
-  Dummy: {
-    screen: DummyComponent,
+  PostDetail: {
+    screen: PostDetail,
     navigationOptions: {
-      title: 'DummyFeed',
+      title: 'Detail',
     }
   },
 }, {
   navigationOptions: ({ navigation }) => ({
     gesturesEnabled: false,
-    headerTintColor: 'white',
     headerStyle: {
       backgroundColor: mainColor,
     },
