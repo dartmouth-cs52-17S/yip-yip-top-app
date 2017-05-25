@@ -165,6 +165,7 @@ export const Tabs = TabNavigator({
 });
 
 export const Root = StackNavigator({
+  // auth screen here
   Tabs: {
     screen: Tabs,
   },
