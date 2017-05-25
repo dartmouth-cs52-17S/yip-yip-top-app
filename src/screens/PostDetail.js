@@ -71,10 +71,7 @@ class PostDetail extends Component {
           <Text style={customStyles.score}> {post.score} </Text>
           <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
         </View>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderCommentCell.bind(this)}
-        />
+
       </View>
     )
   }
