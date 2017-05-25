@@ -4,14 +4,15 @@ import {
   Text,
   StyleSheet,
   View,
-  ListView
+  ListView,
+  TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import moment from 'moment';
 
 import { Icon } from 'react-native-elements';
 import { getPost } from '../api';
-
 
 class PostDetail extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class PostDetail extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      keyboardCounter: 1,
+
     };
   }
 
@@ -38,7 +41,10 @@ class PostDetail extends Component {
     })
     console.log(this.state.dataSource);
   }
+  createComment(input) {
 
+    console.log('creating a comment component');
+  }
   renderCommentCell(comment) {
     console.log(comment);
     return (
@@ -72,7 +78,6 @@ class PostDetail extends Component {
           <Text style={customStyles.score}> {post.score} </Text>
           <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
         </View>
-
       </View>
     );
 
@@ -83,12 +88,22 @@ class PostDetail extends Component {
       style={{flex: 1}}
       />
     );
-
+    const newComment = (
+      <View>
+        <TextInput
+         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+         onChangeText={(commentInput) => this.createComment.bind(this)}
+       />
+      </View>
+    );
     return (
+      <KeyboardAvoidingView behavior='position'>
       <View style={{flex:1}}>
         {postDetail}
         {commentListView}
+        {newComment}
       </View>
+      </KeyboardAvoidingView>
     )
   }
 
