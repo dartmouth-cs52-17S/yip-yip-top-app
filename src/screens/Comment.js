@@ -7,11 +7,6 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: String,
-      timestamp: Date,
-      user:String,
-      upvoters:[String],
-      downvoters:[String],
     }
   }
 
@@ -19,12 +14,9 @@ class Comment extends Component {
 
   }
   render() {
-    console.log('in render');
     return (
       <View>
-        <Text>
-          This is the comment.
-        </Text>
+        <Text> {this.props.comment} </Text>
       </View>
     );
   }

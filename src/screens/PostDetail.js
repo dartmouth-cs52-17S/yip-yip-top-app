@@ -13,6 +13,11 @@ import moment from 'moment';
 
 import { Icon } from 'react-native-elements';
 import { getPost } from '../api';
+import Comment from './Comment';
+
+const fakeComment1 = {
+  text: ''
+}
 
 class PostDetail extends Component {
   constructor(props) {
@@ -39,7 +44,6 @@ class PostDetail extends Component {
     getPost(id, (post) => {
       this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(['comment 1', 'comment 2']) });
     })
-    console.log(this.state.dataSource);
   }
   createComment(input) {
 
@@ -48,9 +52,7 @@ class PostDetail extends Component {
   renderCommentCell(comment) {
     console.log(comment);
     return (
-      <View>
-        <Text> {comment} </Text>
-      </View>
+      <Comment comment={comment} />
     );
   }
   renderPostDetailView(post) {
@@ -83,8 +85,8 @@ class PostDetail extends Component {
 
     const commentListView = (
       <ListView
-      dataSource={this.state.dataSource}
-      renderRow={this.renderCommentCell.bind(this)}
+        dataSource={this.state.dataSource}
+        renderRow={this.renderCommentCell.bind(this)}
       style={{flex: 1}}
       />
     );
