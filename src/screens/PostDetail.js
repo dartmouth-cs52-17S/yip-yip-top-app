@@ -36,13 +36,14 @@ class PostDetail extends Component {
     getPost(id, (post) => {
       this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(post.comments)});
     })
+    console.log(this.state.dataSource);
   }
 
   renderCommentCell(comment) {
     return (
       <View>
         <Text> {comment.text} </Text>
-
+        <Text>just texting</Text>
       </View>
     );
   }
@@ -65,15 +66,15 @@ class PostDetail extends Component {
             </View>
           </View>
         </View>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderCommentCell.bind(this)}
-        />
         <View style={customStyles.vote}>
           <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} />
           <Text style={customStyles.score}> {post.score} </Text>
           <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
         </View>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderCommentCell.bind(this)}
+        />
       </View>
     )
   }
