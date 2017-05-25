@@ -34,23 +34,6 @@ class PostsListView extends Component {
       console.log('current number of posts: ' + this.state.numPosts);
       callback(posts);
     });
-    // setTimeout(() => {
-    //
-    //   const fakePost = {
-    //     text: 'Wow that party was so lit',
-    //     location: 'Hanover, NH',
-    //     time: '1 min ago',
-    //   }
-    //
-    //   var rows = [fakePost];
-    //   if (page === 3) {
-    //     callback(rows, {
-    //       allLoaded: true, // the end of the list is reached
-    //     });
-    //   } else {
-    //     callback(rows);
-    //   }
-    // }, 1000); // simulating network fetching
   }
 
   /**

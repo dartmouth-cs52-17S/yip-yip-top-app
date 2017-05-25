@@ -22,7 +22,14 @@ class NewPostScreen extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'New Post',
-    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: ''
+    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: '',
+    headerLeft: <Icon type='ionicon'
+      name='ios-glasses-outline'
+      color='#3C3559'
+      size={30}
+      onPress={()=>{ navigation.goBack(null); }}
+      style={{ marginLeft: 10, padding: 5}}
+    />
    })
 
 
