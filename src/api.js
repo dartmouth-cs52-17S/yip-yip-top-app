@@ -59,14 +59,16 @@ export function editPost(post, fields, action, cb) {
   let params;
   if (action == 'COMMENT_ACTION') {
     params = {
+      action,
       id: post.post_id,
       commentId: fields.commentId,
       user: fields.user_id,
     }
   } else {
     params = {
-      id: post.post_id,
-      user: fields.user_id,
+      // TODO: Need to get user from client
+      user: 'Hello',    // temporary user information
+      action
     }
   }
   axios.put(url,params).
