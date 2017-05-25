@@ -7,42 +7,96 @@ import {
   StyleSheet
 } from 'react-native' ;
 
+import moment from 'moment';
+
 import { Icon } from 'react-native-elements';
 
+import { editPost } from '../api'
 
 class PostRow extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      score: this.props.post.score,
+    // TODO: define username from app!!!
+    let user = 'Hello';
+
+    if (this.props.post.upvoters.includes(user)) {
+      this.state = {
+        score: this.props.post.score,
+        upvote: true,
+        downvote: false
+      }
+    } else if (this.props.post.downvoters.includes(user)) {
+      this.state = {
+        score: this.props.post.score,
+        upvote: false,
+        downvote: true
+      }
+    } else {
+      this.state = {
+        score: this.props.post.score,
+        upvote: false,
+        downvote: false
+      }
     }
 
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
   }
 
-  // TODO: Link with API
+  componentWillReceiveProps() {
+    this.setState({score: this.props.post.score});
+  }
+
   upVote() {
-    console.log('up pressed');
-    this.setState({score: this.state.score + 1});
+    editPost(this.props.post, null, 'UPVOTE_POST', () => {
+      // this.props.refresh();
+      console.log('upvote');
+    });
+    if (!this.state.upvote) {
+      if (this.state.downvote) {
+        this.setState({
+          upvote: true,
+          downvote: false,
+          score: this.state.score + 2
+        })
+      } else {
+        this.setState({
+          upvote: true,
+          score: this.state.score + 1
+        })
+      }
+    }
   }
 
   downVote() {
-    // console.log('down pressed');
-    this.setState({score: this.state.score - 1});
+    editPost(this.props.post, null, 'DOWNVOTE_POST', () => {
+      // this.props.refresh();
+      console.log('downvote');
+    });
+    if (!this.state.downvote) {
+      if (this.state.upvote) {
+        this.setState({
+          upvote: false,
+          downvote: true,
+          score: this.state.score - 2
+        })
+      } else {
+        this.setState({
+          downvote: true,
+          score: this.state.score - 1
+        })
+      }
+    }
   }
 
   render() {
+    console.log(this.state);
     return (
-      <TouchableHighlight
-        underlayColor = '#c8c7cc'
-        backgroundColor = 'F4F5F9'
-        onPress={(rowData) => {
-          console.log(rowData);
-        }}
-      >
+      <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
+        /* TODO: Link onPress with post detail */
+        onPress={() => {console.log(this.props.post);}}>
         <View style={customStyles.main}>
           <View style={customStyles.content}>
             <Text style={customStyles.mainText}>{this.props.post.text}</Text>
@@ -51,19 +105,19 @@ class PostRow extends Component {
             </Text>
             <View style={customStyles.info}>
               <View style={customStyles.infoDetail}>
-                <Icon type='ionicon' name='ios-clock-outline' size={20} color={'#6C56BA'} margin={3} />
-                <Text>{this.props.post.location.city || 'n/a'}</Text>
+                <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
+                <Text>{this.props.post.commentsLen}</Text>
               </View>
               <View style={customStyles.infoDetail}>
-                <Icon type='ionicon' name='ios-clock-outline' size={20} color={'#6C56BA'} margin={3} />
-                <Text>{this.props.post.timestamp}</Text>
+                <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
+                <Text>{moment(this.props.post.timestamp).fromNow()}</Text>
               </View>
             </View>
           </View>
           <View style={customStyles.vote}>
-            <Icon type="ionicon" name='ios-arrow-up' size={35} color={'#6C56BA'} onPress={this.upVote}/>
+            <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} onPress={this.upVote}/>
             <Text style={customStyles.score}> {this.state.score} </Text>
-            <Icon type="ionicon" name='ios-arrow-down' size={35} color={'#6C56BA'} onPress={this.downVote}/>
+            <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
           </View>
         </View>
       </TouchableHighlight>
@@ -78,10 +132,8 @@ const customStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    // TODO: Make the height responsive to the content in case of overflow
-    height: 100,
-    width: 350,
-    margin: 10,
+    width: 340,
+    margin: 7,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -110,14 +162,15 @@ const customStyles = StyleSheet.create({
     color: '#3C3559',
     fontSize: 15,
     letterSpacing: -0.1,
-    lineHeight: 30
+    lineHeight: 20,
+    paddingLeft: 5
   },
   tags: {
     fontSize: 12,
     color: '#DA5AA4',
     letterSpacing: -0.03,
     margin: 5,
-    marginLeft: 0
+    marginTop: 10
   },
 
   vote: {
