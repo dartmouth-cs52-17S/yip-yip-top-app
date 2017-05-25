@@ -19,21 +19,31 @@ class PostsListView extends Component {
     super(props);
 
     this.state = {
-      numPosts: 0
+      numPosts: 0,
+      long: '',
+      lat: '',
     }
 
     this._onFetch = this._onFetch.bind(this);
   }
 
   _onFetch(page = 1, callback, options) {
-    const lat = 6;
-    const long = 5;
-    fetchPosts(lat, long, (posts) => {
+    fetchPosts(this.state.long, this.state.lat, (posts) => {
       this.setState({numPosts: this.state.numPosts + posts.length});
       // TODO: need to make this only the case for the "Load more" option
       console.log('current number of posts: ' + this.state.numPosts);
       callback(posts);
     });
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (p) => {
+        this.setState({long: p.coords.longitude, lat: p.coords.latitude})
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
   }
 
   /**
@@ -134,38 +144,45 @@ class PostsListView extends Component {
   }
 
   render() {
-    return (
-      <View style={screenStyles.container}>
-        <GiftedListView
-          ref={ref => this.listview = ref}
-          rowView={this._renderRowView.bind(this)}
-          onFetch={this._onFetch}
+    if (this.state.long !== '') {
+      return (
+        <View style={screenStyles.container}>
+          <GiftedListView
+            ref={ref => this.listview = ref}
+            rowView={this._renderRowView.bind(this)}
+            onFetch={this._onFetch}
 
-          pagination={true} // enable infinite scrolling using touch to load more
-          refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
-          enableEmptySections={true}
+            pagination={true} // enable infinite scrolling using touch to load more
+            refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
+            enableEmptySections={true}
 
-          paginationFetchingView={this.paginationFetchingView}
-          paginationAllLoadedView={this._renderPaginationAllLoadedView} // view when you reach end of list
-          paginationWaitingView={this._renderPaginationWaitingView} // the 'load more' view
-          emptyView={this._renderEmptyView}
+            paginationFetchingView={this.paginationFetchingView}
+            paginationAllLoadedView={this._renderPaginationAllLoadedView} // view when you reach end of list
+            paginationWaitingView={this._renderPaginationWaitingView} // the 'load more' view
+            emptyView={this._renderEmptyView}
 
-          renderSeparator={this._renderSeparatorView}
-          withSections={false} // enable sections
+            renderSeparator={this._renderSeparatorView}
+            withSections={false} // enable sections
 
-          PullToRefreshViewAndroidProps={{
-            colors: ['#fff'],
-            progressBackgroundColor: '#003e82',
-          }}
+            PullToRefreshViewAndroidProps={{
+              colors: ['#fff'],
+              progressBackgroundColor: '#003e82',
+            }}
 
-          style={{ backgroundColor: '#F4F5F9'}}
+            style={{ backgroundColor: '#F4F5F9'}}
 
-          rowHasChanged={(r1,r2)=>{
-            r1.id !== r2.id
-          }}
-        />
+            rowHasChanged={(r1,r2)=>{
+              r1.id !== r2.id
+            }}
+          />
+        </View>
+      );
+    } else {
+      return (
+      <View>
+        <Text>Could not get location</Text>
       </View>
-    );
+      )}
   }
 }
 

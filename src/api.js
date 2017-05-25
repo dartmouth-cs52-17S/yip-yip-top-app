@@ -5,8 +5,8 @@ const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
 
 // yip-yip.herokuapp.com/api/posts/?long=5.000001&lat=6.000001
 
-export function fetchPosts(lat, long, cb) {
-  axios.get(`${ROOT_URL}/posts/`, { params: { lat, long } }).
+export function fetchPosts(long, lat, cb) {
+  axios.get(`${ROOT_URL}/posts/`, { params: { long, lat } }).
   then((response) => {
     console.log(response.data);
     cb(response.data);
