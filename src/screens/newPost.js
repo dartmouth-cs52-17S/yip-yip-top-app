@@ -81,10 +81,11 @@ class NewPostScreen extends Component {
       const post = {
         text: this.state.text,
         tags: ['tag', 'another'],
-        coordinates: [5, 6],
+        coordinates: [6, 5],
       }
       createPost(post, (callback) => {
-        console.log(`callback from create: ${JSON.stringify(callback)}`);
+        // console.log(`callback from create: ${JSON.stringify(callback)}`);
+        // console.log(`params is ${JSON.stringify(this.props.navigation.state.params)}`)
         this.props.navigation.goBack(null);
       })
     }

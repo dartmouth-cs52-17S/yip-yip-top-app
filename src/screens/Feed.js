@@ -18,9 +18,21 @@ class Feed extends Component {
     }
   }
 
-  showModal() {
-    this.props.navigation.navigate('Settings')
-  }
+  // componentDidMount() {
+  //   console.log(JSON.stringify(this.props.navigation));
+  //   const currentRoute = this.props.navigation.state.routeName;
+  //   console.log(`current route is ${currentRoute}`)
+  //   this.props.navigation.addListener('didfocus', (event) => {
+  //       //didfocus emit in componentDidMount
+  //     if (currentRoute === event.data.route) {
+  //       console.log('feed appeared');
+  //     } else {
+  //       console.log('feed disappeared');
+  //     }
+  //     console.log(event.data.route);
+  //   });
+  // }
+
 
   render() {
 
