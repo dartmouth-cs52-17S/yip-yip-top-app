@@ -50,9 +50,15 @@ class NewPostScreen extends Component {
 
   postSubmitPressed() {
     if (this.state.text) {
-      createPost(this.state.text, ['wow'], {lat: 5, long: 6}, '12345', (callback) => {
-        console.log('callback from create');
-        console.log(callback);
+      // need to set up user
+      const post = {
+        text: this.state.text,
+        tags: ['tag', 'another'],
+        coordinates: [5, 6],
+      }
+      createPost(post, (callback) => {
+        console.log(`callback from create: ${JSON.stringify(callback)}`);
+        this.props.navigation.goBack(null);
       })
     }
     // this.props.navigation.goBack(null);

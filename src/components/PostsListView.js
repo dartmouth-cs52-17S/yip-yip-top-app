@@ -26,8 +26,10 @@ class PostsListView extends Component {
   }
 
   _onFetch(page = 1, callback, options) {
-    // let rows = [];
-    fetchPosts(5, 6, (posts) => {
+    // let rows = [];]
+    const lat = 6;
+    const long = 5;
+    fetchPosts(lat, long, (posts) => {
       // console.log(posts);
       this.setState({numPosts: this.state.numPosts + posts.length});
       // TODO: need to make this only the case for the "Load more" option
