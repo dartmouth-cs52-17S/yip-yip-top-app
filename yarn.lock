@@ -3445,7 +3445,7 @@ react-native-elements@^0.12.2:
     react-native-side-menu "^0.20.1"
     react-native-tab-navigator "^0.3.3"
 
-react-native-gifted-listview@^0.0.15:
+react-native-gifted-listview@0.0.15:
   version "0.0.15"
   resolved "https://registry.yarnpkg.com/react-native-gifted-listview/-/react-native-gifted-listview-0.0.15.tgz#c92b5b7b32cea7705b727ab4bc199751379dce07"
   dependencies:
