@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  TouchableHighlight
 } from 'react-native' ;
 
 import GiftedListView from 'react-native-gifted-listview';

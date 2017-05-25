@@ -120,11 +120,11 @@ class PostRow extends Component {
             <View style={customStyles.info}>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
-                <Text>{this.props.post.commentsLen}</Text>
+                <Text style={customStyles.mainText}>{this.props.post.commentsLen}</Text>
               </View>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
-                <Text>{time}</Text>
+                <Text style={customStyles.mainText}>{time}</Text>
               </View>
             </View>
           </View>
@@ -173,6 +173,7 @@ const customStyles = StyleSheet.create({
     alignItems: 'center'
   },
   mainText: {
+    fontFamily: 'Gill Sans',
     color: '#3C3559',
     fontSize: 15,
     letterSpacing: -0.1,
@@ -180,6 +181,7 @@ const customStyles = StyleSheet.create({
     paddingLeft: 5
   },
   tags: {
+    fontFamily: 'Gill Sans',
     fontSize: 12,
     color: '#DA5AA4',
     letterSpacing: -0.03,
@@ -192,6 +194,7 @@ const customStyles = StyleSheet.create({
     alignItems: 'center'
   },
   score: {
+    fontFamily: 'Gill Sans',
     fontSize: 18,
     color: '#3C3559',
     letterSpacing: -0.03

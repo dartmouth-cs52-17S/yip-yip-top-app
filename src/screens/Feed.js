@@ -6,8 +6,9 @@ import {
   SegmentedControlIOS,
 } from 'react-native';
 
-import PostsListView from '../components/PostsListView';
 import ActionButton from 'react-native-action-button';
+import { Icon } from 'react-native-elements';
+import PostsListView from '../components/PostsListView';
 
 class Feed extends Component {
   constructor(props) {
@@ -50,9 +51,11 @@ class Feed extends Component {
     // const modalButton = <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
 
     const actionButton = <ActionButton
-      buttonColor='#FF906F'
-      onPress={() => { this.props.navigation.navigate('NewPost')}}          hideShadow={false}
-      size={50}
+      buttonColor='#6C56BA'
+      onPress={() => { this.props.navigation.navigate('NewPost')}}
+      icon={<Icon type='ionicon' name='ios-add-outline' size={45} color={'white'}/>}
+      hideShadow={false}
+      size={65}
     />
 
     return (
