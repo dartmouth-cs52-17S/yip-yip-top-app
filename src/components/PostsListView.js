@@ -26,31 +26,16 @@ class PostsListView extends Component {
   }
 
   _onFetch(page = 1, callback, options) {
-    // let rows = [];
-    fetchPosts(5, 6, (posts) => {
-      console.log(posts);
+    // let rows = [];]
+    const lat = 6;
+    const long = 5;
+    fetchPosts(lat, long, (posts) => {
+      // console.log(posts);
       this.setState({numPosts: this.state.numPosts + posts.length});
       // TODO: need to make this only the case for the "Load more" option
       console.log('current number of posts: ' + this.state.numPosts);
       callback(posts);
     });
-    // setTimeout(() => {
-    //
-    //   const fakePost = {
-    //     text: 'Wow that party was so lit',
-    //     location: 'Hanover, NH',
-    //     time: '1 min ago',
-    //   }
-    //
-    //   var rows = [fakePost];
-    //   if (page === 3) {
-    //     callback(rows, {
-    //       allLoaded: true, // the end of the list is reached
-    //     });
-    //   } else {
-    //     callback(rows);
-    //   }
-    // }, 1000); // simulating network fetching
   }
 
   /**
