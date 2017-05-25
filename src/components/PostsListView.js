@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  TouchableHighlight
 } from 'react-native' ;
 
 import GiftedListView from 'react-native-gifted-listview';
@@ -26,7 +26,9 @@ class PostsListView extends Component {
   }
 
   _onFetch(page = 1, callback, options) {
-    fetchPosts(6, 5, (posts) => {
+    const lat = 6;
+    const long = 5;
+    fetchPosts(lat, long, (posts) => {
       this.setState({numPosts: this.state.numPosts + posts.length});
       // TODO: need to make this only the case for the "Load more" option
       console.log('current number of posts: ' + this.state.numPosts);
