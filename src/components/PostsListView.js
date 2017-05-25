@@ -20,30 +20,18 @@ class PostsListView extends Component {
 
     this.state = {
       numPosts: 0,
-      long: '',
-      lat: '',
     }
 
     this._onFetch = this._onFetch.bind(this);
   }
 
   _onFetch(page = 1, callback, options) {
-    fetchPosts(this.state.long, this.state.lat, (posts) => {
+    fetchPosts(this.props.long, this.props.lat, (posts) => {
       this.setState({numPosts: this.state.numPosts + posts.length});
       // TODO: need to make this only the case for the "Load more" option
       console.log('current number of posts: ' + this.state.numPosts);
       callback(posts);
     });
-  }
-
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      (p) => {
-        this.setState({long: p.coords.longitude, lat: p.coords.latitude})
-      },
-      (error) => alert(JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
   }
 
   /**
@@ -144,7 +132,7 @@ class PostsListView extends Component {
   }
 
   render() {
-    if (this.state.long !== '') {
+    if (this.props.long !== '') {
       return (
         <View style={screenStyles.container}>
           <GiftedListView

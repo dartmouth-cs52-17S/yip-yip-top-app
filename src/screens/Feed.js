@@ -16,24 +16,20 @@ class Feed extends Component {
 
     this.state = {
       selectedTab: 0,
+      long: '',
+      lat: '',
     }
   }
 
-  // componentDidMount() {
-  //   console.log(JSON.stringify(this.props.navigation));
-  //   const currentRoute = this.props.navigation.state.routeName;
-  //   console.log(`current route is ${currentRoute}`)
-  //   this.props.navigation.addListener('didfocus', (event) => {
-  //       //didfocus emit in componentDidMount
-  //     if (currentRoute === event.data.route) {
-  //       console.log('feed appeared');
-  //     } else {
-  //       console.log('feed disappeared');
-  //     }
-  //     console.log(event.data.route);
-  //   });
-  // }
-
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (p) => {
+        this.setState({long: p.coords.longitude, lat: p.coords.latitude})
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+  }
 
   render() {
 
@@ -52,7 +48,7 @@ class Feed extends Component {
 
     const actionButton = <ActionButton
       buttonColor='#6C56BA'
-      onPress={() => { this.props.navigation.navigate('NewPost')}}
+      onPress={() => { this.props.navigation.navigate('NewPost', { long: this.state.long, lat: this.state.lat })}}
       icon={<Icon type='ionicon' name='ios-add-outline' size={45} color={'white'}/>}
       hideShadow={false}
       size={65}
@@ -61,7 +57,10 @@ class Feed extends Component {
     return (
       <View style={{flex: 1, backgroundColor: '#F4F5F9',}}>
         {segmented}
-        <PostsListView />
+        <PostsListView
+          long={this.state.long}
+          lat={this.state.lat}
+        />
         {actionButton}
       </View>
     );
