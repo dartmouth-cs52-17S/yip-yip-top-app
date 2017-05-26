@@ -15,7 +15,7 @@ class HerdScreen extends Component {
     super(props);
 
     this.state = {
-      heardSet: false,
+      herdSet: false,
       lat: 0,
       long: 0,
     };
@@ -26,7 +26,7 @@ class HerdScreen extends Component {
     this.retreiveLocation((lat,long, err) => {
       if (lat && long) {
         this.setState({
-          heardSet: true,
+          herdSet: true,
           lat,
           long
         });
@@ -43,7 +43,7 @@ class HerdScreen extends Component {
           } else {
             console.log('Saved location!');
             this.setState({
-              heardSet: true,
+              herdSet: true,
               lat,
               long
             })
@@ -83,7 +83,7 @@ class HerdScreen extends Component {
     this.clearStorage((err) => {
       if (!err) {
         console.log('setting to false');
-        this.setState({ heardSet: false});
+        this.setState({ herdSet: false});
       }
     })
   }
@@ -124,7 +124,7 @@ class HerdScreen extends Component {
       </View>
     )
 
-    if (this.state.heardSet) {
+    if (this.state.herdSet) {
       return herdSavedView;
     } else {
       return herdNotSavedView;
