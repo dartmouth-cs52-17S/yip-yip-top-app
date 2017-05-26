@@ -31,7 +31,7 @@ class PostDetail extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-      keyboardCounter: 1,
+      text:'',
 
     };
   }
@@ -91,21 +91,31 @@ class PostDetail extends Component {
       />
     );
     const newComment = (
-      <View>
-        <TextInput
-         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-         onChangeText={(commentInput) => this.createComment.bind(this)}
+       <TextInput
+         numberOfLines={2}
+         multiline={true}
+         maxLength={50}
+         placeholder="comment"
+         placeholderTextColor="#D0CCDF"
+         value={this.state.text}
+         onChangeText={(text) => {
+           this.setState({
+             text,
+             remainingCharacters: 100 - text.length
+           });
+         }}
+         blurOnSubmit={true}
+         style={customStyles.textBox}
        />
-      </View>
     );
     return (
-      <KeyboardAvoidingView behavior='position'>
       <View style={{flex:1}}>
-        {postDetail}
-        {commentListView}
-        {newComment}
-      </View>
-      </KeyboardAvoidingView>
+
+       {postDetail}
+       {commentListView}
+       {newComment}
+
+     </View>
     )
   }
 
@@ -173,7 +183,23 @@ const customStyles = StyleSheet.create({
     fontSize: 18,
     color: '#3C3559',
     letterSpacing: -0.03
-  }
+  },
+  textBox: {
+    height: '10%',
+    fontSize: 24,
+    padding: 20,
+    paddingTop: 20,
+    lineHeight: 33,
+    fontFamily: 'Gill Sans',
+    color: '#3C3559',
+    marginBottom: 0,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
+  },
 
 });
 
