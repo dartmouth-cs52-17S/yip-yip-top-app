@@ -24,6 +24,7 @@ class Feed extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (p) => {
+        console.log('location', p.coords.longitude, p.coords.latitude);
         this.setState({long: p.coords.longitude, lat: p.coords.latitude})
       },
       (error) => alert(JSON.stringify(error)),
