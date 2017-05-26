@@ -56,9 +56,6 @@ const DummySearch = (props) => {
 export const HerdStack = StackNavigator({
   Herd: {
     screen: HerdScreen,
-    navigationOptions: {
-      title: 'Herd',
-    }
   }
 })
 
@@ -142,6 +139,7 @@ export const Tabs = TabNavigator({
     }
   }
 }, {
+  lazy: true,
   tabBarOptions: {
     activeTintColor: navBarTintColor,
     inactiveTintColor: accentColor,
