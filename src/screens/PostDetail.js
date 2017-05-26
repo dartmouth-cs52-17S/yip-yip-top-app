@@ -107,13 +107,13 @@ class PostDetail extends Component {
       </View>
     );
     return (
-      <KeyboardAvoidingView behavior='position'>
-      <View style={{flex:1}}>
-        {postDetail}
-        {commentListView}
-        {newComment}
-      </View>
-      </KeyboardAvoidingView>
+        <View style={{flex:1}}>
+          <KeyboardAvoidingView behavior='padding' style={{flex: 1}}>
+            {postDetail}
+            {commentListView}
+            {newComment}
+          </KeyboardAvoidingView>
+        </View>
     )
   }
 
