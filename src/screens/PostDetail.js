@@ -26,7 +26,7 @@ const fakeComment2 = {
   score: 4,
   time: '5 mins ago'
 }
-
+const CHAR_LIMIT = 50;
 class PostDetail extends Component {
   constructor(props) {
     super(props);
@@ -95,11 +95,10 @@ class PostDetail extends Component {
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderCommentCell.bind(this)}
-      style={{flex: 1}}
+      style={customStyles.commentList}
       />
     );
     const newComment = (
-      <View>
        <TextInput
          numberOfLines={1}
          multiline={true}
@@ -110,13 +109,12 @@ class PostDetail extends Component {
          onChangeText={(text) => {
            this.setState({
              text,
-             remainingCharacters: 100 - text.length
+             remainingCharacters: CHAR_LIMIT - text.length
            });
          }}
          blurOnSubmit={true}
          style={customStyles.textBox}
        />
-       </View>
     );
     return (
         <View style={{flex:1}}>
@@ -195,13 +193,11 @@ const customStyles = StyleSheet.create({
     letterSpacing: -0.03
   },
   textBox: {
-    height: '10%',
+    height: '100%',
     fontSize: 24,
     padding: 20,
-    marginTop:20,
     fontFamily: 'Gill Sans',
     color: '#3C3559',
-    marginBottom: 0,
     backgroundColor: 'white',
     borderRadius: 10,
     shadowColor: '#291D56',
@@ -209,6 +205,9 @@ const customStyles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3
   },
+  commentList: {
+    flex:1,
+  }
 
 });
 
