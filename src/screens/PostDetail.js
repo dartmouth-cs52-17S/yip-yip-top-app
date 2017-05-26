@@ -99,8 +99,9 @@ class PostDetail extends Component {
       />
     );
     const newComment = (
+      <View>
        <TextInput
-         numberOfLines={2}
+         numberOfLines={1}
          multiline={true}
          maxLength={50}
          placeholder="comment"
@@ -115,14 +116,15 @@ class PostDetail extends Component {
          blurOnSubmit={true}
          style={customStyles.textBox}
        />
+       </View>
     );
     return (
         <View style={{flex:1}}>
-          <KeyboardAvoidingView behavior='padding' style={{flex: 1}}>
             {postDetail}
             {commentListView}
+            <KeyboardAvoidingView behavior='padding' style={{flex: 1}}>
             {newComment}
-          </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
         </View>
     )
   }
@@ -196,8 +198,7 @@ const customStyles = StyleSheet.create({
     height: '10%',
     fontSize: 24,
     padding: 20,
-    paddingTop: 20,
-    lineHeight: 33,
+    marginTop:20,
     fontFamily: 'Gill Sans',
     color: '#3C3559',
     marginBottom: 0,
