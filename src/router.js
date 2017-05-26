@@ -120,18 +120,18 @@ export const FeedStack = StackNavigator({
 })
 
 export const Tabs = TabNavigator({
-  FeedTab: {
-    screen: FeedStack,
-    navigationOptions: {
-      tabBarLabel: 'Feed',
-      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-navigate-outline' size={30} color={tintColor} />
-    }
-  },
   HerdTab: {
     screen: HerdStack,
     navigationOptions: {
       tabBarLabel: 'Herd',
       tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-ionic-outline' size={30} color={tintColor} />
+    }
+  },
+  FeedTab: {
+    screen: FeedStack,
+    navigationOptions: {
+      tabBarLabel: 'Feed',
+      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-navigate-outline' size={30} color={tintColor} />
     }
   },
   SearchTab: {

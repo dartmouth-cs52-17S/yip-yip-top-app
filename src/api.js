@@ -1,9 +1,6 @@
 import axios from 'axios';
 
 const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
-// axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
-
-// yip-yip.herokuapp.com/api/posts/?long=5.000001&lat=6.000001
 
 export function fetchPosts(long, lat, cb) {
   axios.get(`${ROOT_URL}/posts/`, { params: { long, lat } }).
@@ -12,6 +9,7 @@ export function fetchPosts(long, lat, cb) {
     cb(response.data);
   }).catch((error) => {
     console.log(error);
+    console.log(`error fetching posts with ${lat} ${long}`);
   });
 }
 

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import { Button } from 'react-native-elements'
+import PostsListView from '../components/PostsListView';
 
 
 class HerdScreen extends Component {
@@ -84,6 +85,8 @@ class HerdScreen extends Component {
       if (!err) {
         console.log('setting to false');
         this.setState({ herdSet: false});
+      } else {
+        console.log(err);
       }
     })
   }
@@ -124,9 +127,19 @@ class HerdScreen extends Component {
       </View>
     )
 
+    const herdListView = (
+      <View style={styles.container}>
+        <PostsListView
+          long={this.state.lat}
+          lat={this.state.long}/>
+      </View>
+    )
+
     if (this.state.herdSet) {
-      return herdSavedView;
+      console.log('render herd list');
+      return herdListView;
     } else {
+      console.log('render save herd button');
       return herdNotSavedView;
     }
   }
@@ -135,8 +148,6 @@ class HerdScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F4F5F9',
   },
   button: {
