@@ -14,7 +14,15 @@ import { getPost } from '../api';
 import Comment from './Comment';
 
 const fakeComment1 = {
-  text: ''
+  text: 'comment 1',
+  score: 5,
+  time: '1 min ago'
+}
+
+const fakeComment2 = {
+  text: 'comment 2',
+  score: 4,
+  time: '5 mins ago'
 }
 
 
@@ -39,7 +47,7 @@ class PostDetail extends Component {
 
   fetchPost(id) {
     getPost(id, (post) => {
-      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(['comment 1', 'comment 2']) });
+      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows([fakeComment1, fakeComment2]) });
     })
   }
 

@@ -115,6 +115,7 @@ export const FeedStack = StackNavigator({
     gesturesEnabled: false,
     headerStyle: {
       backgroundColor: mainColor,
+      shadowOpacity: 0
     },
     headerRight:
       <Icon type='ionicon'
