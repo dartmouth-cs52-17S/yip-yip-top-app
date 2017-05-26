@@ -27,6 +27,7 @@ class PostsListView extends Component {
 
   _onFetch(page = 1, callback, options) {
     console.log('fetching posts');
+    console.log(typeof this.props.long);
     fetchPosts(this.props.long, this.props.lat, (posts) => {
       this.setState({numPosts: this.state.numPosts + posts.length});
       // TODO: need to make this only the case for the "Load more" option
@@ -41,7 +42,7 @@ class PostsListView extends Component {
    */
   _renderRowView(rowData) {
     return (
-      <PostRow post={rowData} refresh={()=> {
+      <PostRow post={rowData} id={rowData.id} refresh={()=> {
         this.listview._refresh();
       }}/>
     );

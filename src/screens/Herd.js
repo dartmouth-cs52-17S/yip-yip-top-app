@@ -7,11 +7,18 @@ import {
   AsyncStorage
 } from 'react-native';
 
-import { Button } from 'react-native-elements'
+import { Button, Icon } from 'react-native-elements'
 import PostsListView from '../components/PostsListView';
 
 
 class HerdScreen extends Component {
+
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: 'Herd',
+    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: '',
+  })
+
+
   constructor(props) {
     super(props);
 
@@ -21,9 +28,21 @@ class HerdScreen extends Component {
       long: 0,
     };
 
+    this.clearStoragePressed = this.clearStoragePressed.bind(this);
   }
 
   componentWillMount() {
+
+    this.props.navigation.setParams({
+      headerRight: <Icon type='ionicon'
+        name='ios-refresh-outline'
+        color='#6C56BA'
+        size={30}
+        onPress={this.clearStoragePressed}
+        style={{ marginRight: 10, padding: 5}}
+      />
+    })
+
     this.retreiveLocation((lat,long, err) => {
       if (lat && long) {
         this.setState({
@@ -56,8 +75,8 @@ class HerdScreen extends Component {
 
   async retreiveLocation(callback) {
     try {
-      const savedLat = await AsyncStorage.getItem('@HerdLong:key');
-      const savedLong = await AsyncStorage.getItem('@HerdLat:key');
+      const savedLong = await AsyncStorage.getItem('@HerdLong:key');
+      const savedLat = await AsyncStorage.getItem('@HerdLat:key');
       if (savedLat !== null && savedLong !== null) {
         callback(savedLat, savedLong, null)
       }
@@ -103,7 +122,7 @@ class HerdScreen extends Component {
   render() {
 
     const herdNotSavedView = (
-      <View style={styles.container}>
+      <View style={styles.saveLocationView}>
         <Text> You have not set your Herd yet! </Text>
         <Button
           raised
@@ -127,19 +146,20 @@ class HerdScreen extends Component {
       </View>
     )
 
+    const floatLat = Number(this.state.lat);
+    const floatLong = Number(this.state.long);
+    console.log('location herd', floatLat, floatLong);
     const herdListView = (
       <View style={styles.container}>
         <PostsListView
-          long={this.state.lat}
-          lat={this.state.long}/>
+          long={floatLong}
+          lat={floatLat}/>
       </View>
     )
 
     if (this.state.herdSet) {
-      console.log('render herd list');
       return herdListView;
     } else {
-      console.log('render save herd button');
       return herdNotSavedView;
     }
   }
@@ -149,6 +169,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F4F5F9',
+  },
+  saveLocationView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
     padding: 10,

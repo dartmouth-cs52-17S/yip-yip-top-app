@@ -56,9 +56,6 @@ const DummySearch = (props) => {
 export const HerdStack = StackNavigator({
   Herd: {
     screen: HerdScreen,
-    navigationOptions: {
-      title: 'Herd',
-    }
   }
 })
 
@@ -120,18 +117,18 @@ export const FeedStack = StackNavigator({
 })
 
 export const Tabs = TabNavigator({
-  HerdTab: {
-    screen: HerdStack,
-    navigationOptions: {
-      tabBarLabel: 'Herd',
-      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-ionic-outline' size={30} color={tintColor} />
-    }
-  },
   FeedTab: {
     screen: FeedStack,
     navigationOptions: {
       tabBarLabel: 'Feed',
       tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-navigate-outline' size={30} color={tintColor} />
+    }
+  },
+  HerdTab: {
+    screen: HerdStack,
+    navigationOptions: {
+      tabBarLabel: 'Herd',
+      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-ionic-outline' size={30} color={tintColor} />
     }
   },
   SearchTab: {
@@ -142,6 +139,7 @@ export const Tabs = TabNavigator({
     }
   }
 }, {
+  lazy: true,
   tabBarOptions: {
     activeTintColor: navBarTintColor,
     inactiveTintColor: accentColor,
