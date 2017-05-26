@@ -4,7 +4,9 @@ import {
   Text,
   StyleSheet,
   View,
-  ListView
+  ListView,
+  TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import moment from 'moment';
@@ -25,7 +27,6 @@ const fakeComment2 = {
   time: '5 mins ago'
 }
 
-
 class PostDetail extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +39,8 @@ class PostDetail extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      keyboardCounter: 1,
+
     };
   }
 
@@ -50,7 +53,10 @@ class PostDetail extends Component {
       this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows([fakeComment1, fakeComment2]) });
     })
   }
+  createComment(input) {
 
+    console.log('creating a comment component');
+  }
   renderCommentCell(comment) {
     console.log(comment);
     return (
@@ -92,12 +98,22 @@ class PostDetail extends Component {
       style={{flex: 1}}
       />
     );
-
+    const newComment = (
+      <View>
+        <TextInput
+         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+         onChangeText={(commentInput) => this.createComment.bind(this)}
+       />
+      </View>
+    );
     return (
+      <KeyboardAvoidingView behavior='position'>
       <View style={{flex:1}}>
         {postDetail}
         {commentListView}
+        {newComment}
       </View>
+      </KeyboardAvoidingView>
     )
   }
 
