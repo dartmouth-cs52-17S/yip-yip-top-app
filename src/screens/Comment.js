@@ -21,7 +21,7 @@ class Comment extends Component {
 
           <View style={{flex: 4, backgroundColor: 'blue', flexDirection: 'row'}}>
 
-            <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'orange'}}>
+            <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'blue'}}>
               <Icon
                 reverse
                 name='ios-american-football'
