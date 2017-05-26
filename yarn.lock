@@ -3445,7 +3445,7 @@ react-native-elements@^0.12.2:
     react-native-side-menu "^0.20.1"
     react-native-tab-navigator "^0.3.3"
 
-react-native-gifted-listview@^0.0.15:
+react-native-gifted-listview@0.0.15:
   version "0.0.15"
   resolved "https://registry.yarnpkg.com/react-native-gifted-listview/-/react-native-gifted-listview-0.0.15.tgz#c92b5b7b32cea7705b727ab4bc199751379dce07"
   dependencies:
@@ -3480,6 +3480,10 @@ react-native-tab-view@^0.0.65:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.65.tgz#b685ea3081ff7c96486cd997361026c407302c59"
   dependencies:
     prop-types "^15.5.8"
+
+react-native-touchable-bounce@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-touchable-bounce/-/react-native-touchable-bounce-1.0.3.tgz#3f549c3ba75964eab19b9aed57d65e70a50270ae"
 
 react-native-vector-icons@^4.1.1:
   version "4.1.1"

@@ -8,9 +8,8 @@ import {
 } from 'react-native' ;
 
 import moment from 'moment';
-
+import TouchableBounce from 'react-native-touchable-bounce';
 import { Icon } from 'react-native-elements';
-
 import { editPost } from '../api'
 
 class PostRow extends Component {
@@ -128,9 +127,14 @@ class PostRow extends Component {
             </View>
           </View>
           <View style={customStyles.vote}>
-            <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} onPress={this.upVote}/>
+            <TouchableBounce onPress={this.upVote}>
+              <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
+            </TouchableBounce>
+
             <Text style={customStyles.score}> {this.state.score} </Text>
-            <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
+            <TouchableBounce onPress={this.downVote}>
+              <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
+            </TouchableBounce>
           </View>
         </View>
       </TouchableHighlight>
