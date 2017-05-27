@@ -3459,13 +3459,13 @@ react-native-gifted-spinner@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-native-gifted-spinner/-/react-native-gifted-spinner-0.1.0.tgz#2c76094fa0469c59e96dead270cd5bca5a55962a"
 
-react-native-search-bar@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-search-bar/-/react-native-search-bar-3.0.0.tgz#973b38276d06e1731ed52121e94f54b9aed2bfab"
-
 react-native-side-menu@^0.20.1:
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/react-native-side-menu/-/react-native-side-menu-0.20.1.tgz#df21b4bb9d8a1aa3bae53d74ddf8a739eb59bfc5"
+
+react-native-spinkit@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.0.2.tgz#0d31b019556e038aa8e953038562550cb0ead8d2"
 
 "react-native-swiper@git+https://github.com/FuYaoDe/react-native-swiper.git":
   version "1.4.4"
@@ -3484,10 +3484,6 @@ react-native-tab-view@^0.0.65:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.65.tgz#b685ea3081ff7c96486cd997361026c407302c59"
   dependencies:
     prop-types "^15.5.8"
-
-react-native-tag-input@^0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/react-native-tag-input/-/react-native-tag-input-0.0.14.tgz#742112640a73d11fa8ae87383458c8fc00739775"
 
 react-native-vector-icons@^4.1.1:
   version "4.1.1"

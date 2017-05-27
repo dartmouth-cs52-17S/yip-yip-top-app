@@ -5,7 +5,8 @@ import {
   TextInput,
   StyleSheet,
   Text,
-  Button
+  Button,
+  ScrollView
 } from 'react-native'
 
 import PostsListView from '../components/PostsListView';
@@ -21,6 +22,7 @@ class SearchScreen extends Component {
       searchTerm:'',
       remainingCharacters: CHAR_LIMIT,
       tags: [],
+      showSearchResults: false
     };
   }
 
@@ -29,6 +31,10 @@ class SearchScreen extends Component {
   }
 
   parseSearchTerm(searchTerm) {
+
+    if (searchTerm.length < 3) {
+      this.setState({showSearchResults: false});
+    }
 
     // don't allow spaces or extra tags
     if (searchTerm.slice(-1) === ' ' || (searchTerm.slice(-1) === '#' && searchTerm.length > 1)) {
@@ -49,13 +55,18 @@ class SearchScreen extends Component {
 
   onSubmitPressed() {
     if (this.state.searchTerm && this.state.searchTerm !== '#') {
-      console.log('tag to submit:', this.state.searchTerm.substring(1));
+      const tagToSearch = this.state.searchTerm.substring(1)
+      this.setState({showSearchResults: true});
+      //TODO: Make search api call and refresh results here
+
     } else {
       console.log('error in search entry');
     }
   }
 
   makeTrendingButtons() {
+
+    //TODO: Get trending tags from api
     const tags = ['#party1', '#HanlonsLawn', '#GreenKey17', '#RickAndMorty']
 
     return tags.map((tag) => {
@@ -85,7 +96,7 @@ class SearchScreen extends Component {
         />
     )
 
-    if (this.state.searchTerm.length > 2) {
+    if (this.state.showSearchResults) {
       return (
         <View style={searchStyle.listContainer}>
           {searchBar}
@@ -101,7 +112,9 @@ class SearchScreen extends Component {
           {searchBar}
           <Text> {this.state.remainingCharacters} </Text>
           <Text> #Trending Tags </Text>
-          {trendingButtons}
+          <ScrollView>
+            {trendingButtons}
+          </ScrollView>
         </View>
       );
     }
