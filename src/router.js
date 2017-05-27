@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import Feed from './screens/Feed';
+import Auth from './screens/Auth';
 import DummyComponent from './screens/dummy';
 import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
@@ -165,7 +166,9 @@ export const Tabs = TabNavigator({
 });
 
 export const Root = StackNavigator({
-  // auth screen here
+  Auth: {
+    screen: Auth,
+  },
   Tabs: {
     screen: Tabs,
   },
