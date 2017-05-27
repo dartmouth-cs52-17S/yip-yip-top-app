@@ -8,6 +8,8 @@ import {
   Button
 } from 'react-native'
 
+import PostsListView from '../components/PostsListView';
+
 
 const CHAR_LIMIT = 30;
 
@@ -67,34 +69,54 @@ class SearchScreen extends Component {
 
     const trendingButtons = this.makeTrendingButtons();
 
-    return (
-      <View style={searchStyle.container}>
-        <TextInput
-          multiline={false}
-          selectTextOnFocus={true}
-          maxLength={CHAR_LIMIT}
-          placeholder="Search by #tag"
-          value={this.state.searchTerm}
-          returnKeyType='search'
-          onChangeText={(searchTerm) => {
-            this.parseSearchTerm(searchTerm);
-          }}
-          onSubmitEditing={() => {this.onSubmitPressed()}}
-          style={searchStyle.textBox}
+    const searchBar = (
+      <TextInput
+        multiline={false}
+        selectTextOnFocus={true}
+        maxLength={CHAR_LIMIT}
+        placeholder="Search by #tag"
+        value={this.state.searchTerm}
+        returnKeyType='search'
+        onChangeText={(searchTerm) => {
+          this.parseSearchTerm(searchTerm);
+        }}
+        onSubmitEditing={() => {this.onSubmitPressed()}}
+        style={searchStyle.textBox}
+        />
+    )
+
+    if (this.state.searchTerm.length > 2) {
+      return (
+        <View style={searchStyle.listContainer}>
+          {searchBar}
+          <PostsListView
+            lat={5}
+            long={6}
           />
-        <Text> {this.state.remainingCharacters} </Text>
-        <Text> #Trending Tags </Text>
-        {trendingButtons}
-       </View>
-    );
+        </View>
+      );
+    } else {
+      return (
+        <View style={searchStyle.buttonContainer}>
+          {searchBar}
+          <Text> {this.state.remainingCharacters} </Text>
+          <Text> #Trending Tags </Text>
+          {trendingButtons}
+        </View>
+      );
+    }
   }
+
 }
 
 
 const searchStyle = StyleSheet.create({
-  container: {
+  buttonContainer: {
     flex: 1,
     alignItems: 'center',
+  },
+  listContainer: {
+    flex: 1,
   },
   textBox: {
     height: 55,
