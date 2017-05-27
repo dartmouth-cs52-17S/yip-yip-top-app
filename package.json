@@ -19,7 +19,6 @@
     "react-native-elements": "^0.12.2",
     "react-native-gifted-listview": "0.0.15",
     "react-native-gifted-spinner": "^0.1.0",
-    "react-native-search-bar": "^3.0.0",
     "react-native-vector-icons": "^4.1.1",
     "react-navigation": "^1.0.0-beta.10"
   },
