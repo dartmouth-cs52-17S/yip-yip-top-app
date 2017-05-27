@@ -8,7 +8,7 @@ import {
 } from 'react-native' ;
 
 import moment from 'moment';
-import TouchableBounce from 'react-native-touchable-bounce';
+import TouchableBounce from '../modifiedPackages/TouchableBounce';
 import { Icon } from 'react-native-elements';
 import { editPost } from '../api'
 
