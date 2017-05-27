@@ -92,7 +92,6 @@ class PostRow extends Component {
   }
 
   render() {
-    console.log(this.state);
     let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
     timeSince.splice(-1,1);
     if (timeSince[0] === 'an') {
