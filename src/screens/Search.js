@@ -5,7 +5,9 @@ import {
   TextInput,
   StyleSheet,
   Text,
+  Button
 } from 'react-native'
+
 
 const CHAR_LIMIT = 30;
 
@@ -24,7 +26,6 @@ class SearchScreen extends Component {
     return searchTerm.length < this.state.searchTerm.length
   }
 
-
   parseSearchTerm(searchTerm) {
 
     // don't allow spaces or extra tags
@@ -37,7 +38,7 @@ class SearchScreen extends Component {
     }
 
     // add the tag when they start typing
-    if (searchTerm.length === 1 && !this.isBackspacing(searchTerm)) {
+    if (searchTerm.length === 1 && searchTerm !== '#') {
       this.setState({searchTerm: '#'.concat(searchTerm)});
     } else { this.setState({searchTerm}); }
 
@@ -52,7 +53,20 @@ class SearchScreen extends Component {
     }
   }
 
+  makeTrendingButtons() {
+    const tags = ['#party1', '#HanlonsLawn', '#GreenKey17', '#RickAndMorty']
+
+    return tags.map((tag) => {
+      return <Button key={tag} title={tag} onPress={()=> {
+        this.setState({searchTerm: tag});
+      }} />
+    })
+  }
+
   render() {
+
+    const trendingButtons = this.makeTrendingButtons();
+
     return (
       <View style={searchStyle.container}>
         <TextInput
@@ -69,6 +83,8 @@ class SearchScreen extends Component {
           style={searchStyle.textBox}
           />
         <Text> {this.state.remainingCharacters} </Text>
+        <Text> #Trending Tags </Text>
+        {trendingButtons}
        </View>
     );
   }
@@ -78,10 +94,11 @@ class SearchScreen extends Component {
 const searchStyle = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
   },
   textBox: {
     height: 55,
-    fontSize: 24,
+    fontSize: 20,
     color: '#291D56',
     margin: 20,
     paddingLeft: 20,
