@@ -41,7 +41,7 @@ class SearchScreen extends Component {
       this.setState({searchTerm: '#'.concat(searchTerm)});
     } else { this.setState({searchTerm}); }
 
-    this.setState({remainingCharacters: CHAR_LIMIT - this.state.searchTerm.length});
+    this.setState({remainingCharacters: CHAR_LIMIT - this.state.searchTerm.length - 1});
   }
 
   onSubmitPressed() {
@@ -58,6 +58,7 @@ class SearchScreen extends Component {
         <TextInput
           multiline={false}
           selectTextOnFocus={true}
+          maxLength={CHAR_LIMIT}
           placeholder="Search by #tag"
           value={this.state.searchTerm}
           returnKeyType='search'
