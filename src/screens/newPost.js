@@ -81,6 +81,7 @@ class NewPostScreen extends Component {
         text: this.state.text,
         tags: ['#still', '#need', '#tags'],
         coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
+        user: this.props.navigation.state.params.user,
       }
       createPost(post, (callback) => {
         // console.log(`callback from create: ${JSON.stringify(callback)}`);

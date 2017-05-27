@@ -4,6 +4,7 @@ import {
   View,
   // Button,
   SegmentedControlIOS,
+  AsyncStorage,
 } from 'react-native';
 
 import ActionButton from 'react-native-action-button';
@@ -18,10 +19,33 @@ class Feed extends Component {
       selectedTab: 0,
       long: '',
       lat: '',
+      user: '',
+    }
+  }
+
+  async retreiveProfile(callback) {
+    try {
+      const savedProfile = await AsyncStorage.getItem('@Profile:key');
+      if (savedProfile !== null) {
+        callback(savedProfile, null)
+      }
+    } catch (error) {
+      callback(null, error);
     }
   }
 
   componentDidMount() {
+    this.retreiveProfile((profile, err) => {
+      if (profile) {
+        // make an actual to JSON call
+        const id = { profile };
+        console.log(`in feed here is profile ${id.extraInfo.userId}`)
+        this.setState({
+          user: id.extraInfo.userId
+          // Byrne is "sms|5929b16d961bda2fafde538e"
+        });
+      }
+    })
     navigator.geolocation.getCurrentPosition(
       (p) => {
         console.log('location feed', p.coords.latitude, p.coords.longitude);
@@ -49,7 +73,7 @@ class Feed extends Component {
 
     const actionButton = <ActionButton
       buttonColor='#6C56BA'
-      onPress={() => { this.props.navigation.navigate('NewPost', { long: this.state.long, lat: this.state.lat })}}
+      onPress={() => { this.props.navigation.navigate('NewPost', { long: this.state.long, lat: this.state.lat, user: this.state.user })}}
       icon={<Icon type='ionicon' name='ios-add-outline' size={45} color={'white'}/>}
       hideShadow={false}
       size={65}
