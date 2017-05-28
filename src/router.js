@@ -17,6 +17,7 @@ import DummyComponent from './screens/dummy';
 import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
 import NewPostScreen from './screens/newPost';
+import HerdScreen from './screens/Herd';
 
 const navBarMainColor='#F4F5F9';
 const navBarTintColor='#3C3559';
@@ -42,16 +43,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const DummyHerd = (props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>
-        Welcome to DummyHerd!
-      </Text>
-    </View>
-  );
-};
-
 const DummySearch = (props) => {
   return (
     <View style={styles.container}>
@@ -63,11 +54,8 @@ const DummySearch = (props) => {
 };
 
 export const HerdStack = StackNavigator({
-  DummyHeard: {
-    screen: DummyHerd,
-    navigationOptions: {
-      title: 'DummyHeard',
-    }
+  Herd: {
+    screen: HerdScreen,
   }
 })
 
@@ -151,6 +139,7 @@ export const Tabs = TabNavigator({
     }
   }
 }, {
+  lazy: true,
   tabBarOptions: {
     activeTintColor: navBarTintColor,
     inactiveTintColor: accentColor,
