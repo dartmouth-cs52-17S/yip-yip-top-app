@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+/* eslint-disable no-unused-vars */
+
 import {
   Text,
   StyleSheet,
@@ -11,6 +13,8 @@ import {
 } from 'react-native';
 
 import moment from 'moment';
+
+import { saveReport } from '../api-sheets';
 
 import { Icon } from 'react-native-elements';
 import { getPost, editPost } from '../api';
@@ -82,6 +86,15 @@ class PostDetail extends Component {
 
   renderPostDetailView(post) {
 
+    const reportInfo = {
+      timestamp: Date.now().toString(),
+      reporter: 'reporter',
+      reportee: 'reportee',
+      post_id: 'post_id',
+      text: 'text',
+      score: 'score',
+    }
+
     const postDetail = (
       <View style={customStyles.main}>
         <View style={customStyles.content}>
@@ -97,6 +110,9 @@ class PostDetail extends Component {
             <View style={customStyles.infoDetail}>
               <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
               <Text>{moment(post.timestamp).fromNow()}</Text>
+            </View>
+            <View>
+              <Text style={{ color: '#de1224' }} onPress={() => saveReport(reportInfo)}>report</Text>
             </View>
           </View>
         </View>
