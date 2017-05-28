@@ -109,13 +109,6 @@ export const FeedStack = StackNavigator({
 })
 
 export const Tabs = TabNavigator({
-  SearchTab: {
-    screen: SearchStack,
-    navigationOptions: {
-      tabBarLabel: 'Feed',
-      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-search' size={30} color={tintColor} />
-    }
-  },
   FeedTab: {
     screen: FeedStack,
     navigationOptions: {
@@ -128,6 +121,13 @@ export const Tabs = TabNavigator({
     navigationOptions: {
       tabBarLabel: 'Herd',
       tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-ionic-outline' size={30} color={tintColor} />
+    }
+  },
+  SearchTab: {
+    screen: SearchStack,
+    navigationOptions: {
+      tabBarLabel: 'Feed',
+      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-search' size={30} color={tintColor} />
     }
   },
 }, {

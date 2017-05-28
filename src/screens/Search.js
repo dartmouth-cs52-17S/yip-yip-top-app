@@ -20,8 +20,6 @@ class SearchScreen extends Component {
 
     this.state = {
       searchTerm:'',
-      remainingCharacters: CHAR_LIMIT,
-      tags: [],
       showSearchResults: false
     };
   }
@@ -46,19 +44,22 @@ class SearchScreen extends Component {
     }
 
     // add the tag when they start typing
-    if (searchTerm.length === 1 && searchTerm !== '#') {
+    else if (searchTerm.length === 1 && searchTerm !== '#') {
       this.setState({searchTerm: '#'.concat(searchTerm)});
-    } else { this.setState({searchTerm}); }
+    }
 
-    this.setState({remainingCharacters: CHAR_LIMIT - this.state.searchTerm.length - 1});
+    else {
+      this.setState({searchTerm});
+    }
+
   }
 
   onSubmitPressed() {
     if (this.state.searchTerm && this.state.searchTerm !== '#') {
-      const tagToSearch = this.state.searchTerm.substring(1)
       this.setState({showSearchResults: true});
-      //TODO: Make search api call and refresh results here
-
+      if (this.child) {
+        this.child.triggerRefresh();
+      }
     } else {
       console.log('error in search entry');
     }
@@ -71,7 +72,7 @@ class SearchScreen extends Component {
 
     return tags.map((tag) => {
       return <Button key={tag} title={tag} onPress={()=> {
-        this.setState({searchTerm: tag});
+        this.setState({searchTerm: tag, showSearchResults: true});
       }} />
     })
   }
@@ -85,6 +86,7 @@ class SearchScreen extends Component {
         multiline={false}
         selectTextOnFocus={false}
         maxLength={CHAR_LIMIT}
+        clearButtonMode={'while-editing'}
         placeholder="Search by #tag"
         value={this.state.searchTerm}
         returnKeyType='search'
@@ -101,6 +103,7 @@ class SearchScreen extends Component {
         <View style={searchStyle.listContainer}>
           {searchBar}
           <PostsListView
+            ref={instance => {this.child = instance; }}
             lat={5}
             long={6}
             searchTags={this.state.searchTerm.substring(1)}
