@@ -31,6 +31,11 @@ const fakeComment3 = {
   score: 6,
   time: '5 mins ago'
 }
+const fakeComment4 = {
+  text: 'comment 4',
+  score: 6,
+  time: '5 mins ago'
+}
 const CHAR_LIMIT = 50;
 class PostDetail extends Component {
   constructor(props) {
@@ -55,7 +60,7 @@ class PostDetail extends Component {
 
   fetchPost(id) {
     getPost(id, (post) => {
-      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows([fakeComment1, fakeComment2, fakeComment3]) });
+      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows([fakeComment1, fakeComment2, fakeComment3, fakeComment4]) });
     })
   }
   submitCommentPressed(input) {
@@ -107,11 +112,15 @@ class PostDetail extends Component {
       </View>
     );
     const newComment = (
-      <View style={{display: 'flex', flexDirection: 'row', position:'absolute'}}>
-              <Text> comment </Text>
+      <View style={{display: 'flex', flexDirection: 'row', position:'absolute', height: 45, marginTop: 510}}>
               <TextInput
                 placeholder="comment"
-                placeholderTextColor="#D0CCDF"/>
+                placeholderTextColor="#D0CCDF"
+                multiline={true}
+                style={customStyles.textBox}/>
+              <View>
+              <Text style={{backgroundColor:'purple', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
+              </View>
       </View>
 
     );
@@ -192,8 +201,19 @@ const customStyles = StyleSheet.create({
   commentContainer: {
     flex:4,
   },
-  commentList: {
-  }
+  textBox: {
+    height: '100%',
+    width:'80%',
+    fontSize: 24,
+    fontFamily: 'Gill Sans',
+    color: '#3C3559',
+    backgroundColor: 'white',
+    borderRadius: 5,
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
+  },
 
 });
 
