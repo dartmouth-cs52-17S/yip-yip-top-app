@@ -10,6 +10,7 @@ class Auth extends React.Component {
       await AsyncStorage.setItem('@HerdLong:key', JSON.stringify(token));
       console.log(`profile is ${JSON.stringify(profile)}`);
       console.log(`token is ${JSON.stringify(token)}`);
+      this.props.navigation.navigate('Tabs');
     } catch (error) {
       console.log(`Count not save login. ${error}`);
     }
