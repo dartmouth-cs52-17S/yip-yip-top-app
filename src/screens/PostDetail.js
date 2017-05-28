@@ -20,6 +20,7 @@ import { Icon } from 'react-native-elements';
 import { getPost, editPost } from '../api';
 import Comment from './Comment';
 
+/*
 const fakeComment1 = {
   text: 'comment 1',
   score: 5,
@@ -41,6 +42,7 @@ const fakeComment4 = {
   score: 6,
   time: '5 mins ago'
 }
+*/
 const CHAR_LIMIT = 50;
 class PostDetail extends Component {
   constructor(props) {

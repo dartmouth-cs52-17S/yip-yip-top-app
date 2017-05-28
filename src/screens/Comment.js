@@ -4,7 +4,7 @@ import {
     Text,
     View
 } from 'react-native';
-
+import moment from 'moment';
 import { Icon } from 'react-native-elements';
 
 class Comment extends Component {
@@ -16,6 +16,20 @@ class Comment extends Component {
 
   render() {
     const comm = this.props.comment;
+    let timeSince = moment(comm.timestamp).fromNow().split(' ');
+    timeSince.splice(-1,1);
+    if (timeSince[0] === 'an' | timeSince[0] === 'a') {
+      timeSince[0] = '1'
+    }
+    if (timeSince[1] === 'minutes') {
+      timeSince[1] = 'mins'
+    } else if (timeSince[1] === 'seconds') {
+      timeSince[1] = 'secs'
+    }
+    if (timeSince[2] === 'seconds') {
+      timeSince[2] = 'secs'
+    }
+    const time = timeSince.join(' ');
     return (
       <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', marginLeft: 17, marginRight: 17, marginTop: 10}}>
 
@@ -31,7 +45,7 @@ class Comment extends Component {
             </View>
             <View style={{flex: 3, justifyContent: 'center', backgroundColor: '#FFFFFF'}}>
               <Text> {comm.text} </Text>
-              <Text> {comm.time} </Text>
+              <Text> {time} </Text>
             </View>
 
           </View>
