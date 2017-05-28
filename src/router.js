@@ -154,10 +154,28 @@ export const Tabs = TabNavigator({
   }
 });
 
-export const Root = StackNavigator({
+export const AuthRoot = StackNavigator({
   Auth: {
     screen: Auth,
   },
+  Tabs: {
+    screen: Tabs,
+  },
+  Tutorial: {
+    screen: Tutorial,
+  },
+  Settings: {
+    screen: SettingsStack,
+  },
+  NewPost: {
+    screen: NewPostStack,
+  }
+}, {
+  mode: 'modal',
+  headerMode: 'none',
+})
+
+export const Root = StackNavigator({
   Tabs: {
     screen: Tabs,
   },

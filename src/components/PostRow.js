@@ -18,16 +18,13 @@ class PostRow extends Component {
   constructor(props) {
     super(props);
 
-    // TODO: define username from app!!!
-    let user = 'Hello';
-
-    if (this.props.post.upvoters.includes(user)) {
+    if (this.props.post.upvoters.includes(this.props.user)) {
       this.state = {
         score: this.props.post.score,
         upvote: true,
         downvote: false
       }
-    } else if (this.props.post.downvoters.includes(user)) {
+    } else if (this.props.post.downvoters.includes(this.props.user)) {
       this.state = {
         score: this.props.post.score,
         upvote: false,
@@ -50,7 +47,7 @@ class PostRow extends Component {
   }
 
   upVote() {
-    editPost(this.props.post, null, 'UPVOTE_POST', () => {
+    editPost(this.props.post, { user_id: this.props.user }, 'UPVOTE_POST', () => {
       // this.props.refresh();
       console.log('upvote');
     });
@@ -71,7 +68,7 @@ class PostRow extends Component {
   }
 
   downVote() {
-    editPost(this.props.post, null, 'DOWNVOTE_POST', () => {
+    editPost(this.props.post, { user_id: this.props.user }, 'DOWNVOTE_POST', () => {
       // this.props.refresh();
       console.log('downvote');
     });

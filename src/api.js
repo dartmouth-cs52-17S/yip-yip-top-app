@@ -59,8 +59,7 @@ export function editPost(post, fields, action, cb) {
     }
   } else {
     params = {
-      // TODO: Need to get user from client
-      user: 'Hello',    // temporary user information
+      user: fields.user_id,
       action
     }
   }

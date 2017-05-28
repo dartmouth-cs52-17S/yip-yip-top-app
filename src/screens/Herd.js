@@ -43,7 +43,7 @@ class HerdScreen extends Component {
       />
     })
 
-    this.retreiveLocation((lat,long, err) => {
+    this.retrieveLocation((lat,long, err) => {
       if (lat && long) {
         this.setState({
           herdSet: true,
@@ -73,7 +73,7 @@ class HerdScreen extends Component {
     )
   }
 
-  async retreiveLocation(callback) {
+  async retrieveLocation(callback) {
     try {
       const savedLong = await AsyncStorage.getItem('@HerdLong:key');
       const savedLat = await AsyncStorage.getItem('@HerdLat:key');

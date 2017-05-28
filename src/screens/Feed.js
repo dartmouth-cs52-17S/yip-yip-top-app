@@ -23,7 +23,7 @@ class Feed extends Component {
     }
   }
 
-  async retreiveProfile(callback) {
+  async retrieveProfile(callback) {
     try {
       const savedProfile = await AsyncStorage.getItem('@Profile:key');
       if (savedProfile !== null) {
@@ -35,15 +35,16 @@ class Feed extends Component {
   }
 
   componentDidMount() {
-    this.retreiveProfile((profile, err) => {
+    this.retrieveProfile((profile, err) => {
       if (profile) {
-        // make an actual to JSON call
-        const id = { profile };
-        console.log(`in feed here is profile ${id.extraInfo.userId}`)
+        const id = JSON.parse(profile);
+        console.log(`in feed here is profile ${id.userId}`)
         this.setState({
-          user: id.extraInfo.userId
+          user: id.userId
           // Byrne is "sms|5929b16d961bda2fafde538e"
         });
+      } else {
+        console.log(`could not get profile in componentDidMount in Feed ${err}. state.user is ${this.state.user}`);
       }
     })
     navigator.geolocation.getCurrentPosition(
@@ -85,6 +86,7 @@ class Feed extends Component {
         <PostsListView
           long={this.state.long}
           lat={this.state.lat}
+          user={this.state.user}
         />
         {actionButton}
       </View>
