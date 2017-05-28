@@ -33,13 +33,17 @@ class PostsListView extends Component {
 
   _onFetch(page = 1, callback, options) {
     if (this.props.searchTags) {
-      searchPosts(this.props.long, this.props.lat, this.props.searchTags, (posts) => {
+      console.log('searching posts');
+      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts) => {
         this.setState({numPosts: this.state.numPosts + posts.length});
         callback(posts);
       })
     } else {
-      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, (posts) => {
+      console.log('list sorty by', this.props.sortBy, 'page', page);
+      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts) => {
+        callback([])
         this.setState({numPosts: this.state.numPosts + posts.length});
+        console.log(posts);
         callback(posts);
       });
     }

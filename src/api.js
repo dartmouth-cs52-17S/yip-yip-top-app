@@ -2,10 +2,11 @@ import axios from 'axios';
 
 const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
 
-export function fetchPosts(long, lat, sort, cb) {
-  axios.get(`${ROOT_URL}/posts/`, { params: { long, lat, sort } }).
+export function fetchPosts(long, lat, sort, page, cb) {
+  console.log(`sort by ${sort}`);
+  axios.get(`${ROOT_URL}/posts/`, { params: { long, lat, sort, page } }).
   then((response) => {
-    console.log(response.data);
+    console.log(response);
     cb(response.data);
   }).catch((error) => {
     console.log(error);
@@ -13,8 +14,9 @@ export function fetchPosts(long, lat, sort, cb) {
   });
 }
 
-export function searchPosts(long, lat, tags, cb) {
-  axios.get(`${ROOT_URL}/search/`, { params: { lat, long, tags } }).
+export function searchPosts(long, lat, tags, page, cb) {
+  console.log('search posts lat:', lat, 'long:', long);
+  axios.get(`${ROOT_URL}/search/`, { params: { long, lat, tags, page } }).
   then((response) => {
     console.log(response);
     cb(response.data);

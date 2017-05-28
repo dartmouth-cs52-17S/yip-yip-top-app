@@ -24,6 +24,17 @@ class SearchScreen extends Component {
     };
   }
 
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (p) => {
+        console.log('location search', 'lat:', p.coords.latitude, 'long:', p.coords.longitude);
+        this.setState({long: p.coords.longitude, lat: p.coords.latitude})
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+  }
+
   isBackspacing(searchTerm) {
     return searchTerm.length < this.state.searchTerm.length
   }
@@ -98,14 +109,20 @@ class SearchScreen extends Component {
         />
     )
 
+    if (this.state.showSearchResults && (!this.state.lat || !this.state.long)) {
+      return (
+        <Text> Still waiting for location </Text>
+      );
+    }
+
     if (this.state.showSearchResults) {
       return (
         <View style={searchStyle.listContainer}>
           {searchBar}
           <PostsListView
             ref={instance => {this.child = instance; }}
-            lat={5}
-            long={6}
+            lat={this.state.lat}
+            long={this.state.long}
             searchTags={this.state.searchTerm.substring(1)}
           />
         </View>
