@@ -6,6 +6,7 @@ import {
   View,
   ListView,
   TextInput,
+  TouchableOpacity,
   KeyboardAvoidingView
 } from 'react-native';
 
@@ -63,9 +64,9 @@ class PostDetail extends Component {
       this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows([fakeComment1, fakeComment2, fakeComment3, fakeComment4]) });
     })
   }
-  submitCommentPressed(input) {
+  submitComment(input) {
     console.log(input);
-    console.log('creating a comment component');
+    console.log('creating a comment');
   }
   renderCommentCell(comment) {
     console.log(comment);
@@ -117,10 +118,14 @@ class PostDetail extends Component {
                 placeholder="comment"
                 placeholderTextColor="#D0CCDF"
                 multiline={true}
+                onChangeText={(text) => this.setState({text})}
+                onSubmitEditing={this.submitComment(this.state.text)}
                 style={customStyles.textBox}/>
-              <View onPress={this.submitComment}>
+              <TouchableOpacity onPress={this.submitComment(this.state.text)}>
+              <View>
               <Text style={{backgroundColor:'purple', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
               </View>
+              </TouchableOpacity>
       </View>
 
     );
@@ -129,7 +134,6 @@ class PostDetail extends Component {
         <View style={{flex:1}}>
             {postDetail}
             {commentListView}
-
             {newComment}
 
         </View>
