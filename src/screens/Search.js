@@ -83,7 +83,7 @@ class SearchScreen extends Component {
     const searchBar = (
       <TextInput
         multiline={false}
-        selectTextOnFocus={true}
+        selectTextOnFocus={false}
         maxLength={CHAR_LIMIT}
         placeholder="Search by #tag"
         value={this.state.searchTerm}
@@ -103,6 +103,7 @@ class SearchScreen extends Component {
           <PostsListView
             lat={5}
             long={6}
+            searchTags={this.state.searchTerm.substring(1)}
           />
         </View>
       );
@@ -110,7 +111,6 @@ class SearchScreen extends Component {
       return (
         <View style={searchStyle.buttonContainer}>
           {searchBar}
-          <Text> {this.state.remainingCharacters} </Text>
           <Text> #Trending Tags </Text>
           <ScrollView>
             {trendingButtons}

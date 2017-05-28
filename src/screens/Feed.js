@@ -15,9 +15,10 @@ class Feed extends Component {
     super(props);
 
     this.state = {
-      selectedTab: 0,
+      selectedTab: 'new',
       long: '',
       lat: '',
+      sortBy: 'NEW',
     }
   }
 
@@ -32,6 +33,16 @@ class Feed extends Component {
     );
   }
 
+  updateSortParam(segmentedVal) {
+    if (segmentedVal == 'New') {
+      this.setState({sortBy: 'NEW'});
+    } else if (segmentedVal == 'Top') {
+      this.setState({sortBy: 'VOTES'});
+    } else {
+      this.setState({sortBy: 'COMMENTS'});
+    }
+  }
+
   render() {
 
     const segmented = <SegmentedControlIOS
@@ -43,6 +54,11 @@ class Feed extends Component {
         this.setState({
           selectedTab: val
         })
+
+        //TODO: Change in backend
+        if (val == 'New') {
+
+        }
       }} />
 
     // const modalButton = <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
@@ -61,6 +77,7 @@ class Feed extends Component {
         <PostsListView
           long={this.state.long}
           lat={this.state.lat}
+          sortBy={this.state.sortBy}
         />
         {actionButton}
       </View>

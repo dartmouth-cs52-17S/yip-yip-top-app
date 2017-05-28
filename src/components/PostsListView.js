@@ -11,7 +11,7 @@ import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
 import Spinner from 'react-native-spinkit';
 
-import { fetchPosts } from '../api.js';
+import { fetchPosts, searchPosts } from '../api.js';
 import PostRow from './PostRow';
 
 class PostsListView extends Component {
@@ -26,15 +26,28 @@ class PostsListView extends Component {
     this._onFetch = this._onFetch.bind(this);
   }
 
+  //called when sortBy props changes
+  componentWillReceiveProps() {
+    console.log('here');
+    if (this.listview) {
+      this.listview._refresh();
+    }
+  }
+
   _onFetch(page = 1, callback, options) {
-    console.log('fetching posts');
-    console.log(typeof this.props.long);
-    fetchPosts(this.props.long, this.props.lat, (posts) => {
-      this.setState({numPosts: this.state.numPosts + posts.length});
-      // TODO: need to make this only the case for the "Load more" option
-      console.log('current number of posts: ' + this.state.numPosts);
-      callback(posts);
-    });
+    console.log('about to fetch');
+    if (this.props.searchTags) {
+      console.log('searching for', this.props.searchTags);
+      searchPosts(this.props.long, this.props.lat, this.props.searchTags, (posts) => {
+        this.setState({numPosts: this.state.numPosts + posts.length});
+        callback(posts);
+      })
+    } else {
+      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, (posts) => {
+        this.setState({numPosts: this.state.numPosts + posts.length});
+        callback(posts);
+      });
+    }
   }
 
   /**

@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
 
-export function fetchPosts(long, lat, cb) {
-  axios.get(`${ROOT_URL}/posts/`, { params: { long, lat } }).
+export function fetchPosts(long, lat, sort, cb) {
+  axios.get(`${ROOT_URL}/posts/`, { params: { long, lat, sort } }).
   then((response) => {
     console.log(response.data);
     cb(response.data);
@@ -11,6 +11,17 @@ export function fetchPosts(long, lat, cb) {
     console.log(error);
     console.log(`error fetching posts with ${lat} ${long}`);
   });
+}
+
+export function searchPosts(long, lat, tags, cb) {
+  axios.get(`${ROOT_URL}/search/`, { params: { lat, long, tags } }).
+  then((response) => {
+    console.log(response);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+    console.log('error searching posts');
+  })
 }
 
 export function createPost(post, cb) {
