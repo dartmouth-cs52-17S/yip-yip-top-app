@@ -77,7 +77,7 @@ class NewPostScreen extends Component {
     if (this.state.text) {
       // need to set up user
       console.log(`long prop ${this.props.navigation.state.params.long}`);
-      let tagArray = '';
+      let tagArray = [];
       if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
       const post = {
         text: this.state.text,

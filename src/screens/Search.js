@@ -11,6 +11,8 @@ import {
 
 import PostsListView from '../components/PostsListView';
 
+import { getTrendingTags } from '../api.js';
+
 
 const CHAR_LIMIT = 30;
 
@@ -20,15 +22,19 @@ class SearchScreen extends Component {
 
     this.state = {
       searchTerm:'',
-      showSearchResults: false
+      showSearchResults: false,
+      trendingTags: [],
+      loadingTags: true,
     };
   }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (p) => {
-        console.log('location search', 'lat:', p.coords.latitude, 'long:', p.coords.longitude);
         this.setState({long: p.coords.longitude, lat: p.coords.latitude})
+        getTrendingTags(p.coords.longitude, p.coords.latitude, (tags) => {
+          this.setState({trendingTags: tags, loadingTags: false});
+        })
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -76,10 +82,7 @@ class SearchScreen extends Component {
     }
   }
 
-  makeTrendingButtons() {
-
-    //TODO: Get trending tags from api
-    const tags = ['#party1', '#HanlonsLawn', '#GreenKey17', '#RickAndMorty']
+  makeTrendingButtons(tags) {
 
     return tags.map((tag) => {
       return <Button key={tag} title={tag} onPress={()=> {
@@ -89,8 +92,6 @@ class SearchScreen extends Component {
   }
 
   render() {
-
-    const trendingButtons = this.makeTrendingButtons();
 
     const searchBar = (
       <TextInput
@@ -127,7 +128,17 @@ class SearchScreen extends Component {
           />
         </View>
       );
-    } else {
+    } else if (this.state.loadingTags) {
+      return (
+        <View style={searchStyle.buttonContainer}>
+          {searchBar}
+          <Text> Loading trending tags... </Text>
+        </View>
+      )
+    }
+    else {
+      const trendingButtons = this.makeTrendingButtons(this.state.trendingTags);
+
       return (
         <View style={searchStyle.buttonContainer}>
           {searchBar}
@@ -147,6 +158,7 @@ const searchStyle = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#F4F5F9',
   },
   listContainer: {
     flex: 1,

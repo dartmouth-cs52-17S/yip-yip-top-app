@@ -87,3 +87,13 @@ export function editPost(post, fields, action, cb) {
     console.log(error);
   });
 }
+
+
+export function getTrendingTags(long, lat, cb) {
+  console.log('getting trending');
+  axios.get(`${ROOT_URL}/tags/`, { params: { long, lat } }).
+  then((response) => {
+    console.log(response);
+    cb(response.data)
+  })
+}

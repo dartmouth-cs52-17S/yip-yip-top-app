@@ -112,7 +112,8 @@ class HerdScreen extends Component {
 
   async clearStorage(callback) {
     try {
-      await AsyncStorage.clear();
+      await AsyncStorage.removeItem('@HerdLat:key');
+      await AsyncStorage.removeItem('@HerdLong:key')
       callback(null);
     } catch (error) {
       callback(error);
