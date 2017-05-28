@@ -123,7 +123,7 @@ class SearchScreen extends Component {
             ref={instance => {this.child = instance; }}
             lat={this.state.lat}
             long={this.state.long}
-            searchTags={this.state.searchTerm.substring(1)}
+            searchTags={this.state.searchTerm}
           />
         </View>
       );
