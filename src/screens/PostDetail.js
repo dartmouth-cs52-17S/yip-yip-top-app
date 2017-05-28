@@ -74,6 +74,7 @@ class PostDetail extends Component {
     console.log('creating a comment');
     const fields = {comment: input, user_id: 'nina'};
     editPost(this.props.navigation.state.params.postId,fields, 'CREATE_COMMENT', (comment) => {
+      this.setState({text:''});
       this.fetchPost(this.props.navigation.state.params.postId);
     });
 
@@ -140,8 +141,10 @@ class PostDetail extends Component {
                 placeholder="comment"
                 placeholderTextColor="#D0CCDF"
                 multiline={true}
+                value={this.state.text}
                 onChangeText={(text) => this.setState({text})}
                 style={customStyles.textBox}/>
+
               <TouchableOpacity>
               <View>
               <Text onPress={() => {this.submitComment(this.state.text)}}
