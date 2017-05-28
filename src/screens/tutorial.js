@@ -20,30 +20,60 @@ class Tutorial extends React.Component {
 
   render() {
     const pageArray = [{
-      title: 'Page 1',
-      description: 'Description 1',
-      img: 'https://s-media-cache-ak0.pinimg.com/736x/3b/af/59/3baf59084c422852dfed2de3e9fff6f3.jpg',
+      title: 'Welcome to Yip Yip,',
+      description: 'where you can share your thoughts with the people around you.',
+      img: 'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png',
       imgStyle: {
         height: 80 * 2.5,
-        width: 109 * 2.5,
+        width: 100 * 2.5,
       },
-      backgroundColor: '#fa931d',
-      fontColor: '#fff',
+      backgroundColor: '#F4F5F9',
+      fontColor: '#3C3559',
+      fontFamily: 'Gill Sans',
+      level: 15,
+    },{
+      title: 'Explore',
+      description: 'See what the buzz is, around you or at your pinned location.',
+      /* eslint-disable no-undef */
+      img: require('../../screenshots/feed.gif'),   /* eslint-enable */
+      imgStyle: {
+        height: 80 * 3,
+        width: 100 * 2.5,
+      },
+      backgroundColor: '#F4F5F9',
+      fontColor: '#3C3559',
+      level: 10,
+    },{
+      title: 'Send a Yip',
+      description: 'Want to share something? Send a yip to your location!',
+      /* eslint-disable no-undef */
+      img: require('../../screenshots/new.gif'),   /* eslint-enable */
+      imgStyle: {
+        height: 80 * 3,
+        width: 100 * 2.5,
+      },
+      backgroundColor: '#F4F5F9',
+      fontColor: '#3C3559',
       level: 10,
     }, {
-      title: 'Page 2',
-      description: 'Description 2',
-      img: 'https://s-media-cache-ak0.pinimg.com/originals/cf/e7/32/cfe73233c0e3c7909fe556f78fdee124.png',
+      title: 'Vote and Comment',
+      description: 'You get to shape the buzz, collectively!',
+      /* eslint-disable no-undef */
+      img: require('../../screenshots/vote.gif'),   /* eslint-enable */
       imgStyle: {
-        height: 93 * 2.5,
-        width: 103 * 2.5,
+        height: 80 * 3,
+        width: 100 * 2.5,
       },
-      backgroundColor: '#a4b602',
-      fontColor: '#fff',
+      backgroundColor: '#F4F5F9',
+      fontColor: '#3C3559',
       level: 10,
     }];
     return (
       <AppIntro
+        dotColor="#D0CCDF"
+        activeDotColor="#6C56BA"
+        rightTextColor="#6C56BA"
+        leftTextColor="#6C56BA"
         onNextBtnClick={this.nextBtnHandle}
         onDoneBtnClick={this.doneBtnHandle}
         onSkipBtnClick={this.onSkipBtnHandle}
@@ -54,4 +84,4 @@ class Tutorial extends React.Component {
   }
 }
 
-module.exports = Tutorial;
+export default Tutorial;
