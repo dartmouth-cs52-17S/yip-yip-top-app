@@ -1,16 +1,18 @@
 import axios from 'axios';
 
 const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
+// const ROOT_URL = 'http://localhost:9090/api';
 
 export function fetchPosts(long, lat, sort, page, cb) {
   console.log(`sort by ${sort}`);
   axios.get(`${ROOT_URL}/posts/`, { params: { long, lat, sort, page } }).
+
   then((response) => {
     console.log(response);
     cb(response.data);
   }).catch((error) => {
     console.log(error);
-    console.log(`error fetching posts with ${lat} ${long}`);
+    console.log(`error fetching posts with long: ${long}, lat: ${lat} with sort of ${sort}`);
   });
 }
 

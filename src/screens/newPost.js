@@ -76,10 +76,12 @@ class NewPostScreen extends Component {
   postSubmitPressed() {
     if (this.state.text) {
       // need to set up user
-      console.log(`long prop ${this.props.navigation.state.params.long}`)
+      console.log(`long prop ${this.props.navigation.state.params.long}`);
+      let tagArray = '';
+      if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
       const post = {
         text: this.state.text,
-        tags: ['#still', '#need', '#tags'],
+        tags: tagArray,
         coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
       }
       createPost(post, (callback) => {
@@ -131,6 +133,17 @@ class NewPostScreen extends Component {
         </KeyboardAvoidingView>
       </View>
     );
+  }
+}
+
+function findHashtags(text) {
+  var regexp = /\B\#\w\w+\b/g;
+  let result = text.match(regexp);
+  if (result) {
+    console.log(result);
+    return result;
+  } else {
+    return false;
   }
 }
 

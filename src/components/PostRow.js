@@ -18,7 +18,7 @@ class PostRow extends Component {
     super(props);
 
     // TODO: define username from app!!!
-    let user = 'Hello';
+    let user = 'You';
 
     if (this.props.post.upvoters.includes(user)) {
       this.state = {
@@ -93,7 +93,7 @@ class PostRow extends Component {
   render() {
     let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
     timeSince.splice(-1,1);
-    if (timeSince[0] === 'an') {
+    if (timeSince[0] === 'an' | timeSince[0] === 'a') {
       timeSince[0] = '1'
     }
     if (timeSince[1] === 'minutes') {

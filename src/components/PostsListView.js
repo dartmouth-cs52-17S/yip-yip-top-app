@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  Image,
   View,
   TouchableHighlight
 } from 'react-native' ;
@@ -95,8 +96,11 @@ class PostsListView extends Component {
    */
   paginationFetchingView() {
     return (
-      <View style={customStyles.paginationView}>
-       <Text>Loading...</Text>
+      <View alignItems='center'>
+       <Text style={customStyles.loading}>Loading Yips...</Text>
+       <Image
+        source={require('../../screenshots/Appa.png')}
+        style={customStyles.loadImg}/>
       </View>
     );
   }
@@ -191,10 +195,17 @@ class PostsListView extends Component {
 
 
 const customStyles = StyleSheet.create({
-  separator: {
-    height: 0,
-    backgroundColor: '#CCC'
+  loading: {
+    fontFamily: 'Gill Sans',
+    fontSize: 20,
+    color: '#6C56BA',
+    margin: 20,
   },
+  loadImg: {
+    width: '30%',
+    resizeMode: 'contain',
+  },
+
   refreshableView: {
     height: 50,
     backgroundColor: '#F4F5F9',
