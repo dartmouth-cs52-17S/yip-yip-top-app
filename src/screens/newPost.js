@@ -76,10 +76,12 @@ class NewPostScreen extends Component {
   postSubmitPressed() {
     if (this.state.text) {
       // need to set up user
-      console.log(`long prop ${this.props.navigation.state.params.long}`)
+      console.log(`long prop ${this.props.navigation.state.params.long}`);
+      let tagArray = '';
+      if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
       const post = {
         text: this.state.text,
-        tags: findHashtags(this.state.text),
+        tags: tagArray,
         coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
       }
       createPost(post, (callback) => {
