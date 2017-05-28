@@ -6,7 +6,7 @@ import {
   View,
   ListView,
   TextInput,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import moment from 'moment';
@@ -24,6 +24,11 @@ const fakeComment1 = {
 const fakeComment2 = {
   text: 'comment 2',
   score: 4,
+  time: '5 mins ago'
+}
+const fakeComment3 = {
+  text: 'comment 3',
+  score: 6,
   time: '5 mins ago'
 }
 const CHAR_LIMIT = 50;
@@ -50,11 +55,11 @@ class PostDetail extends Component {
 
   fetchPost(id) {
     getPost(id, (post) => {
-      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows([fakeComment1, fakeComment2]) });
+      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows([fakeComment1, fakeComment2, fakeComment3]) });
     })
   }
-  createComment(input) {
-
+  submitCommentPressed(input) {
+    console.log(input);
     console.log('creating a comment component');
   }
   renderCommentCell(comment) {
@@ -63,6 +68,7 @@ class PostDetail extends Component {
       <Comment comment={comment} />
     );
   }
+
   renderPostDetailView(post) {
 
     const postDetail = (
@@ -92,37 +98,28 @@ class PostDetail extends Component {
     );
 
     const commentListView = (
+      <View style={customStyles.commentContainer}>
       <ListView
         dataSource={this.state.dataSource}
         renderRow={this.renderCommentCell.bind(this)}
-      style={customStyles.commentList}
+        style={customStyles.commentlist}
       />
+      </View>
     );
     const newComment = (
-       <TextInput
-         numberOfLines={1}
-         multiline={true}
-         maxLength={50}
-         placeholder="comment"
-         placeholderTextColor="#D0CCDF"
-         value={this.state.text}
-         onChangeText={(text) => {
-           this.setState({
-             text,
-             remainingCharacters: CHAR_LIMIT - text.length
-           });
-         }}
-         blurOnSubmit={true}
-         style={customStyles.textBox}
-       />
+      <View style={{display: 'flex', flexDirection: 'row', position:'absolute'}}>
+              <Text> comment </Text>
+              <TextInput
+                placeholder="comment"
+                placeholderTextColor="#D0CCDF"/>
+      </View>
+
     );
     return (
         <View style={{flex:1}}>
             {postDetail}
             {commentListView}
-            <KeyboardAvoidingView behavior='padding' style={{flex: 1}}>
             {newComment}
-            </KeyboardAvoidingView>
         </View>
     )
   }
@@ -139,7 +136,7 @@ class PostDetail extends Component {
 
 const customStyles = StyleSheet.create({
   main: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
     width: 340,
@@ -151,11 +148,11 @@ const customStyles = StyleSheet.create({
     shadowColor: '#291D56',
     shadowOffset: {height: 2},
     shadowOpacity: 0.3,
-    shadowRadius: 3
+    shadowRadius: 3,
   },
 
   content: {
-    flex: 4,
+    flex: 2,
     flexDirection: 'column',
     justifyContent: 'center',
     margin: 10,
@@ -192,21 +189,10 @@ const customStyles = StyleSheet.create({
     color: '#3C3559',
     letterSpacing: -0.03
   },
-  textBox: {
-    height: '100%',
-    fontSize: 24,
-    padding: 20,
-    fontFamily: 'Gill Sans',
-    color: '#3C3559',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    shadowColor: '#291D56',
-    shadowOffset: {height: 2},
-    shadowOpacity: 0.3,
-    shadowRadius: 3
+  commentContainer: {
+    flex:4,
   },
   commentList: {
-    flex:1,
   }
 
 });
