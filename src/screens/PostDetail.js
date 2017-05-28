@@ -55,7 +55,7 @@ class PostDetail extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       text:'',
-
+      createCommentError: false,
     };
   }
 
@@ -72,12 +72,15 @@ class PostDetail extends Component {
   submitComment(input) {
     console.log(input)
     console.log('creating a comment');
-    const fields = {comment: input, user_id: 'nina'};
-    editPost(this.props.navigation.state.params.postId,fields, 'CREATE_COMMENT', (comment) => {
-      this.setState({text:''});
-      this.fetchPost(this.props.navigation.state.params.postId);
-    });
-
+    if (input){
+      const fields = {comment: input, user_id: 'nina'};
+      editPost(this.props.navigation.state.params.postId,fields, 'CREATE_COMMENT', (comment) => {
+        this.setState({text:''});
+        this.fetchPost(this.props.navigation.state.params.postId);
+      });
+    } else {
+      this.setState({createCommentError:true});
+    }
   }
   renderCommentCell(comment) {
     console.log(comment);
@@ -168,7 +171,10 @@ class PostDetail extends Component {
   render() {
     if (this.state.loading) {
       return (<Text> {this.props.navigation.state.params.postId} </Text>);
-    } else {
+    } else if (this.state.createCommentError) {
+      return (<Text> The comment is emptty! </Text>);
+    }
+    else {
       return this.renderPostDetailView(this.state.post);
     }
   }
