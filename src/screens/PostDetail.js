@@ -65,7 +65,8 @@ class PostDetail extends Component {
 
   fetchPost(id) {
     getPost(id, (post) => {
-      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows([fakeComment1, fakeComment2, fakeComment3, fakeComment4]) });
+      const comments = post.comments;
+      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments) });
     })
   }
   submitComment(input) {
