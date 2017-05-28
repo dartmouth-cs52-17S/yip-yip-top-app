@@ -18,6 +18,7 @@ import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
 import NewPostScreen from './screens/newPost';
 import HerdScreen from './screens/Herd';
+import SearchScreen from './screens/Search';
 
 const navBarMainColor='#F4F5F9';
 const navBarTintColor='#3C3559';
@@ -43,15 +44,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const DummySearch = (props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>
-        Welcome to DummySearch!
-      </Text>
-    </View>
-  );
-};
 
 export const HerdStack = StackNavigator({
   Herd: {
@@ -60,10 +52,10 @@ export const HerdStack = StackNavigator({
 })
 
 export const SearchStack = StackNavigator({
-  DummySearch: {
-    screen: DummySearch,
+  Search: {
+    screen: SearchScreen,
     navigationOptions: {
-      title: 'DummySearch',
+      title: 'Search',
     }
   }
 })
@@ -137,7 +129,7 @@ export const Tabs = TabNavigator({
       tabBarLabel: 'Feed',
       tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-search' size={30} color={tintColor} />
     }
-  }
+  },
 }, {
   lazy: true,
   tabBarOptions: {

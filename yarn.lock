@@ -3445,7 +3445,7 @@ react-native-elements@^0.12.2:
     react-native-side-menu "^0.20.1"
     react-native-tab-navigator "^0.3.3"
 
-react-native-gifted-listview@^0.0.15:
+react-native-gifted-listview@0.0.15:
   version "0.0.15"
   resolved "https://registry.yarnpkg.com/react-native-gifted-listview/-/react-native-gifted-listview-0.0.15.tgz#c92b5b7b32cea7705b727ab4bc199751379dce07"
   dependencies:
@@ -3462,6 +3462,10 @@ react-native-gifted-spinner@^0.1.0:
 react-native-side-menu@^0.20.1:
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/react-native-side-menu/-/react-native-side-menu-0.20.1.tgz#df21b4bb9d8a1aa3bae53d74ddf8a739eb59bfc5"
+
+react-native-spinkit@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.0.2.tgz#0d31b019556e038aa8e953038562550cb0ead8d2"
 
 "react-native-swiper@git+https://github.com/FuYaoDe/react-native-swiper.git":
   version "1.4.4"

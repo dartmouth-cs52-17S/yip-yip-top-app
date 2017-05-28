@@ -11,7 +11,7 @@ import {
 import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
 
-import { fetchPosts } from '../api.js';
+import { fetchPosts, searchPosts } from '../api.js';
 import PostRow from './PostRow';
 
 class PostsListView extends Component {
@@ -26,15 +26,28 @@ class PostsListView extends Component {
     this._onFetch = this._onFetch.bind(this);
   }
 
+  triggerRefresh() {
+    if (this.listview) {
+      this.listview._refresh();
+    }
+  }
+
   _onFetch(page = 1, callback, options) {
-    console.log('fetching posts');
-    console.log(typeof this.props.long);
-    fetchPosts(this.props.long, this.props.lat, 'VOTES', (posts) => {
-      this.setState({numPosts: this.state.numPosts + posts.length});
-      // TODO: need to make this only the case for the "Load more" option
-      console.log('current number of posts: ' + this.state.numPosts);
-      callback(posts);
-    });
+    if (this.props.searchTags) {
+      console.log('searching posts');
+      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts) => {
+        this.setState({numPosts: this.state.numPosts + posts.length});
+        callback(posts);
+      })
+    } else {
+      console.log('list sorty by', this.props.sortBy, 'page', page);
+      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts) => {
+        callback([])
+        this.setState({numPosts: this.state.numPosts + posts.length});
+        console.log(posts);
+        callback(posts);
+      });
+    }
   }
 
   /**
@@ -204,10 +217,8 @@ const customStyles = StyleSheet.create({
     color: '#6C56BA',
   },
   paginationView: {
-    height: 44,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F4F5F9',
   },
   defaultView: {
     justifyContent: 'center',
@@ -223,13 +234,6 @@ const customStyles = StyleSheet.create({
     padding: 10,
     height: 44,
   },
-  header: {
-    backgroundColor: '#50a4ff',
-    padding: 10,
-  },
-  headerTitle: {
-    color: '#fff',
-  },
 });
 
 const screenStyles = StyleSheet.create({
@@ -237,18 +241,6 @@ const screenStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF',
   },
-  navBar: {
-    height: 64,
-    backgroundColor: '#007aff',
-
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  navBarTitle: {
-    color: '#fff',
-    fontSize: 16,
-    marginTop: 12,
-  }
 });
 
 
