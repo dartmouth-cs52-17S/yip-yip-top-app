@@ -13,7 +13,7 @@ import {
 import moment from 'moment';
 
 import { Icon } from 'react-native-elements';
-import { getPost } from '../api';
+import { getPost, editPost } from '../api';
 import Comment from './Comment';
 
 const fakeComment1 = {
@@ -65,8 +65,13 @@ class PostDetail extends Component {
     })
   }
   submitComment(input) {
-    console.log(input);
+    console.log(input)
     console.log('creating a comment');
+    const fields = {comment: input, user_id: 'nina'};
+    editPost(this.props.navigation.state.params.postId,fields, 'CREATE_COMMENT', (comment) => {
+      console.log(comment);
+    });
+
   }
   renderCommentCell(comment) {
     console.log(comment);
@@ -119,15 +124,14 @@ class PostDetail extends Component {
                 placeholderTextColor="#D0CCDF"
                 multiline={true}
                 onChangeText={(text) => this.setState({text})}
-                onSubmitEditing={this.submitComment(this.state.text)}
                 style={customStyles.textBox}/>
-              <TouchableOpacity onPress={this.submitComment(this.state.text)}>
+              <TouchableOpacity>
               <View>
-              <Text style={{backgroundColor:'purple', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
+              <Text onPress={() => {this.submitComment(this.state.text)}}
+                style={{backgroundColor:'purple', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
               </View>
               </TouchableOpacity>
       </View>
-
     );
     return (
 
