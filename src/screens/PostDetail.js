@@ -118,18 +118,22 @@ class PostDetail extends Component {
                 placeholderTextColor="#D0CCDF"
                 multiline={true}
                 style={customStyles.textBox}/>
-              <View>
+              <View onPress={this.submitComment}>
               <Text style={{backgroundColor:'purple', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
               </View>
       </View>
 
     );
     return (
+
         <View style={{flex:1}}>
             {postDetail}
             {commentListView}
+
             {newComment}
+
         </View>
+
     )
   }
 
