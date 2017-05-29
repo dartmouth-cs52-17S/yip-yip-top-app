@@ -10,6 +10,7 @@ import {
 import ActionButton from 'react-native-action-button';
 import { Icon } from 'react-native-elements';
 import PostsListView from '../components/PostsListView';
+import EventEmitter from 'react-native-eventemitter';
 
 class Feed extends Component {
   constructor(props) {
@@ -33,6 +34,15 @@ class Feed extends Component {
     } catch (error) {
       callback(null, error);
     }
+  }
+
+  componentWillMount() {
+    EventEmitter.on('refreshListView', (val) => {
+      // this.setState({ refreshListView: true });
+      if (this.child) {
+        this.child.triggerRefresh();
+      }
+    })
   }
 
   componentDidMount() {
