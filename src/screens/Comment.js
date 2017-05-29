@@ -18,25 +18,39 @@ class Comment extends Component {
     this.downVote = this.downVote.bind(this);
   }
   upVote(){
+    if (this.state.downvote) {
+      this.setState({
+        downvote:false
+      });
+    }
     if (this.state.upvote){
       this.setState({
         upvote:false
       });
+      this.props.comment.score -= 1;
     }else {
       this.setState({
         upvote:true
       });
+      this.props.comment.score += 1;
     }
   }
   downVote(){
+    if (this.state.upvote) {
+      this.setState({
+        upvote:false
+      });
+    }
     if (this.state.downvote){
       this.setState({
         downvote:false
       });
+      this.props.comment.score += 1;
     }else {
       this.setState({
         downvote:true
       });
+      this.props.comment.score -= 1;
     }
   }
   render() {
