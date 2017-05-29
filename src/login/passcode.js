@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TextInput, Text, Image, Alert, StyleSheet, Dimensions, AsyncStorage } from 'react-native';
 import Button from 'react-native-button';
 import jwtDecode from 'jwt-decode';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import { codeAuth } from '../api';
 
@@ -77,6 +78,7 @@ class AuthCode extends React.Component {
             </Text>
           </View>
         </View>
+        <KeyboardSpacer />
       </View>
     )
   }
