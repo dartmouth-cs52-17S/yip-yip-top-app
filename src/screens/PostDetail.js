@@ -93,7 +93,7 @@ class PostDetail extends Component {
     console.log(input)
     console.log('creating a comment');
     if (input){
-      const fields = {comment: input, user_id: 'rose'};
+      const fields = {comment: input, user_id: this.props.navigation.state.params.user};
       editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
         this.setState({text:''});
         this.setState({commentsLen:this.state.commentsLen + 1});
@@ -102,9 +102,10 @@ class PostDetail extends Component {
     }
   }
   voteComment(commentId, action) {
-    const fields = {commentId: commentId, userId: 'rose', action}
-    editPost(this.props.navigation.state.params.postId, fields, action, () => {
-      console.log('voted success');
+    const fields = {commentId: commentId, userId: this.props.navigation.state.params.user, action}
+    editPost(this.props.navigation.state.params.post.id, fields, action, () => {
+      console.log(action);
+      console.log('success');
     });
   }
 
