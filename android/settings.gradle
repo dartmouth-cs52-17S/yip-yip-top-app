@@ -1,6 +1,8 @@
 rootProject.name = 'YipYip'
 include ':react-native-lock'
 project(':react-native-lock').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-lock/android')
+include ':react-native-spinkit'
+project(':react-native-spinkit').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-spinkit/android')
 include ':react-native-vector-icons'
 project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
 

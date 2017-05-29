@@ -22,6 +22,7 @@
     "react-native-gifted-listview": "0.0.15",
     "react-native-gifted-spinner": "^0.1.0",
     "react-native-lock": "^0.6.0",
+    "react-native-spinkit": "^1.0.2",
     "react-native-vector-icons": "^4.1.1",
     "react-navigation": "^1.0.0-beta.10"
   },
