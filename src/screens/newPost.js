@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 
 import {
@@ -81,12 +82,16 @@ class NewPostScreen extends Component {
       if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
       const post = {
         text: this.state.text,
+<<<<<<< HEAD
         tags: tagArray,
         coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
+=======
+        tags: ['tag', 'another'],
+        coordinates: [5, 6],
+>>>>>>> post-detail
       }
       createPost(post, (callback) => {
-        // console.log(`callback from create: ${JSON.stringify(callback)}`);
-        // console.log(`params is ${JSON.stringify(this.props.navigation.state.params)}`)
+        console.log(`callback from create: ${JSON.stringify(callback)}`);
         this.props.navigation.goBack(null);
       })
     }
@@ -136,6 +141,7 @@ class NewPostScreen extends Component {
   }
 }
 
+<<<<<<< HEAD
 function findHashtags(text) {
   var regexp = /\B\#\w\w+\b/g;
   let result = text.match(regexp);
@@ -146,6 +152,8 @@ function findHashtags(text) {
     return false;
   }
 }
+=======
+>>>>>>> post-detail
 
 const customStyles = StyleSheet.create({
   main: {

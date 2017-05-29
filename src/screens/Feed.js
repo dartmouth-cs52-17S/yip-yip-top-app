@@ -68,12 +68,16 @@ class Feed extends Component {
     return (
       <View style={{flex: 1, backgroundColor: '#F4F5F9',}}>
         {segmented}
+<<<<<<< HEAD
         <PostsListView
           long={this.state.long}
           lat={this.state.lat}
           sortBy={this.state.sortBy}
           ref={instance => {this.child = instance}}
         />
+=======
+        <PostsListView navigation={this.props.navigation}/>
+>>>>>>> post-detail
         {actionButton}
       </View>
     );

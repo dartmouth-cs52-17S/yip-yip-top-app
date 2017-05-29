@@ -16,6 +16,7 @@ import Feed from './screens/Feed';
 import DummyComponent from './screens/dummy';
 import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
+import PostDetail from './screens/PostDetail';
 import NewPostScreen from './screens/newPost';
 import HerdScreen from './screens/Herd';
 import SearchScreen from './screens/Search';
@@ -109,22 +110,24 @@ export const FeedStack = StackNavigator({
       }
     }
   },
-  Dummy: {
-    screen: DummyComponent,
+  PostDetail: {
+    screen: PostDetail,
     navigationOptions: {
-      title: 'DummyFeed',
+      title: 'Detail',
     }
   },
 }, {
   navigationOptions: ({ navigation }) => ({
     gesturesEnabled: false,
-    headerTintColor: 'white',
     headerStyle: {
       backgroundColor: mainColor,
       shadowOpacity: 0
+<<<<<<< HEAD
     },
     headerTitleStyle: {
       fontFamily: 'Gill Sans'
+=======
+>>>>>>> post-detail
     },
     headerRight:
       <Icon type='font-awesome'
