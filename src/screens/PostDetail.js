@@ -11,7 +11,8 @@ import {
   TextInput,
   TouchableHighlight,
   KeyboardAvoidingView,
-  Dimensions
+  Dimensions,
+  Alert,
 } from 'react-native';
 
 import moment from 'moment';
@@ -22,6 +23,8 @@ import { Icon } from 'react-native-elements';
 import { getPost, createReport, editPost } from '../api';
 import Comment from './Comment';
 import ErrorView from '../components/ErrorView';
+
+import banned from '../banned';
 
 const vw = Dimensions.get('window').width;
 const CHAR_LIMIT = 75;
@@ -106,14 +109,25 @@ class PostDetail extends Component {
 
   submitComment(input) {
     if (input){
-      const fields = {comment: input, user_id: this.props.navigation.state.params.user};
-      editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
-        this.setState({text:''});
-        this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
-        this.fetchPost(this.props.navigation.state.params.post.id);
-      });
+      let safe = true;
+      for (var i = 0; i < banned.length; i++) {
+        if (input.toLowerCase().includes(banned[i])) {
+          Alert.alert('Cannot Save Comment', 'Please remove profanity from comment.');
+          safe = false;
+          break;
+        }
+      }
+      if (safe){
+        const fields = {comment: input, user_id: this.props.navigation.state.params.user};
+        editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
+          this.setState({text:''});
+          this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
+          this.fetchPost(this.props.navigation.state.params.post.id);
+        });
+      }
     }
   }
+
   voteComment(commentId, action) {
     const fields = {commentId: commentId, userId: this.props.navigation.state.params.user, action}
     editPost(this.props.navigation.state.params.post.id, fields, action, () => {
