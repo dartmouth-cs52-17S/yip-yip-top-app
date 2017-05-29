@@ -24,14 +24,16 @@ class PostsListView extends Component {
       numPosts: 0,
       error: false,
       empty: false,
+      endOfResults: false,
     }
 
     this._onFetch = this._onFetch.bind(this);
+    this._renderPaginationWaitingView = this._renderPaginationWaitingView.bind(this);
   }
 
   triggerRefresh() {
     console.log('refresh triggered', this.listview);
-    this.setState({error: false, empty: false}, () => {
+    this.setState({error: false, empty: false, endOfResults: false}, () => {
       if (this.listview) {
         this.listview._refresh();
       }
@@ -45,8 +47,10 @@ class PostsListView extends Component {
         if (error) {
           this.setState({error: true});
         } else {
-          if (posts.length === 0) {
+          if (page === 1 && posts.length === 0) {
             this.setState({empty: true});
+          } else if (posts.length === 0) {
+            this.setState({endOfResults: true});
           }
         }
         callback(posts);
@@ -58,7 +62,7 @@ class PostsListView extends Component {
         if (error) {
           this.setState({error: true});
         } else {
-          if (posts.length === 0) {
+          if (page === 1 && posts.length === 0) {
             this.setState({empty: true});
           }
         }
@@ -95,6 +99,15 @@ class PostsListView extends Component {
    * @param {function} paginateCallback The function to call to load more rows
    */
   _renderPaginationWaitingView(paginateCallback) {
+    if (this.state && this.state.endOfResults) {
+      return (
+        <View style={customStyles.paginationView}>
+          <Text style={customStyles.actionsLabel}>
+            End of Results
+          </Text>
+        </View>
+      );
+    }
     return (
       <TouchableHighlight
         underlayColor='#D0CCDF'
