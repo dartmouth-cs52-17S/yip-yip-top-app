@@ -20,7 +20,7 @@ class AuthCode extends React.Component {
       await AsyncStorage.setItem('@Token:key', token);
       console.log(`profile is ${JSON.stringify(profile)}`);
       console.log(`token is ${JSON.stringify(token)}`);
-      this.props.navigation.navigate('Tabs');
+      this.props.navigation.navigate('Tutorial');
     } catch (error) {
       console.log(`Count not save login. ${error}`);
     }

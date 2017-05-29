@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 
 import Feed from './screens/Feed';
-import Auth from './screens/Auth';
 import AuthIntro from './login/intro';
 import AuthPhone from './login/phone';
 import AuthCode from './login/passcode';
