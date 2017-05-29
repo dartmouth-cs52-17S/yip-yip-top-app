@@ -11,7 +11,7 @@ import {
 import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
 
-import { fetchPosts, searchPosts } from '../api.js';
+import { fetchPosts, searchPosts, getUserPosts } from '../api.js';
 import PostRow from './PostRow';
 import ErrorView from './ErrorView';
 
@@ -55,7 +55,22 @@ class PostsListView extends Component {
         }
         callback(posts);
       })
-    } else {
+    } else if (this.props.userId) {
+      getUserPosts(this.props.userId, page, (posts, error) => {
+        if (error) {
+          this.setState({error: true});
+        } else {
+          if (page === 1 && posts.length === 0) {
+            this.setState({empty: true});
+          } else if (posts.length === 0) {
+            this.setState({endOfResults: true})
+          }
+        }
+        callback(posts);
+      })
+    }
+
+    else {
       console.log('list sorty by', this.props.sortBy, 'page', page);
       fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
         callback([])

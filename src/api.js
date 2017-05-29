@@ -3,6 +3,18 @@ import axios from 'axios';
 const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
 // const ROOT_URL = 'http://localhost:9090/api';
 
+
+export function getUserPosts(user_id, page, cb) {
+  axios.get(`${ROOT_URL}/userPosts/${user_id}`, { params: { page }}).
+  then((response) => {
+    console.log('posts for user', user_id, page, response);
+    cb(response.data, null);
+  }).catch((error) => {
+    console.log('error in user posts', error);
+    cb(null, error);
+  })
+}
+
 export function createReport(report, cb) {
   // { reporter, item, type, severity, additionalInfo }
   console.log(`report is ${JSON.stringify(report)}`);

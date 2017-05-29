@@ -23,6 +23,7 @@ import PostDetail from './screens/PostDetail';
 import NewPostScreen from './screens/newPost';
 import HerdScreen from './screens/Herd';
 import SearchScreen from './screens/Search';
+import ProfilePage from './screens/User';
 
 const navBarMainColor='#F4F5F9';
 const navBarTintColor='#6C56BA';
@@ -118,10 +119,10 @@ export const SearchStack = StackNavigator({
 })
 
 export const SettingsStack = StackNavigator({
-  Settings: {
-    screen: Settings,
+  Profile: {
+    screen: ProfilePage,
     navigationOptions: {
-      title: 'Settings',
+      title: 'Profile',
     }
   }
 })
