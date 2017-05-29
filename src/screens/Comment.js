@@ -45,7 +45,7 @@ class Comment extends Component {
               </View>
               <View style={{flex: 3, justifyContent: 'center'}}>
                 <Text> {comm.text} </Text>
-                <Text> {time} </Text>
+                <Text style={{marginTop: 20, marginLeft: 135, fontSize: 13}}> {time} </Text>
               </View>
 
             </View>

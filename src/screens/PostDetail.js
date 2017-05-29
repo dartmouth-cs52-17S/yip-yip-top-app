@@ -53,7 +53,7 @@ class PostDetail extends Component {
     console.log(input)
     console.log('creating a comment');
     if (input){
-      const fields = {comment: input, user_id: 'nina'};
+      const fields = {comment: input, user_id: 'rose'};
       editPost(this.props.navigation.state.params.postId,fields, 'CREATE_COMMENT', (comment) => {
         this.setState({text:''});
         this.fetchPost(this.props.navigation.state.params.postId);
