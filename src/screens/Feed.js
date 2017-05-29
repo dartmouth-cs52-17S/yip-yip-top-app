@@ -16,10 +16,11 @@ class Feed extends Component {
     super(props);
 
     this.state = {
-      selectedTab: 0,
+      selectedTab: 'new',
       long: '',
       lat: '',
       user: '',
+      sortBy: 'New'
     }
   }
 
@@ -49,12 +50,23 @@ class Feed extends Component {
     })
     navigator.geolocation.getCurrentPosition(
       (p) => {
-        console.log('location feed', p.coords.latitude, p.coords.longitude);
+        console.log('location feed', 'lat:', p.coords.latitude, 'long:', p.coords.longitude);
         this.setState({long: p.coords.longitude, lat: p.coords.latitude})
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
+  }
+
+  updateSortParam(segmentedVal) {
+
+    this.setState({sortBy: segmentedVal}, () => {
+      if (this.child) {
+        console.log('feed sort by', this.state.sortBy);
+        this.child.triggerRefresh();
+      }
+    });
+
   }
 
   render() {
@@ -65,9 +77,7 @@ class Feed extends Component {
       margin={10}
       tintColor={'#6C56BA'}
       onValueChange={(val) => {
-        this.setState({
-          selectedTab: val
-        })
+        this.updateSortParam(val);
       }} />
 
     // const modalButton = <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
@@ -87,11 +97,15 @@ class Feed extends Component {
           long={this.state.long}
           lat={this.state.lat}
           user={this.state.user}
+          sortBy={this.state.sortBy}
+          ref={instance => {this.child = instance}}
         />
         {actionButton}
       </View>
     );
   }
 }
+
+
 
 export default Feed;

@@ -8,9 +8,8 @@ import {
 } from 'react-native' ;
 
 import moment from 'moment';
-
+import TouchableBounce from '../modifiedPackages/TouchableBounce';
 import { Icon } from 'react-native-elements';
-
 import { editPost } from '../api'
 
 
@@ -92,7 +91,7 @@ class PostRow extends Component {
   render() {
     let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
     timeSince.splice(-1,1);
-    if (timeSince[0] === 'an') {
+    if (timeSince[0] === 'an' | timeSince[0] === 'a') {
       timeSince[0] = '1'
     }
     if (timeSince[1] === 'minutes') {
@@ -126,9 +125,14 @@ class PostRow extends Component {
             </View>
           </View>
           <View style={customStyles.vote}>
-            <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} onPress={this.upVote}/>
+            <TouchableBounce onPress={this.upVote}>
+              <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
+            </TouchableBounce>
+
             <Text style={customStyles.score}> {this.state.score} </Text>
-            <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
+            <TouchableBounce onPress={this.downVote}>
+              <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
+            </TouchableBounce>
           </View>
         </View>
       </TouchableHighlight>

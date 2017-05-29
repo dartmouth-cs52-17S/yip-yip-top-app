@@ -22,11 +22,13 @@ import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
 import NewPostScreen from './screens/newPost';
 import HerdScreen from './screens/Herd';
+import SearchScreen from './screens/Search';
 
 const navBarMainColor='#F4F5F9';
-const navBarTintColor='#3C3559';
+const navBarTintColor='#6C56BA';
 const accentColor='#D0CCDF';
 const mainColor='#F4F5F9';
+const tintColor='#6C56BA';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,29 +49,42 @@ const styles = StyleSheet.create({
   },
 });
 
-const DummySearch = (props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>
-        Welcome to DummySearch!
-      </Text>
-    </View>
-  );
-};
 
 export const HerdStack = StackNavigator({
   Herd: {
     screen: HerdScreen,
   }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    gesturesEnabled: false,
+    headerStyle: {
+      backgroundColor: mainColor,
+      shadowOpacity: 0
+    },
+    headerTitleStyle: {
+      fontFamily: 'Gill Sans'
+    },
+  })
 })
 
 export const SearchStack = StackNavigator({
-  DummySearch: {
-    screen: DummySearch,
+  Search: {
+    screen: SearchScreen,
     navigationOptions: {
-      title: 'DummySearch',
+      title: 'Search',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans'
+      }
     }
   }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    gesturesEnabled: false,
+    headerStyle: {
+      backgroundColor: mainColor,
+      shadowOpacity: 0
+    }
+  })
 })
 
 export const SettingsStack = StackNavigator({
@@ -113,7 +128,10 @@ export const FeedStack = StackNavigator({
     screen: Feed,
     navigationOptions: {
       title: 'Feed',
-      headerTintColor: '#3C3559'
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans'
+      }
     }
   },
   Dummy: {
@@ -128,12 +146,16 @@ export const FeedStack = StackNavigator({
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: mainColor,
+      shadowOpacity: 0
+    },
+    headerTitleStyle: {
+      fontFamily: 'Gill Sans'
     },
     headerRight:
-      <Icon type='ionicon'
-        name='ios-glasses-outline'
-        color='#3C3559'
-        size={30}
+      <Icon type='font-awesome'
+        name='user-circle-o'
+        color='#6C56BA'
+        size={25}
         onPress={()=>{ navigation.navigate('Settings'); }}
         style={{ marginRight: 10, padding: 5}}
         underlayColor='yellow'
@@ -146,23 +168,23 @@ export const Tabs = TabNavigator({
     screen: FeedStack,
     navigationOptions: {
       tabBarLabel: 'Feed',
-      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-navigate-outline' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon type='font-awesome' name='map-marker' size={28} color={tintColor} />
     }
   },
   HerdTab: {
     screen: HerdStack,
     navigationOptions: {
       tabBarLabel: 'Herd',
-      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-ionic-outline' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon type='font-awesome' name='paw' size={28} color={tintColor} />
     }
   },
   SearchTab: {
     screen: SearchStack,
     navigationOptions: {
       tabBarLabel: 'Feed',
-      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-search' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon type='font-awesome' name='search' size={28} color={tintColor} />
     }
-  }
+  },
 }, {
   lazy: true,
   tabBarOptions: {
@@ -205,6 +227,9 @@ export const DummyRoot = StackNavigator({
   },
   Tutorial: {
     screen: Tutorial,
+  },
+  Tabs: {
+    screen: Tabs,
   },
   Settings: {
     screen: SettingsStack,
