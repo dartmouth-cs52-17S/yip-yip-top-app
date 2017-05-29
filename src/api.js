@@ -114,17 +114,22 @@ export function deletePost(post_id, cb) {
 export function editPost(postId, fields, action, cb) {
   const url = `${ROOT_URL}/posts/${postId}`;
   let params;
-  if (action == 'COMMENT_ACTION') {
-    params = {
-      action,
-      id: postId,
-      commentId: fields.commentId,
-      user: fields.user_id,
-    }
-  } else if (action == 'CREATE_COMMENT') {
+  if (action == 'CREATE_COMMENT') {
     params = {
       comment: fields.comment,
-      user: fields.user_id,
+      user: fields.userId,
+      action,
+    }
+  } else if (action == 'DOWNVOTE_COMMENT') {
+    params = {
+      commentId: fields.commentId,
+      user: fields.userId,
+      action,
+    }
+  } else if (action == 'UPVOTE_COMMENT') {
+    params = {
+      commentId: fields.commentId,
+      user: fields.userId,
       action,
     }
   } else {

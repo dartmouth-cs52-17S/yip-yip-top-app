@@ -33,11 +33,14 @@ class Comment extends Component {
         upvote:false
       });
       this.props.comment.score -= 1;
+      this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
+
     }else {
       this.setState({
         upvote:true
       });
       this.props.comment.score += 1;
+      this.props.voteComment(this.props.comment._id, 'UPVOTE_COMMENT');
     }
   }
   downVote(){
@@ -51,11 +54,13 @@ class Comment extends Component {
         downvote:false
       });
       this.props.comment.score += 1;
+      this.props.voteComment(this.props.comment._id, 'UPVOTE_COMMENT');
     }else {
       this.setState({
         downvote:true
       });
       this.props.comment.score -= 1;
+      this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
     }
   }
   render() {
