@@ -40,6 +40,7 @@ class PostDetail extends Component {
   }
 
   componentDidMount() {
+    // only fetching comments not post itself
     this.fetchPost(this.props.navigation.state.params.postId);
   }
 

@@ -48,7 +48,7 @@ class Feed extends Component {
   componentDidMount() {
     this.retrieveProfile((profile, err) => {
       if (profile) {
-        console.log(`in feed here is profile ${profile}`)
+        // console.log(`in feed here is profile ${profile}`)
         this.setState({
           user: profile
           // Byrne is "sms|5929b16d961bda2fafde538e"

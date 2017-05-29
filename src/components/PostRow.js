@@ -47,7 +47,8 @@ class PostRow extends Component {
   }
 
   upVote() {
-    editPost(this.props.post, { user_id: this.props.user }, 'UPVOTE_POST', () => {
+    // console.log(`whats going on with upvoting? post props is ${JSON.stringify(this.props.post)} and the user is ${this.props.user}`)
+    editPost(this.props.post._id, { user_id: this.props.user }, 'UPVOTE_POST', () => {
       // this.props.refresh();
       console.log('upvote');
     });
@@ -68,7 +69,7 @@ class PostRow extends Component {
   }
 
   downVote() {
-    editPost(this.props.post, { user_id: this.props.user }, 'DOWNVOTE_POST', () => {
+    editPost(this.props.post._id, { user_id: this.props.user }, 'DOWNVOTE_POST', () => {
       // this.props.refresh();
       console.log('downvote');
     });
