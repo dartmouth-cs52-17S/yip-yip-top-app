@@ -13,10 +13,10 @@ import {
 
 import moment from 'moment';
 
-import { saveReport } from '../api-sheets';
+// import { saveReport } from '../api-sheets';
 
 import { Icon } from 'react-native-elements';
-import { getPost } from '../api';
+import { getPost, createReport } from '../api';
 import Comment from './Comment';
 
 const fakeComment1 = {
@@ -54,9 +54,41 @@ class PostDetail extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       text:'',
-
     };
+    this.reportPostPressed = this.reportPostPressed.bind(this);
   }
+
+  reportPostPressed() {
+    const report = {
+      // reporter: this.state.user,
+      reporter: 'reporter',
+      item: JSON.stringify(this.state.post),
+      type: 'POST',
+      severity: 2,
+      additionalInfo: 'bad-- will come from a text box'
+    }
+
+    // put into a modal add a severity dropdown and a comment box (for 'additionalInfo')
+    createReport(report, (callback) => {
+      console.log(`callback from create report: ${JSON.stringify(callback)}`);
+      // this.props.navigation.goBack(null);
+    })
+  }
+
+  // should be in Comment.js
+  // reportCommentPressed() {
+  //   const report = {
+  //     reporter: 'reporter',
+  //     item: 'this.state.comment',
+  //     type: 'COMMENT',
+  //     severity: 2,
+  //     additionalInfo: 'bad'
+  //   }
+  //   createReport(report, (callback) => {
+  //     console.log(`callback from create: ${JSON.stringify(callback)}`);
+  //     this.props.navigation.goBack(null);
+  //   })
+  // }
 
   componentDidMount() {
     this.fetchPost(this.props.navigation.state.params.postId);
@@ -80,15 +112,6 @@ class PostDetail extends Component {
 
   renderPostDetailView(post) {
 
-    const reportInfo = {
-      timestamp: Date.now().toString(),
-      reporter: 'reporter',
-      reportee: 'reportee',
-      post_id: 'post_id',
-      text: 'text',
-      score: 'score',
-    }
-
     const postDetail = (
       <View style={customStyles.main}>
         <View style={customStyles.content}>
@@ -106,7 +129,7 @@ class PostDetail extends Component {
               <Text>{moment(post.timestamp).fromNow()}</Text>
             </View>
             <View>
-              <Text style={{ color: '#de1224' }} onPress={() => saveReport(reportInfo)}>report</Text>
+              <Text style={{ color: '#de1224' }} onPress={() => this.reportPostPressed()}>report</Text>
             </View>
           </View>
         </View>

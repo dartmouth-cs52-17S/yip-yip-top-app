@@ -1,9 +1,19 @@
 import axios from 'axios';
 
 const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
-// axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
+// const ROOT_URL = 'http://localhost:9090/api';
 
-// yip-yip.herokuapp.com/api/posts/?long=5.000001&lat=6.000001
+export function createReport(report, cb) {
+  // { reporter, item, type, severity, additionalInfo }
+  console.log(`report is ${JSON.stringify(report)}`);
+  axios.post(`${ROOT_URL}/report`, report)
+  .then((response) => {
+    console.log(`Report created. ${response.data}`);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(`error creating posts. ${error}`);
+  });
+}
 
 export function fetchPosts(lat, long, cb) {
   axios.get(`${ROOT_URL}/posts/`, { params: { lat, long } }).
