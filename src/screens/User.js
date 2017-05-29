@@ -9,22 +9,18 @@ import {
   Button
 } from 'react-native';
 
-class Settings extends Component {
+import PostsListView from '../components/PostsListView';
+
+
+class ProfilePage extends Component {
 
   render() {
-    console.log("profile user", this.props.userId);
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to Settings!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+      <View style={{flex: 1}}>
+        <PostsListView
+          userId={this.props.navigation.state.params.userId}
+        />
       </View>
     );
   }
@@ -49,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = Settings;
+module.exports = ProfilePage;

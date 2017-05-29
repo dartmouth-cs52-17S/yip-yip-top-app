@@ -142,7 +142,7 @@ class SearchScreen extends Component {
       return (
         <View style={searchStyle.buttonContainer}>
           {searchBar}
-          <Text> #Trending Tags </Text>
+          <Text style={searchStyle.text}> #Trending Tags </Text>
           <ScrollView>
             {trendingButtons}
           </ScrollView>
@@ -162,6 +162,12 @@ const searchStyle = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
+    backgroundColor: '#F4F5F9',
+  },
+  text: {
+    fontSize: 20,
+    color: '#291D56',
+    fontFamily: 'Gill Sans',
   },
   textBox: {
     height: 55,

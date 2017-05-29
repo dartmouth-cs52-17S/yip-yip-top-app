@@ -18,22 +18,31 @@ import moment from 'moment';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchableBounce from '../modifiedPackages/TouchableBounce';
 
-
-// import { saveReport } from '../api-sheets';
-
 import { Icon } from 'react-native-elements';
 import { getPost, createReport, editPost } from '../api';
 import Comment from './Comment';
+import ErrorView from '../components/ErrorView';
 
 const vw = Dimensions.get('window').width;
 const CHAR_LIMIT = 75;
 
 class PostDetail extends Component {
+
+
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: 'Herd',
+    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: ''
+
+  })
+
+
   constructor(props) {
     super(props);
 
     this.state = {
       loading: true,
+      empty: false,
+      error: false,
       post: '',
       upvote: false,
       downvote: false,
@@ -43,6 +52,7 @@ class PostDetail extends Component {
       }),
       text:'',
     };
+
     this.voteComment = this.voteComment.bind(this);
     this.reportPostPressed = this.reportPostPressed.bind(this);
     this.submitComment = this.submitComment.bind(this);
@@ -50,6 +60,7 @@ class PostDetail extends Component {
   }
 
   reportPostPressed() {
+    console.log('report pressed');
     const report = {
       // reporter: this.state.user,
       reporter: 'reporter',
@@ -62,44 +73,43 @@ class PostDetail extends Component {
     // put into a modal add a severity dropdown and a comment box (for 'additionalInfo')
     createReport(report, (callback) => {
       console.log(`callback from create report: ${JSON.stringify(callback)}`);
-      // this.props.navigation.goBack(null);
     })
   }
 
-  // should be in Comment.js
-  // reportCommentPressed() {
-  //   const report = {
-  //     reporter: 'reporter',
-  //     item: 'this.state.comment',
-  //     type: 'COMMENT',
-  //     severity: 2,
-  //     additionalInfo: 'bad'
-  //   }
-  //   createReport(report, (callback) => {
-  //     console.log(`callback from create: ${JSON.stringify(callback)}`);
-  //     this.props.navigation.goBack(null);
-  //   })
-  // }
-
   componentDidMount() {
-    this.fetchPost(this.props.navigation.state.params.postId);
+    this.fetchPost(this.props.navigation.state.params.post.id);
+    this.props.navigation.setParams({
+      headerRight: <Icon type='font-awesome'
+        name='flag'
+        color='#6C56BA'
+        size={25}
+        onPress={this.reportPostPressed}
+        style={{ marginRight: 10, padding: 5}}
+      />
+    })
+
   }
 
   fetchPost(id) {
-    getPost(id, (post) => {
-      const comments = post.comments;
-      console.log('setting post');
-      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments) });
+    getPost(id, (post, error) => {
+      if (error) {
+        this.setState({error: true});
+      } else {
+        const comments = post.comments;
+        this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments) });
+        if (comments.length === 0) {
+          this.setState({empty: true});
+        }
+      }
     })
   }
 
   submitComment(input) {
-    console.log(input)
     if (input){
       const fields = {comment: input, user_id: this.props.navigation.state.params.user};
       editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
         this.setState({text:''});
-        this.setState({commentsLen:this.state.commentsLen + 1});
+        this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
         this.fetchPost(this.props.navigation.state.params.post.id);
       });
     }
@@ -155,6 +165,7 @@ class PostDetail extends Component {
     const commentListView = (
       <View style={customStyles.commentContainer}>
       <ListView
+        enableEmptySections={true}
         dataSource={this.state.dataSource}
         renderRow={this.renderCommentCell.bind(this)}
         style={customStyles.commentlist}
@@ -188,17 +199,33 @@ class PostDetail extends Component {
       </View>
     );
 
+    if (this.state.error) {
+      return <ErrorView message={'Error loading post :('} />
+    }
+
     if(loaded) {
-      return (
-        <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
+      if (!this.state.empty) {
+        return (
+          <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
           {postDetail}
           <Text style={customStyles.commentCount}> {this.state.commentsLen} Comments </Text>
           {commentListView}
           {newComment}
           <KeyboardSpacer topSpacing={-50}/>
-        </View>
-      );
-    } else {
+          </View>
+        );
+      } else {
+        return (
+          <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
+          {postDetail}
+          <ErrorView message={'No Comments'} />
+          {newComment}
+          <KeyboardSpacer topSpacing={-50}/>
+          </View>
+        );
+      }
+    }
+    else {
       return (
         <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
           {postDetail}
