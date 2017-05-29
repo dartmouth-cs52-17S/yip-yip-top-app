@@ -33,11 +33,6 @@ class PostsListView extends Component {
     }
   }
 
-  doNothing() {
-    console.log('here');
-  }
-
-
   _onFetch(page = 1, callback, options) {
     if (this.props.searchTags) {
       console.log('searching posts');
