@@ -84,10 +84,10 @@ class AuthPhone extends React.Component {
   onPress() {
     // if (this.state.text.length === 10) {
       // console.log('Hello');
-      // this.props.navigation.navigate('Passcode');
-    startAuth('5712155245', (data) => {
+    startAuth('+15712155245', (data) => {
       console.log('auth return');
       console.log(data);
+      this.props.navigation.navigate('Passcode', {phone: '+15712155245'});
     })
     // } else {
     //   Alert.alert('Invalid Phone Number', 'Please enter your phone number and try again.');

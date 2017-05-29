@@ -6,19 +6,40 @@ export function startAuth(pn, cb)  {
   const params = {
     'client_id': 'z84JtDyqbr7VldTci4QupQaaD9akB0rT',
     'connection': 'sms',
-    'phone_number': '+15712155245',
+    'phone_number': pn,
     'send': 'code'
   }
   axios.post('https://bhollander823.auth0.com/passwordless/start', params, {headers: {
     'Content-Type': 'application/json'
   }}).
   then((response) => {
-    console.log(response);
+    console.log(response.data);
     cb(response.data);
   }).catch((error) => {
     console.log('error in auth');
     console.log(error.response);
   })
+}
+
+export function codeAuth(pn, code, cb) {
+  const params = {
+    client_id: 'z84JtDyqbr7VldTci4QupQaaD9akB0rT',
+    connection: 'sms',
+    username: pn,
+    password: code,
+    scope: 'openid'
+  }
+  axios.post('https://bhollander823.auth0.com/oauth/ro', params, {headers: {
+    'Content-Type': 'application/json'
+  }}).
+  then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log('error in codeAuth');
+    console.log(error.response);
+  })
+
 }
 
 export function fetchPosts(long, lat, cb) {

@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, TextInput, Text, Image, Alert, StyleSheet, Dimensions } from 'react-native';
 import Button from 'react-native-button';
-import Auth0Lock from 'react-native-lock';
 
-var lock = new Auth0Lock({clientId: 'z84JtDyqbr7VldTci4QupQaaD9akB0rT', domain: 'bhollander823.auth0.com'});
+import { codeAuth } from '../api';
 
 const vw = Dimensions.get('window').width;
 
@@ -94,8 +93,11 @@ class AuthCode extends React.Component {
   }
 
   onButtonPress() {
+    console.log(this.props.navigation.state.params.phone);
     if (this.state.text.length === 6) {
-      this.props.navigation.navigate('Tabs');
+      codeAuth(this.props.navigation.state.params.phone, this.state.text, (response) => {
+        this.props.navigation.navigate('Tabs');
+      });
     } else {
       Alert.alert('Invalid Passcode', 'Please enter 6 digits for your passcode.');
     }
