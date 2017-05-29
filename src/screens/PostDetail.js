@@ -8,38 +8,20 @@ import {
   View,
   ListView,
   TextInput,
+  TouchableHighlight,
   KeyboardAvoidingView
 } from 'react-native';
 
 import moment from 'moment';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 // import { saveReport } from '../api-sheets';
 
 import { Icon } from 'react-native-elements';
-import { getPost, createReport } from '../api';
+import { getPost, createReport, editPost } from '../api';
 import Comment from './Comment';
 
-const fakeComment1 = {
-  text: 'comment 1',
-  score: 5,
-  time: '1 min ago'
-}
 
-const fakeComment2 = {
-  text: 'comment 2',
-  score: 4,
-  time: '5 mins ago'
-}
-const fakeComment3 = {
-  text: 'comment 3',
-  score: 6,
-  time: '5 mins ago'
-}
-const fakeComment4 = {
-  text: 'comment 4',
-  score: 6,
-  time: '5 mins ago'
-}
 const CHAR_LIMIT = 50;
 class PostDetail extends Component {
   constructor(props) {
@@ -96,12 +78,20 @@ class PostDetail extends Component {
 
   fetchPost(id) {
     getPost(id, (post) => {
-      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows([fakeComment1, fakeComment2, fakeComment3, fakeComment4]) });
+      const comments = post.comments;
+      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments) });
     })
   }
-  submitCommentPressed(input) {
-    console.log(input);
-    console.log('creating a comment component');
+  submitComment(input) {
+    console.log(input)
+    console.log('creating a comment');
+    if (input){
+      const fields = {comment: input, user_id: 'rose'};
+      editPost(this.props.navigation.state.params.postId,fields, 'CREATE_COMMENT', (comment) => {
+        this.setState({text:''});
+        this.fetchPost(this.props.navigation.state.params.postId);
+      });
+    }
   }
   renderCommentCell(comment) {
     console.log(comment);
@@ -151,24 +141,32 @@ class PostDetail extends Component {
       </View>
     );
     const newComment = (
-      <View style={{display: 'flex', flexDirection: 'row', position:'absolute', height: 45, marginTop: 510}}>
+      <View style={{display: 'flex', flexDirection: 'row', height: 45}}>
               <TextInput
                 placeholder="comment"
                 placeholderTextColor="#D0CCDF"
-                multiline={true}
+                multiline={false}
+                value={this.state.text}
+                onChangeText={(text) => this.setState({text})}
                 style={customStyles.textBox}/>
-              <View>
-              <Text style={{backgroundColor:'purple', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
-              </View>
-      </View>
 
+              <TouchableHighlight>
+              <View>
+              <Text onPress={() => {this.submitComment(this.state.text)}}
+                style={{backgroundColor:'#6C56BA', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
+              </View>
+              </TouchableHighlight>
+      </View>
     );
     return (
+
         <View style={{flex:1}}>
             {postDetail}
             {commentListView}
             {newComment}
+            <KeyboardSpacer topSpacing={-45}/>
         </View>
+
     )
   }
 
@@ -253,7 +251,6 @@ const customStyles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3
   },
-
 });
 
 export default PostDetail;
