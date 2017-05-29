@@ -9,10 +9,23 @@ import {
   Button
 } from 'react-native';
 
+import { Icon } from 'react-native-elements';
+
 import PostsListView from '../components/PostsListView';
 
 
 class ProfilePage extends Component {
+
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: 'Profile',
+    headerLeft: <Icon type='ionicon'
+      name='ios-close'
+      color='#6C56BA'
+      size={40}
+      onPress={()=>{ navigation.goBack(null); }}
+      style={{ marginLeft: 10, padding: 5}}
+    />
+  })
 
   render() {
 
