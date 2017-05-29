@@ -89,6 +89,10 @@ class PostRow extends Component {
   }
 
   render() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> post-detail
     let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
     timeSince.splice(-1,1);
     if (timeSince[0] === 'an' | timeSince[0] === 'a') {
@@ -103,10 +107,12 @@ class PostRow extends Component {
       timeSince[2] = 'secs'
     }
     const time = timeSince.join(' ');
+
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
-        /* TODO: Link onPress with post detail */
-        onPress={() => {console.log(this.props.post);}}>
+        onPress={() => {
+          this.props.navigation.navigate('PostDetail', {postId: this.props.post.id});
+        }}>
         <View style={customStyles.main}>
           <View style={customStyles.content}>
             <Text style={customStyles.mainText}>{this.props.post.text}</Text>
@@ -116,11 +122,11 @@ class PostRow extends Component {
             <View style={customStyles.info}>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
-                <Text style={customStyles.mainText}>{this.props.post.commentsLen}</Text>
+                <Text>{this.props.post.commentsLen}</Text>
               </View>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
-                <Text style={customStyles.mainText}>{time}</Text>
+                <Text>{time}</Text>
               </View>
             </View>
           </View>
@@ -174,7 +180,6 @@ const customStyles = StyleSheet.create({
     alignItems: 'center'
   },
   mainText: {
-    fontFamily: 'Gill Sans',
     color: '#3C3559',
     fontSize: 15,
     letterSpacing: -0.1,
@@ -182,7 +187,6 @@ const customStyles = StyleSheet.create({
     paddingLeft: 5
   },
   tags: {
-    fontFamily: 'Gill Sans',
     fontSize: 12,
     color: '#DA5AA4',
     letterSpacing: -0.03,
@@ -195,7 +199,6 @@ const customStyles = StyleSheet.create({
     alignItems: 'center'
   },
   score: {
-    fontFamily: 'Gill Sans',
     fontSize: 18,
     color: '#3C3559',
     letterSpacing: -0.03

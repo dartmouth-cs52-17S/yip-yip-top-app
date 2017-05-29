@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 
 import {
@@ -86,8 +87,7 @@ class NewPostScreen extends Component {
         user: this.props.navigation.state.params.user,
       }
       createPost(post, (callback) => {
-        // console.log(`callback from create: ${JSON.stringify(callback)}`);
-        // console.log(`params is ${JSON.stringify(this.props.navigation.state.params)}`)
+        console.log(`callback from create: ${JSON.stringify(callback)}`);
         this.props.navigation.goBack(null);
       })
     }
