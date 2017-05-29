@@ -259,14 +259,11 @@ export const AuthRoot = StackNavigator({
 })
 
 export const Root = StackNavigator({
+  Tabs: {
+    screen: Tabs,
+  },
   Tutorial: {
     screen: Tutorial,
-  },
-  Tabs: {
-    screen: Tabs,
-  },
-  Tabs: {
-    screen: Tabs,
   },
   Settings: {
     screen: SettingsStack,
