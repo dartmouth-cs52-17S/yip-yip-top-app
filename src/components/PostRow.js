@@ -12,7 +12,6 @@ import TouchableBounce from '../modifiedPackages/TouchableBounce';
 import { Icon } from 'react-native-elements';
 import { editPost } from '../api'
 
-
 class PostRow extends Component {
 
   constructor(props) {
@@ -47,9 +46,7 @@ class PostRow extends Component {
   }
 
   upVote() {
-    // console.log(`whats going on with upvoting? post props is ${JSON.stringify(this.props.post)} and the user is ${this.props.user}`)
     editPost(this.props.post._id, { user_id: this.props.user }, 'UPVOTE_POST', () => {
-      // this.props.refresh();
       console.log('upvote');
     });
     if (!this.state.upvote) {
@@ -108,7 +105,8 @@ class PostRow extends Component {
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
         onPress={() => {
-          this.props.navigation.navigate('PostDetail', {postId: this.props.post.id});
+          console.log('user', this.props.user);
+          this.props.navigation.navigate('PostDetail', {post: this.props.post, user: this.props.user});
         }}>
         <View style={customStyles.main}>
           <View style={customStyles.content}>
@@ -119,11 +117,11 @@ class PostRow extends Component {
             <View style={customStyles.info}>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
-                <Text>{this.props.post.commentsLen}</Text>
+                <Text style={customStyles.infoText}>{this.props.post.comments.length} comments</Text>
               </View>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
-                <Text>{time}</Text>
+                <Text style={customStyles.infoText}>{time}</Text>
               </View>
             </View>
           </View>
@@ -150,7 +148,7 @@ const customStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    width: 340,
+    width: '90%',
     margin: 7,
     borderRadius: 10,
     alignItems: 'center',
@@ -168,6 +166,23 @@ const customStyles = StyleSheet.create({
     justifyContent: 'center',
     margin: 10,
   },
+  mainText: {
+    fontFamily: 'Gill Sans',
+    color: '#3C3559',
+    fontSize: 17,
+    letterSpacing: -0.1,
+    lineHeight: 20,
+    paddingLeft: 5
+  },
+  tags: {
+    fontSize: 12,
+    fontFamily: 'Gill Sans',
+    color: '#DA5AA4',
+    letterSpacing: -0.03,
+    margin: 5,
+    marginTop: 10
+  },
+
   info: {
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -176,19 +191,10 @@ const customStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  mainText: {
-    color: '#3C3559',
-    fontSize: 15,
-    letterSpacing: -0.1,
-    lineHeight: 20,
-    paddingLeft: 5
-  },
-  tags: {
+  infoText: {
+    fontFamily: 'Gill Sans',
     fontSize: 12,
-    color: '#DA5AA4',
-    letterSpacing: -0.03,
-    margin: 5,
-    marginTop: 10
+    color: '#3C3559',
   },
 
   vote: {
@@ -197,6 +203,7 @@ const customStyles = StyleSheet.create({
   },
   score: {
     fontSize: 18,
+    fontFamily: 'Gill Sans',
     color: '#3C3559',
     letterSpacing: -0.03
   }

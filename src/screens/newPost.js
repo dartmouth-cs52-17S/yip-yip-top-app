@@ -16,7 +16,7 @@ import { Icon } from 'react-native-elements';
 import { createPost } from '../api';
 import EventEmitter from 'react-native-eventemitter';
 
-const CHAR_LIMIT = 50;
+const CHAR_LIMIT = 140;
 
 class NewPostScreen extends Component {
 
@@ -115,7 +115,7 @@ class NewPostScreen extends Component {
             numberOfLines={5}
             multiline={true}
             maxLength={CHAR_LIMIT}
-            placeholder="Send a Yip out to your location!"
+            placeholder="Send a Yip out to your location! (Add tags using #hashtags)"
             placeholderTextColor="#D0CCDF"
             value={this.state.text}
             onChangeText={(text) => {

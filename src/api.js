@@ -3,6 +3,17 @@ import axios from 'axios';
 const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
 // const ROOT_URL = 'http://localhost:9090/api';
 
+export function createReport(report, cb) {
+  // { reporter, item, type, severity, additionalInfo }
+  console.log(`report is ${JSON.stringify(report)}`);
+  axios.post(`${ROOT_URL}/report`, report)
+  .then((response) => {
+    console.log(`Report created. ${response.data}`);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(`error creating posts. ${error}`);
+  });
+}
 
 export function startAuth(pn, cb)  {
   const params = {
@@ -103,17 +114,22 @@ export function deletePost(post_id, cb) {
 export function editPost(postId, fields, action, cb) {
   const url = `${ROOT_URL}/posts/${postId}`;
   let params;
-  if (action == 'COMMENT_ACTION') {
-    params = {
-      action,
-      id: postId,
-      commentId: fields.commentId,
-      user: fields.user_id,
-    }
-  } else if (action == 'CREATE_COMMENT') {
+  if (action == 'CREATE_COMMENT') {
     params = {
       comment: fields.comment,
-      user: fields.user_id,
+      user: fields.userId,
+      action,
+    }
+  } else if (action == 'DOWNVOTE_COMMENT') {
+    params = {
+      commentId: fields.commentId,
+      user: fields.userId,
+      action,
+    }
+  } else if (action == 'UPVOTE_COMMENT') {
+    params = {
+      commentId: fields.commentId,
+      user: fields.userId,
       action,
     }
   } else {

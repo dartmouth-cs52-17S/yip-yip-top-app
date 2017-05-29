@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F5F9',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center',
     margin: 10,
   },
@@ -54,7 +54,26 @@ const styles = StyleSheet.create({
 export const HerdStack = StackNavigator({
   Herd: {
     screen: HerdScreen,
-  }
+    navigationOptions: {
+      title: 'Herd',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 18
+      }
+    }
+  },
+  PostDetail: {
+    screen: PostDetail,
+    navigationOptions: {
+      title: 'Detail',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 18
+      }
+    }
+  },
 }, {
   navigationOptions: ({ navigation }) => ({
     gesturesEnabled: false,
@@ -63,9 +82,19 @@ export const HerdStack = StackNavigator({
       shadowOpacity: 0
     },
     headerTitleStyle: {
-      fontFamily: 'Gill Sans'
+      fontFamily: 'Gill Sans',
+      fontSize: 18
     },
-  })
+    headerRight:
+      <Icon type='font-awesome'
+        name='user-circle-o'
+        color='#6C56BA'
+        size={25}
+        onPress={()=>{ navigation.navigate('Settings'); }}
+        style={{ marginRight: 10, padding: 5}}
+        underlayColor='yellow'
+      />
+    })
 })
 
 export const SearchStack = StackNavigator({
@@ -73,8 +102,10 @@ export const SearchStack = StackNavigator({
     screen: SearchScreen,
     navigationOptions: {
       title: 'Search',
+      headerTintColor: '#6C56BA',
       headerTitleStyle: {
-        fontFamily: 'Gill Sans'
+        fontFamily: 'Gill Sans',
+        fontSize: 18
       }
     }
   }
@@ -132,7 +163,8 @@ export const FeedStack = StackNavigator({
       title: 'Feed',
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
-        fontFamily: 'Gill Sans'
+        fontFamily: 'Gill Sans',
+        fontSize: 18
       }
     }
   },
@@ -140,6 +172,11 @@ export const FeedStack = StackNavigator({
     screen: PostDetail,
     navigationOptions: {
       title: 'Detail',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 18
+      }
     }
   },
 }, {
@@ -228,9 +265,6 @@ export const Root = StackNavigator({
   },
   Tutorial: {
     screen: Tutorial,
-  },
-  Tabs: {
-    screen: Tabs,
   },
   Settings: {
     screen: SettingsStack,

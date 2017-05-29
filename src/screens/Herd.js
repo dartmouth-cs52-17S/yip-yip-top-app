@@ -153,6 +153,7 @@ class HerdScreen extends Component {
     const herdListView = (
       <View style={styles.container}>
         <PostsListView
+          navigation={this.props.navigation}
           long={floatLong}
           lat={floatLat}/>
       </View>
