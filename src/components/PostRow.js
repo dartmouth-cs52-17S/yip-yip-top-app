@@ -118,11 +118,11 @@ class PostRow extends Component {
             <View style={customStyles.info}>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
-                <Text>{this.props.post.comments.length} comments</Text>
+                <Text style={customStyles.infoText}>{this.props.post.comments.length} comments</Text>
               </View>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
-                <Text>{time}</Text>
+                <Text style={customStyles.infoText}>{time}</Text>
               </View>
             </View>
           </View>
@@ -167,15 +167,8 @@ const customStyles = StyleSheet.create({
     justifyContent: 'center',
     margin: 10,
   },
-  info: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  infoDetail: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
   mainText: {
+    fontFamily: 'Gill Sans',
     color: '#3C3559',
     fontSize: 15,
     letterSpacing: -0.1,
@@ -184,10 +177,25 @@ const customStyles = StyleSheet.create({
   },
   tags: {
     fontSize: 12,
+    fontFamily: 'Gill Sans',
     color: '#DA5AA4',
     letterSpacing: -0.03,
     margin: 5,
     marginTop: 10
+  },
+
+  info: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  infoDetail: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  infoText: {
+    fontFamily: 'Gill Sans',
+    fontSize: 12,
+    color: '#3C3559',
   },
 
   vote: {
@@ -196,6 +204,7 @@ const customStyles = StyleSheet.create({
   },
   score: {
     fontSize: 18,
+    fontFamily: 'Gill Sans',
     color: '#3C3559',
     letterSpacing: -0.03
   }

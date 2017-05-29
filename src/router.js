@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F5F9',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center',
     margin: 10,
   },
@@ -59,7 +59,7 @@ export const HerdStack = StackNavigator({
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 20
+        fontSize: 18
       }
     }
   },
@@ -70,7 +70,7 @@ export const HerdStack = StackNavigator({
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 20
+        fontSize: 18
       }
     }
   },
@@ -83,7 +83,7 @@ export const HerdStack = StackNavigator({
     },
     headerTitleStyle: {
       fontFamily: 'Gill Sans',
-      fontSize: 20
+      fontSize: 18
     },
     headerRight:
       <Icon type='font-awesome'
@@ -105,7 +105,7 @@ export const SearchStack = StackNavigator({
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 20
+        fontSize: 18
       }
     }
   }
@@ -163,7 +163,7 @@ export const FeedStack = StackNavigator({
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 20
+        fontSize: 18
       }
     }
   },
@@ -174,7 +174,7 @@ export const FeedStack = StackNavigator({
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 20
+        fontSize: 18
       }
     }
   },
