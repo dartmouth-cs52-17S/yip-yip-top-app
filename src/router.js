@@ -158,6 +158,7 @@ export const NewPostStack = StackNavigator({
 export const FeedStack = StackNavigator({
   Feed: {
     screen: Feed,
+
     navigationOptions: {
       title: 'Feed',
       headerTintColor: '#6C56BA',

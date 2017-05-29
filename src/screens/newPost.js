@@ -14,6 +14,7 @@ import {
 // import { height } from 'react-native-dimension';
 import { Icon } from 'react-native-elements';
 import { createPost } from '../api';
+import EventEmitter from 'react-native-eventemitter';
 
 const CHAR_LIMIT = 140;
 
@@ -60,9 +61,6 @@ class NewPostScreen extends Component {
     })
   }
 
-  componentDidMount() {
-
-  }
 
   componentWillUnmount () {
     this.keyboardWillHideListener.remove();
@@ -88,6 +86,7 @@ class NewPostScreen extends Component {
       }
       createPost(post, (callback) => {
         console.log(`callback from create: ${JSON.stringify(callback)}`);
+        EventEmitter.emit('refreshListView');
         this.props.navigation.goBack(null);
       })
     }

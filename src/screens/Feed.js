@@ -10,6 +10,7 @@ import {
 import ActionButton from 'react-native-action-button';
 import { Icon } from 'react-native-elements';
 import PostsListView from '../components/PostsListView';
+import EventEmitter from 'react-native-eventemitter';
 
 class Feed extends Component {
   constructor(props) {
@@ -35,10 +36,19 @@ class Feed extends Component {
     }
   }
 
+  componentWillMount() {
+    EventEmitter.on('refreshListView', (val) => {
+      // this.setState({ refreshListView: true });
+      if (this.child) {
+        this.child.triggerRefresh();
+      }
+    })
+  }
+
   componentDidMount() {
     this.retrieveProfile((profile, err) => {
       if (profile) {
-        console.log(`in feed here is profile ${profile}`)
+        // console.log(`in feed here is profile ${profile}`)
         this.setState({
           user: profile
           // Byrne is "sms|5929b16d961bda2fafde538e"

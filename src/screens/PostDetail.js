@@ -82,7 +82,7 @@ class PostDetail extends Component {
   // }
 
   componentDidMount() {
-    this.fetchPost(this.props.navigation.state.params.post.id);
+    this.fetchPost(this.props.navigation.state.params.postId);
   }
 
   fetchPost(id) {

@@ -138,7 +138,7 @@ export function editPost(postId, fields, action, cb) {
       action
     }
   }
-  axios.put(url,params).
+  axios.put(url, params).
   then((response) => {
     console.log(response.data);
     cb(response.data);

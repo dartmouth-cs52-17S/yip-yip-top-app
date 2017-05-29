@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "backbone-events-standalone": "^0.2.7",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^7.0.1",
     "jwt-decode": "^2.2.0",
@@ -19,6 +20,7 @@
     "react-native-button": "^1.8.2",
     "react-native-dimension": "^1.0.6",
     "react-native-elements": "^0.12.2",
+    "react-native-eventemitter": "^0.0.1",
     "react-native-gifted-listview": "0.0.15",
     "react-native-gifted-spinner": "^0.1.0",
     "react-native-keyboard-spacer": "^0.3.1",

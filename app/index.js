@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 import { Root, AuthRoot } from '../src/router';
 
+import BackboneEvents from 'backbone-events-standalone';
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +35,7 @@ class App extends Component {
 
   componentWillMount() {
     this.retrieveProfile();
+    window.EventBus = BackboneEvents.mixin({});
   }
 
   render() {
