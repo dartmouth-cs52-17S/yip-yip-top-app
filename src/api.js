@@ -27,7 +27,7 @@ export function codeAuth(pn, code, cb) {
     connection: 'sms',
     username: pn,
     password: code,
-    scope: 'openid'
+    scope: 'openid profile email'
   }
   axios.post('https://bhollander823.auth0.com/oauth/ro', params, {headers: {
     'Content-Type': 'application/json'

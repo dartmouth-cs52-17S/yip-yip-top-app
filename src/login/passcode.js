@@ -1,10 +1,84 @@
 import React from 'react';
-import { View, TextInput, Text, Image, Alert, StyleSheet, Dimensions } from 'react-native';
+import { View, TextInput, Text, Image, Alert, StyleSheet, Dimensions, AsyncStorage } from 'react-native';
 import Button from 'react-native-button';
 
 import { codeAuth } from '../api';
 
 const vw = Dimensions.get('window').width;
+
+
+
+class AuthCode extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { text: '' };
+  }
+
+  onButtonPress() {
+    if (this.state.text.length === 6) {
+      codeAuth(this.props.navigation.state.params.phone, this.state.text, (response) => {
+        console.log(response);
+        //TODO: Save response login information
+        // this.saveLogin()
+        this.props.navigation.navigate('Tabs');
+      });
+    } else {
+      Alert.alert('Invalid Passcode', 'Please enter 6 digits for your passcode.');
+    }
+  }
+
+  async saveLogin(profile, token) {
+    try {
+      await AsyncStorage.setItem('@Profile:key', JSON.stringify(profile));
+      await AsyncStorage.setItem('@HerdLong:key', JSON.stringify(token));
+      console.log(`profile is ${JSON.stringify(profile)}`);
+      console.log(`token is ${JSON.stringify(token)}`);
+      // this.props.navigation.navigate('Tabs');
+    } catch (error) {
+      console.log(`Could not save login. ${error}`);
+    }
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.logo}>
+          <Image
+            style={styles.logoImg}
+            source={{uri:'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png'}}
+          />
+          <Text style={styles.logoFont}> Yip Yip </Text>
+        </View>
+        <Text style={styles.instructions}> Enter your 6-digit code </Text>
+        <View style={styles.numArea}>
+          <TextInput
+            maxLength={6}
+            keyboardType='numeric'
+            textAlign='center'
+            style={styles.textArea}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text}
+          />
+        </View>
+        <View style={styles.buttonArea}>
+          <Button
+            containerStyle={styles.button}
+            style={styles.buttonFont}
+            onPress={this.onButtonPress.bind(this)}>
+            YIP YIP!
+          </Button>
+          <View style={styles.numArea}>
+            <Text style={styles.caption}> Code not received? </Text>
+            <Text style={styles.clickCaption} onPress={() => this.props.navigation.goBack()}>
+              Re-enter phone number
+            </Text>
+          </View>
+        </View>
+      </View>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -84,65 +158,5 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
 });
-
-class AuthCode extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { text: '' };
-  }
-
-  onButtonPress() {
-    console.log(this.props.navigation.state.params.phone);
-    if (this.state.text.length === 6) {
-      codeAuth(this.props.navigation.state.params.phone, this.state.text, (response) => {
-        this.props.navigation.navigate('Tabs');
-      });
-    } else {
-      Alert.alert('Invalid Passcode', 'Please enter 6 digits for your passcode.');
-    }
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.logo}>
-          <Image
-            style={styles.logoImg}
-            source={{uri:'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png'}}
-          />
-          <Text style={styles.logoFont}> Yip Yip </Text>
-        </View>
-        <Text style={styles.instructions}> Enter your 6-digit code </Text>
-        <View style={styles.numArea}>
-          <TextInput
-            maxLength={6}
-            keyboardType='numeric'
-            textAlign='center'
-            style={styles.textArea}
-            onChangeText={(text) => this.setState({text})}
-            value={this.state.text}
-          />
-        </View>
-        <View style={styles.buttonArea}>
-          <Button
-            containerStyle={styles.button}
-            style={styles.buttonFont}
-            onPress={this.onButtonPress.bind(this)}>
-            YIP YIP!
-          </Button>
-          <View style={styles.numArea}>
-            <Text style={styles.caption}> Code not received? </Text>
-            <Text style={styles.clickCaption} onPress={() => this.props.navigation.goBack()}>
-              Re-enter phone number
-            </Text>
-          </View>
-        </View>
-      </View>
-    )
-  }
-}
-
-
 
 export default AuthCode;
