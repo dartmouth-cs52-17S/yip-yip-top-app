@@ -16,6 +16,8 @@ import {
 
 import moment from 'moment';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import TouchableBounce from '../modifiedPackages/TouchableBounce';
+
 
 // import { saveReport } from '../api-sheets';
 
@@ -44,6 +46,7 @@ class PostDetail extends Component {
     this.voteComment = this.voteComment.bind(this);
     this.reportPostPressed = this.reportPostPressed.bind(this);
     this.submitComment = this.submitComment.bind(this);
+    this.upvotePost = this.upvotePost.bind(this);
   }
 
   reportPostPressed() {
@@ -85,13 +88,13 @@ class PostDetail extends Component {
   fetchPost(id) {
     getPost(id, (post) => {
       const comments = post.comments;
+      console.log('setting post');
       this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments) });
     })
   }
 
   submitComment(input) {
     console.log(input)
-    console.log('creating a comment');
     if (input){
       const fields = {comment: input, user_id: this.props.navigation.state.params.user};
       editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
@@ -107,6 +110,10 @@ class PostDetail extends Component {
       console.log(action);
       console.log('success');
     });
+  }
+
+  upvotePost() {
+    console.log('in upvote');
   }
 
   renderCommentCell(comment) {
@@ -138,9 +145,13 @@ class PostDetail extends Component {
           </View>
         </View>
         <View style={customStyles.vote}>
-          <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} />
+          <TouchableBounce onPress={this.upvotePost}>
+            <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} />
+          </TouchableBounce>
           <Text style={customStyles.score}> {post.score} </Text>
-          <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
+          <TouchableBounce onPress={() => {this.downvotePost}}>
+            <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
+          </TouchableBounce>
         </View>
       </View>
     );
