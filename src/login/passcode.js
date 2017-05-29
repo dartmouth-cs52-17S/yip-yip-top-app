@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, TextInput, Text, Image, Alert, StyleSheet, Dimensions, AsyncStorage } from 'react-native';
 import Button from 'react-native-button';
+import jwtDecode from 'jwt-decode';
 
 import { codeAuth } from '../api';
 
 const vw = Dimensions.get('window').width;
-
-
 
 class AuthCode extends React.Component {
 
@@ -15,28 +14,31 @@ class AuthCode extends React.Component {
     this.state = { text: '' };
   }
 
-  onButtonPress() {
-    if (this.state.text.length === 6) {
-      codeAuth(this.props.navigation.state.params.phone, this.state.text, (response) => {
-        console.log(response);
-        //TODO: Save response login information
-        // this.saveLogin()
-        this.props.navigation.navigate('Tabs');
-      });
-    } else {
-      Alert.alert('Invalid Passcode', 'Please enter 6 digits for your passcode.');
+  async saveLogin(profile, token) {
+    try {
+      await AsyncStorage.setItem('@Profile:key', profile);
+      await AsyncStorage.setItem('@Token:key', token);
+      console.log(`profile is ${JSON.stringify(profile)}`);
+      console.log(`token is ${JSON.stringify(token)}`);
+      this.props.navigation.navigate('Tabs');
+    } catch (error) {
+      console.log(`Count not save login. ${error}`);
     }
   }
 
-  async saveLogin(profile, token) {
-    try {
-      await AsyncStorage.setItem('@Profile:key', JSON.stringify(profile));
-      await AsyncStorage.setItem('@HerdLong:key', JSON.stringify(token));
-      console.log(`profile is ${JSON.stringify(profile)}`);
-      console.log(`token is ${JSON.stringify(token)}`);
-      // this.props.navigation.navigate('Tabs');
-    } catch (error) {
-      console.log(`Could not save login. ${error}`);
+  onButtonPress() {
+    if (this.state.text.length === 6) {
+      codeAuth(this.props.navigation.state.params.phone, this.state.text, (response) => {
+        console.log(`response is ${JSON.stringify(response)}`);
+        //TODO: Save response login information
+        const decoded = jwtDecode(response.id_token);
+        console.log(`decoded is ${JSON.stringify(decoded)}`);
+        console.log(`decoded userID is ${decoded.sub}`);
+        console.log(`access token is ${response.access_token}`);
+        this.saveLogin(decoded.sub, response.access_token);
+      });
+    } else {
+      Alert.alert('Invalid Passcode', 'Please enter 6 digits for your passcode.');
     }
   }
 

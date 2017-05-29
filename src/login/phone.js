@@ -1,6 +1,11 @@
 import React from 'react';
+/* eslint-disable no-unused-vars */
 import { View, Text, TextInput, Image, Alert, StyleSheet, Dimensions, Keyboard } from 'react-native';
 import Button from 'react-native-button';
+
+// LOOK! Set phone number here
+// const phone_number = '+15617895211' // this is Byrne's number please don't use it
+const phone_number = '+15712155245' // this is Armin's number go crazy with this one
 
 import { startAuth } from '../api';
 
@@ -84,10 +89,10 @@ class AuthPhone extends React.Component {
   onPress() {
     // if (this.state.text.length === 10) {
       // console.log('Hello');
-    startAuth('+15712155245', (data) => {
+    startAuth(phone_number, (data) => {
       console.log('auth return');
       console.log(data);
-      this.props.navigation.navigate('Passcode', {phone: '+15712155245'});
+      this.props.navigation.navigate('Passcode', {phone: phone_number});
     })
     // } else {
     //   Alert.alert('Invalid Phone Number', 'Please enter your phone number and try again.');

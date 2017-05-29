@@ -22,7 +22,7 @@ class App extends Component {
         // console.log(`profile exists in storage ${savedProfile.extraInfo.phone_number}`);
         this.setState( { view: <AuthRoot />, kind: 'AuthRoot' } );
       } else {
-        this.setState( { view: <Root />, kind: 'Root' } );
+        this.setState( { view: <AuthRoot />, kind: 'Root' } );
       }
     }
     catch (error) {

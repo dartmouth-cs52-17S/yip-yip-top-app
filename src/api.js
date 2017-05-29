@@ -27,17 +27,15 @@ export function codeAuth(pn, code, cb) {
     connection: 'sms',
     username: pn,
     password: code,
-    scope: 'openid profile email'
+    scope: 'openid'
   }
-  axios.post('https://bhollander823.auth0.com/oauth/ro', params, {headers: {
-    'Content-Type': 'application/json'
-  }}).
-  then((response) => {
+  axios.post('https://bhollander823.auth0.com/oauth/ro', params,
+    { headers: { 'Content-Type': 'application/json' }})
+  .then((response) => {
     console.log(response.data);
     cb(response.data);
   }).catch((error) => {
-    console.log('error in codeAuth');
-    console.log(error.response);
+    console.log(`error in codeAuth. ${error}`);
   })
 
 }
