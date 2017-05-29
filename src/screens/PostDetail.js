@@ -36,7 +36,6 @@ class PostDetail extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       text:'',
-      createCommentError: false,
     };
   }
 
@@ -59,8 +58,6 @@ class PostDetail extends Component {
         this.setState({text:''});
         this.fetchPost(this.props.navigation.state.params.postId);
       });
-    } else {
-      this.setState({createCommentError:true});
     }
   }
   renderCommentCell(comment) {
@@ -152,10 +149,7 @@ class PostDetail extends Component {
   render() {
     if (this.state.loading) {
       return (<Text> {this.props.navigation.state.params.postId} </Text>);
-    } else if (this.state.createCommentError) {
-      return (<Text> The comment is emptty! </Text>);
-    }
-    else {
+    } else {
       return this.renderPostDetailView(this.state.post);
     }
   }
