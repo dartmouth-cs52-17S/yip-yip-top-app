@@ -1,18 +1,80 @@
 import axios from 'axios';
 
 const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
-// axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
+// const ROOT_URL = 'http://localhost:9090/api';
 
-// yip-yip.herokuapp.com/api/posts/?long=5.000001&lat=6.000001
+export function createReport(report, cb) {
+  // { reporter, item, type, severity, additionalInfo }
+  console.log(`report is ${JSON.stringify(report)}`);
+  axios.post(`${ROOT_URL}/report`, report)
+  .then((response) => {
+    console.log(`Report created. ${response.data}`);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(`error creating posts. ${error}`);
+  });
+}
 
-export function fetchPosts(lat, long, cb) {
-  axios.get(`${ROOT_URL}/posts/`, { params: { lat, long } }).
+export function startAuth(pn, cb)  {
+  const params = {
+    'client_id': 'z84JtDyqbr7VldTci4QupQaaD9akB0rT',
+    'connection': 'sms',
+    'phone_number': pn,
+    'send': 'code'
+  }
+  axios.post('https://bhollander823.auth0.com/passwordless/start', params, {headers: {
+    'Content-Type': 'application/json'
+  }}).
   then((response) => {
     console.log(response.data);
     cb(response.data);
   }).catch((error) => {
+    console.log('error in auth');
+    console.log(error.response);
+  })
+}
+
+export function codeAuth(pn, code, cb) {
+  const params = {
+    client_id: 'z84JtDyqbr7VldTci4QupQaaD9akB0rT',
+    connection: 'sms',
+    username: pn,
+    password: code,
+    scope: 'openid'
+  }
+  axios.post('https://bhollander823.auth0.com/oauth/ro', params,
+    { headers: { 'Content-Type': 'application/json' }})
+  .then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(`error in codeAuth. ${error}`);
+  })
+
+}
+
+export function fetchPosts(long, lat, sort, page, cb) {
+  console.log(`sort by ${sort}`);
+  axios.get(`${ROOT_URL}/posts/`, { params: { long, lat, sort, page } }).
+  then((response) => {
+    console.log(response);
+    cb(response.data);
+  }).catch((error) => {
     console.log(error);
+    console.log(`error fetching posts with long: ${long}, lat: ${lat} with sort of ${sort}`);
   });
+}
+
+export function searchPosts(long, lat, tags, page, cb) {
+  console.log('search posts lat:', lat, 'long:', long);
+  axios.get(`${ROOT_URL}/search/`, { params: { long, lat, tags, page } }).
+  then((response) => {
+    console.log(response);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+    console.log('error searching posts');
+  })
 }
 
 export function createPost(post, cb) {
@@ -79,8 +141,7 @@ export function editPost(postId, fields, action, cb) {
     }
   } else {
     params = {
-      // TODO: Need to get user from client
-      user: 'Hello',    // temporary user information
+      user: fields.user_id,
       action
     }
   }
@@ -91,4 +152,14 @@ export function editPost(postId, fields, action, cb) {
   }).catch((error) => {
     console.log(error);
   });
+}
+
+
+export function getTrendingTags(long, lat, cb) {
+  console.log('getting trending');
+  axios.get(`${ROOT_URL}/tags/`, { params: { long, lat } }).
+  then((response) => {
+    console.log(response);
+    cb(response.data)
+  })
 }

@@ -13,16 +13,23 @@ import {
 } from 'react-native';
 
 import Feed from './screens/Feed';
+import Auth from './screens/Auth';
+import AuthIntro from './login/intro';
+import AuthPhone from './login/phone';
+import AuthCode from './login/passcode';
 import DummyComponent from './screens/dummy';
 import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
 import PostDetail from './screens/PostDetail';
 import NewPostScreen from './screens/newPost';
+import HerdScreen from './screens/Herd';
+import SearchScreen from './screens/Search';
 
 const navBarMainColor='#F4F5F9';
-const navBarTintColor='#3C3559';
+const navBarTintColor='#6C56BA';
 const accentColor='#D0CCDF';
 const mainColor='#F4F5F9';
+const tintColor='#6C56BA';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,42 +50,73 @@ const styles = StyleSheet.create({
   },
 });
 
-const DummyHerd = (props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>
-        Welcome to DummyHerd!
-      </Text>
-    </View>
-  );
-};
-
-const DummySearch = (props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>
-        Welcome to DummySearch!
-      </Text>
-    </View>
-  );
-};
 
 export const HerdStack = StackNavigator({
-  DummyHeard: {
-    screen: DummyHerd,
+  Herd: {
+    screen: HerdScreen,
     navigationOptions: {
-      title: 'DummyHeard',
+      title: 'Herd',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 20
+      }
     }
-  }
+  },
+  PostDetail: {
+    screen: PostDetail,
+    navigationOptions: {
+      title: 'Detail',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 20
+      }
+    }
+  },
+}, {
+  navigationOptions: ({ navigation }) => ({
+    gesturesEnabled: false,
+    headerStyle: {
+      backgroundColor: mainColor,
+      shadowOpacity: 0
+    },
+    headerTitleStyle: {
+      fontFamily: 'Gill Sans',
+      fontSize: 20
+    },
+    headerRight:
+      <Icon type='font-awesome'
+        name='user-circle-o'
+        color='#6C56BA'
+        size={25}
+        onPress={()=>{ navigation.navigate('Settings'); }}
+        style={{ marginRight: 10, padding: 5}}
+        underlayColor='yellow'
+      />
+    })
 })
 
 export const SearchStack = StackNavigator({
-  DummySearch: {
-    screen: DummySearch,
+  Search: {
+    screen: SearchScreen,
     navigationOptions: {
-      title: 'DummySearch',
+      title: 'Search',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 20
+      }
     }
   }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    gesturesEnabled: false,
+    headerStyle: {
+      backgroundColor: mainColor,
+      shadowOpacity: 0
+    }
+  })
 })
 
 export const SettingsStack = StackNavigator({
@@ -88,6 +126,27 @@ export const SettingsStack = StackNavigator({
       title: 'Settings',
     }
   }
+})
+
+export const AuthStack = StackNavigator({
+  Intro: {
+    screen: AuthIntro
+  },
+  Phone: {
+    screen: AuthPhone
+  },
+  Passcode: {
+    screen: AuthCode
+  }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    gesturesEnabled: false,
+    header: null,
+    headerTintColor: mainColor,
+    headerStyle: {
+      backgroundColor: mainColor,
+    },
+  })
 })
 
 export const NewPostStack = StackNavigator({
@@ -101,13 +160,22 @@ export const FeedStack = StackNavigator({
     screen: Feed,
     navigationOptions: {
       title: 'Feed',
-      headerTintColor: '#3C3559'
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 20
+      }
     }
   },
   PostDetail: {
     screen: PostDetail,
     navigationOptions: {
       title: 'Detail',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 20
+      }
     }
   },
 }, {
@@ -117,11 +185,14 @@ export const FeedStack = StackNavigator({
       backgroundColor: mainColor,
       shadowOpacity: 0
     },
+    headerTitleStyle: {
+      fontFamily: 'Gill Sans'
+    },
     headerRight:
-      <Icon type='ionicon'
-        name='ios-glasses-outline'
-        color='#3C3559'
-        size={30}
+      <Icon type='font-awesome'
+        name='user-circle-o'
+        color='#6C56BA'
+        size={25}
         onPress={()=>{ navigation.navigate('Settings'); }}
         style={{ marginRight: 10, padding: 5}}
         underlayColor='yellow'
@@ -134,24 +205,25 @@ export const Tabs = TabNavigator({
     screen: FeedStack,
     navigationOptions: {
       tabBarLabel: 'Feed',
-      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-navigate-outline' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon type='font-awesome' name='map-marker' size={28} color={tintColor} />
     }
   },
   HerdTab: {
     screen: HerdStack,
     navigationOptions: {
       tabBarLabel: 'Herd',
-      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-ionic-outline' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon type='font-awesome' name='paw' size={28} color={tintColor} />
     }
   },
   SearchTab: {
     screen: SearchStack,
     navigationOptions: {
       tabBarLabel: 'Feed',
-      tabBarIcon: ({ tintColor }) => <Icon type='ionicon' name='ios-search' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon type='font-awesome' name='search' size={28} color={tintColor} />
     }
-  }
+  },
 }, {
+  lazy: true,
   tabBarOptions: {
     activeTintColor: navBarTintColor,
     inactiveTintColor: accentColor,
@@ -165,12 +237,36 @@ export const Tabs = TabNavigator({
   }
 });
 
+export const AuthRoot = StackNavigator({
+  Auth: {
+    screen: AuthStack,
+  },
+  Tabs: {
+    screen: Tabs,
+  },
+  Tutorial: {
+    screen: Tutorial,
+  },
+  Settings: {
+    screen: SettingsStack,
+  },
+  NewPost: {
+    screen: NewPostStack,
+  }
+}, {
+  mode: 'modal',
+  headerMode: 'none',
+})
+
 export const Root = StackNavigator({
   Tabs: {
     screen: Tabs,
   },
   Tutorial: {
     screen: Tutorial,
+  },
+  Tabs: {
+    screen: Tabs,
   },
   Settings: {
     screen: SettingsStack,
