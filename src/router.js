@@ -200,7 +200,7 @@ export const Tabs = TabNavigator({
   }
 });
 
-export const Root = StackNavigator({
+export const AuthRoot = StackNavigator({
   Auth: {
     screen: AuthStack,
   },
@@ -221,7 +221,7 @@ export const Root = StackNavigator({
   headerMode: 'none',
 })
 
-export const DummyRoot = StackNavigator({
+export const Root = StackNavigator({
   Tabs: {
     screen: Tabs,
   },
