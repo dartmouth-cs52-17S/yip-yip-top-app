@@ -124,7 +124,18 @@ export const SettingsStack = StackNavigator({
     navigationOptions: {
       title: 'Profile',
     }
-  }
+  },
+  PostDetail: {
+    screen: PostDetail,
+    navigationOptions: {
+      title: 'Detail',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 18
+      }
+    }
+  },
 })
 
 export const AuthStack = StackNavigator({
