@@ -54,7 +54,26 @@ const styles = StyleSheet.create({
 export const HerdStack = StackNavigator({
   Herd: {
     screen: HerdScreen,
-  }
+    navigationOptions: {
+      title: 'Herd',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 20
+      }
+    }
+  },
+  PostDetail: {
+    screen: PostDetail,
+    navigationOptions: {
+      title: 'Detail',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 20
+      }
+    }
+  },
 }, {
   navigationOptions: ({ navigation }) => ({
     gesturesEnabled: false,
@@ -63,9 +82,19 @@ export const HerdStack = StackNavigator({
       shadowOpacity: 0
     },
     headerTitleStyle: {
-      fontFamily: 'Gill Sans'
+      fontFamily: 'Gill Sans',
+      fontSize: 20
     },
-  })
+    headerRight:
+      <Icon type='font-awesome'
+        name='user-circle-o'
+        color='#6C56BA'
+        size={25}
+        onPress={()=>{ navigation.navigate('Settings'); }}
+        style={{ marginRight: 10, padding: 5}}
+        underlayColor='yellow'
+      />
+    })
 })
 
 export const SearchStack = StackNavigator({
@@ -73,8 +102,10 @@ export const SearchStack = StackNavigator({
     screen: SearchScreen,
     navigationOptions: {
       title: 'Search',
+      headerTintColor: '#6C56BA',
       headerTitleStyle: {
-        fontFamily: 'Gill Sans'
+        fontFamily: 'Gill Sans',
+        fontSize: 20
       }
     }
   }
@@ -131,7 +162,8 @@ export const FeedStack = StackNavigator({
       title: 'Feed',
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
-        fontFamily: 'Gill Sans'
+        fontFamily: 'Gill Sans',
+        fontSize: 20
       }
     }
   },
@@ -139,6 +171,11 @@ export const FeedStack = StackNavigator({
     screen: PostDetail,
     navigationOptions: {
       title: 'Detail',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 20
+      }
     }
   },
 }, {

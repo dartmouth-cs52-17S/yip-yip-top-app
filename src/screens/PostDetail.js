@@ -95,7 +95,7 @@ class PostDetail extends Component {
       const fields = {comment: input, user_id: 'rose'};
       editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
         this.setState({text:''});
-        this.setState({commentsLen: this.state.commentsLen +1});
+        this.setState({commentsLen:this.state.commentsLen + 1});
         this.fetchPost(this.props.navigation.state.params.post.id);
       });
     }
