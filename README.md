@@ -20,6 +20,12 @@ Also, I think the standard for styles on React Native is inline (`const styles =
 #### Authentication
 We are using auth0 for passwordless
 
+## You need to bundle the app for deployment
+
+Bundling per [this article](https://medium.com/react-native-development/deploying-a-react-native-app-for-ios-pt-1-a79dfd15acb8):
+
+`react-native bundle --entry-file index.ios.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios`
+
 ### Front End Features
 
 #### Realtime feed
