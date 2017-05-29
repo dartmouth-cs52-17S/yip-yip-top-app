@@ -178,26 +178,6 @@ export const FeedStack = StackNavigator({
       }
     }
   },
-}, {
-  navigationOptions: ({ navigation }) => ({
-    gesturesEnabled: false,
-    headerStyle: {
-      backgroundColor: mainColor,
-      shadowOpacity: 0
-    },
-    headerTitleStyle: {
-      fontFamily: 'Gill Sans'
-    },
-    headerRight:
-      <Icon type='font-awesome'
-        name='user-circle-o'
-        color='#6C56BA'
-        size={25}
-        onPress={()=>{ navigation.navigate('Settings'); }}
-        style={{ marginRight: 10, padding: 5}}
-        underlayColor='yellow'
-      />
-    })
 })
 
 export const Tabs = TabNavigator({

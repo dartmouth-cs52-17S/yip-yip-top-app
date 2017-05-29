@@ -27,6 +27,15 @@ const vw = Dimensions.get('window').width;
 const CHAR_LIMIT = 75;
 
 class PostDetail extends Component {
+
+
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: 'Herd',
+    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: ''
+
+  })
+
+
   constructor(props) {
     super(props);
 
@@ -50,6 +59,7 @@ class PostDetail extends Component {
   }
 
   reportPostPressed() {
+    console.log('report pressed');
     const report = {
       // reporter: this.state.user,
       reporter: 'reporter',
@@ -83,6 +93,16 @@ class PostDetail extends Component {
 
   componentDidMount() {
     this.fetchPost(this.props.navigation.state.params.post.id);
+    this.props.navigation.setParams({
+      headerRight: <Icon type='font-awesome'
+        name='flag'
+        color='#6C56BA'
+        size={25}
+        onPress={this.reportPostPressed}
+        style={{ marginRight: 10, padding: 5}}
+      />
+    })
+
   }
 
   fetchPost(id) {
@@ -160,6 +180,7 @@ class PostDetail extends Component {
     const commentListView = (
       <View style={customStyles.commentContainer}>
       <ListView
+        enableEmptySections={true}
         dataSource={this.state.dataSource}
         renderRow={this.renderCommentCell.bind(this)}
         style={customStyles.commentlist}
