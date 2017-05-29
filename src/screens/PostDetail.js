@@ -208,6 +208,7 @@ class PostDetail extends Component {
     if (this.state.loading) {
       return (this.renderPostDetailView(false));
     } else {
+      console.log(`user in post detail is ${this.props.navigation.state.params.user}`);
       return (this.renderPostDetailView(true));
     }
   }
