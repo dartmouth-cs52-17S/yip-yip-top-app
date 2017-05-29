@@ -13,6 +13,7 @@ import GiftedSpinner from 'react-native-gifted-spinner';
 
 import { fetchPosts, searchPosts } from '../api.js';
 import PostRow from './PostRow';
+import ErrorView from './ErrorView';
 
 class PostsListView extends Component {
 
@@ -21,6 +22,8 @@ class PostsListView extends Component {
 
     this.state = {
       numPosts: 0,
+      error: false,
+      empty: false,
     }
 
     this._onFetch = this._onFetch.bind(this);
@@ -28,24 +31,37 @@ class PostsListView extends Component {
 
   triggerRefresh() {
     console.log('refresh triggered', this.listview);
-    if (this.listview) {
-      this.listview._refresh();
-    }
+    this.setState({error: false, empty: false}, () => {
+      if (this.listview) {
+        this.listview._refresh();
+      }
+    });
   }
 
   _onFetch(page = 1, callback, options) {
     if (this.props.searchTags) {
       console.log('searching posts');
-      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts) => {
-        this.setState({numPosts: this.state.numPosts + posts.length});
+      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts, error) => {
+        if (error) {
+          this.setState({error: true});
+        } else {
+          if (posts.length === 0) {
+            this.setState({empty: true});
+          }
+        }
         callback(posts);
       })
     } else {
       console.log('list sorty by', this.props.sortBy, 'page', page);
-      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts) => {
+      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
         callback([])
-        this.setState({numPosts: this.state.numPosts + posts.length});
-        console.log(posts);
+        if (error) {
+          this.setState({error: true});
+        } else {
+          if (posts.length === 0) {
+            this.setState({empty: true});
+          }
+        }
         callback(posts);
       });
     }
@@ -152,6 +168,15 @@ class PostsListView extends Component {
   }
 
   render() {
+
+    if (this.state.error) {
+      return <ErrorView message={'Error loading Yips'}/>
+    }
+
+    if (this.state.empty) {
+      return <ErrorView message={'No Yips in this area yet \n You should make one!'} />
+    }
+
     if (this.props.long !== '') {
       return (
         <View style={screenStyles.container}>

@@ -18,12 +18,10 @@ import moment from 'moment';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import TouchableBounce from '../modifiedPackages/TouchableBounce';
 
-
-// import { saveReport } from '../api-sheets';
-
 import { Icon } from 'react-native-elements';
 import { getPost, createReport, editPost } from '../api';
 import Comment from './Comment';
+import ErrorView from '../components/ErrorView';
 
 const vw = Dimensions.get('window').width;
 const CHAR_LIMIT = 75;
@@ -34,6 +32,8 @@ class PostDetail extends Component {
 
     this.state = {
       loading: true,
+      empty: false,
+      error: false,
       post: '',
       upvote: false,
       downvote: false,
@@ -82,24 +82,29 @@ class PostDetail extends Component {
   // }
 
   componentDidMount() {
-    this.fetchPost(this.props.navigation.state.params.postId);
+    this.fetchPost(this.props.navigation.state.params.post.id);
   }
 
   fetchPost(id) {
-    getPost(id, (post) => {
-      const comments = post.comments;
-      console.log('setting post');
-      this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments) });
+    getPost(id, (post, error) => {
+      if (error) {
+        this.setState({error: true});
+      } else {
+        const comments = post.comments;
+        this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments) });
+        if (comments.length === 0) {
+          this.setState({empty: true});
+        }
+      }
     })
   }
 
   submitComment(input) {
-    console.log(input)
     if (input){
       const fields = {comment: input, user_id: this.props.navigation.state.params.user};
       editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
         this.setState({text:''});
-        this.setState({commentsLen:this.state.commentsLen + 1});
+        this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
         this.fetchPost(this.props.navigation.state.params.post.id);
       });
     }
@@ -188,17 +193,33 @@ class PostDetail extends Component {
       </View>
     );
 
+    if (this.state.error) {
+      return <ErrorView message={'Error loading post :('} />
+    }
+
     if(loaded) {
-      return (
-        <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
+      if (!this.state.empty) {
+        return (
+          <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
           {postDetail}
           <Text style={customStyles.commentCount}> {this.state.commentsLen} Comments </Text>
           {commentListView}
           {newComment}
           <KeyboardSpacer topSpacing={-50}/>
-        </View>
-      );
-    } else {
+          </View>
+        );
+      } else {
+        return (
+          <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
+          {postDetail}
+          <ErrorView message={'No Comments'} />
+          {newComment}
+          <KeyboardSpacer topSpacing={-50}/>
+          </View>
+        );
+      }
+    }
+    else {
       return (
         <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
           {postDetail}

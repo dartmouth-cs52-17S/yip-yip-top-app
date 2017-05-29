@@ -50,7 +50,6 @@ export function codeAuth(pn, code, cb) {
   }).catch((error) => {
     console.log(`error in codeAuth. ${error}`);
   })
-
 }
 
 export function fetchPosts(long, lat, sort, page, cb) {
@@ -58,10 +57,11 @@ export function fetchPosts(long, lat, sort, page, cb) {
   axios.get(`${ROOT_URL}/posts/`, { params: { long, lat, sort, page } }).
   then((response) => {
     console.log(response);
-    cb(response.data);
+    cb(response.data, null);
   }).catch((error) => {
-    console.log(error);
+    console.log(error.response);
     console.log(`error fetching posts with long: ${long}, lat: ${lat} with sort of ${sort}`);
+    cb(null, error);
   });
 }
 
@@ -69,11 +69,12 @@ export function searchPosts(long, lat, tags, page, cb) {
   console.log('search posts lat:', lat, 'long:', long);
   axios.get(`${ROOT_URL}/search/`, { params: { long, lat, tags, page } }).
   then((response) => {
-    console.log(response);
+    console.log(response, null);
     cb(response.data);
   }).catch((error) => {
     console.log(error);
     console.log('error searching posts');
+    cb(null, error);
   })
 }
 
@@ -93,10 +94,10 @@ export function getPost(post_id, cb) {
   axios.get(url, {params: {post_id}}).
   then((response) => {
     console.log(response.data);
-    cb(response.data);
+    cb(response.data, null);
   }).catch((error) => {
     console.log(error);
-
+    cb(null, error);
   });
 }
 

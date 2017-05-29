@@ -55,7 +55,7 @@ class Comment extends Component {
       });
       this.props.comment.score += 1;
       this.props.voteComment(this.props.comment._id, 'UPVOTE_COMMENT');
-    }else {
+    } else {
       this.setState({
         downvote:true
       });
@@ -83,7 +83,7 @@ class Comment extends Component {
     return (
         <View style={customStyles.container}>
           <View style={customStyles.icon}>
-            <Icon reverse name='ios-american-football' type='ionicon' color='#517fa4' />
+            <Icon reverse name={comm.icon} type='font-awesome' color={comm.color} />
           </View>
           <View style={customStyles.content}>
             <Text style={customStyles.comment}> {comm.text} </Text>
