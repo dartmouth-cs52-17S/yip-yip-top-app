@@ -82,7 +82,11 @@ class PostDetail extends Component {
   // }
 
   componentDidMount() {
-    this.fetchPost(this.props.navigation.state.params.postId);
+    this.fetchPost(this.props.navigation.state.params.post._id);
+  }
+
+  componentWillReceiveProps() {
+    this.setState({commentsLen: this.props.navigation.state.params.post.comments.length});
   }
 
   fetchPost(id) {
@@ -100,7 +104,7 @@ class PostDetail extends Component {
       editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
         this.setState({text:''});
         this.setState({commentsLen:this.state.commentsLen + 1});
-        this.fetchPost(this.props.navigation.state.params.post.id);
+        this.fetchPost(this.props.navigation.state.params.post._id);
       });
     }
   }
@@ -166,7 +170,7 @@ class PostDetail extends Component {
       <View style={{flex: 4, alignItems: 'center', justifyContent: 'space-around'}}>
         <Text style={customStyles.loading}>Loading Comments...</Text>
         <Image
-        source={{uri:'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png'}}
+        source={{uri:'https://i.imgur.com/gQIYpxd.png'}}
         style={{width: '30%', height: '30%', resizeMode: 'contain'}}/>
       </View>
     );
@@ -216,7 +220,7 @@ class PostDetail extends Component {
     if (this.state.loading) {
       return (this.renderPostDetailView(false));
     } else {
-      console.log(`user in post detail is ${this.props.navigation.state.params.user}`);
+      // console.log(`user in post detail is ${this.props.navigation.state.params.user}`);
       return (this.renderPostDetailView(true));
     }
   }
