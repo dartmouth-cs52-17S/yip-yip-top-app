@@ -35,12 +35,14 @@ class PostDetail extends Component {
       post: '',
       upvote: false,
       downvote: false,
+      commentsLen: this.props.navigation.state.params.post.comments.length,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       text:'',
     };
     this.reportPostPressed = this.reportPostPressed.bind(this);
+    this.submitComment = this.submitComment.bind(this);
   }
 
   reportPostPressed() {
@@ -91,9 +93,10 @@ class PostDetail extends Component {
     console.log('creating a comment');
     if (input){
       const fields = {comment: input, user_id: 'rose'};
-      editPost(this.props.navigation.state.params.postId,fields, 'CREATE_COMMENT', (comment) => {
+      editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
         this.setState({text:''});
-        this.fetchPost(this.props.navigation.state.params.postId);
+        this.setState({commentsLen: this.state.commentsLen +1});
+        this.fetchPost(this.props.navigation.state.params.post.id);
       });
     }
   }
@@ -174,7 +177,7 @@ class PostDetail extends Component {
       return (
         <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
           {postDetail}
-          <Text style={customStyles.commentCount}> {post.comments.length} Comments </Text>
+          <Text style={customStyles.commentCount}> {this.state.commentsLen} Comments </Text>
           {commentListView}
           {newComment}
           <KeyboardSpacer topSpacing={-50}/>

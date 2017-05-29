@@ -15,14 +15,66 @@ export function createReport(report, cb) {
   });
 }
 
-export function fetchPosts(lat, long, cb) {
-  axios.get(`${ROOT_URL}/posts/`, { params: { lat, long } }).
+export function startAuth(pn, cb)  {
+  const params = {
+    'client_id': 'z84JtDyqbr7VldTci4QupQaaD9akB0rT',
+    'connection': 'sms',
+    'phone_number': pn,
+    'send': 'code'
+  }
+  axios.post('https://bhollander823.auth0.com/passwordless/start', params, {headers: {
+    'Content-Type': 'application/json'
+  }}).
   then((response) => {
     console.log(response.data);
     cb(response.data);
   }).catch((error) => {
+    console.log('error in auth');
+    console.log(error.response);
+  })
+}
+
+export function codeAuth(pn, code, cb) {
+  const params = {
+    client_id: 'z84JtDyqbr7VldTci4QupQaaD9akB0rT',
+    connection: 'sms',
+    username: pn,
+    password: code,
+    scope: 'openid'
+  }
+  axios.post('https://bhollander823.auth0.com/oauth/ro', params,
+    { headers: { 'Content-Type': 'application/json' }})
+  .then((response) => {
+    console.log(response.data);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(`error in codeAuth. ${error}`);
+  })
+
+}
+
+export function fetchPosts(long, lat, sort, page, cb) {
+  console.log(`sort by ${sort}`);
+  axios.get(`${ROOT_URL}/posts/`, { params: { long, lat, sort, page } }).
+  then((response) => {
+    console.log(response);
+    cb(response.data);
+  }).catch((error) => {
     console.log(error);
+    console.log(`error fetching posts with long: ${long}, lat: ${lat} with sort of ${sort}`);
   });
+}
+
+export function searchPosts(long, lat, tags, page, cb) {
+  console.log('search posts lat:', lat, 'long:', long);
+  axios.get(`${ROOT_URL}/search/`, { params: { long, lat, tags, page } }).
+  then((response) => {
+    console.log(response);
+    cb(response.data);
+  }).catch((error) => {
+    console.log(error);
+    console.log('error searching posts');
+  })
 }
 
 export function createPost(post, cb) {
@@ -77,8 +129,7 @@ export function editPost(postId, fields, action, cb) {
     }
   } else {
     params = {
-      // TODO: Need to get user from client
-      user: 'Hello',    // temporary user information
+      user: fields.user_id,
       action
     }
   }
@@ -89,4 +140,14 @@ export function editPost(postId, fields, action, cb) {
   }).catch((error) => {
     console.log(error);
   });
+}
+
+
+export function getTrendingTags(long, lat, cb) {
+  console.log('getting trending');
+  axios.get(`${ROOT_URL}/tags/`, { params: { long, lat } }).
+  then((response) => {
+    console.log(response);
+    cb(response.data)
+  })
 }

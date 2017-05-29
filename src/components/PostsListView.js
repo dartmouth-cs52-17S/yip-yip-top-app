@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  Image,
   View,
   TouchableHighlight
 } from 'react-native' ;
@@ -10,7 +11,7 @@ import {
 import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
 
-import { fetchPosts } from '../api.js';
+import { fetchPosts, searchPosts } from '../api.js';
 import PostRow from './PostRow';
 
 class PostsListView extends Component {
@@ -19,21 +20,34 @@ class PostsListView extends Component {
     super(props);
 
     this.state = {
-      numPosts: 0
+      numPosts: 0,
     }
 
     this._onFetch = this._onFetch.bind(this);
   }
 
+  triggerRefresh() {
+    if (this.listview) {
+      this.listview._refresh();
+    }
+  }
+
   _onFetch(page = 1, callback, options) {
-    const lat = 6;
-    const long = 5;
-    fetchPosts(lat, long, (posts) => {
-      this.setState({numPosts: this.state.numPosts + posts.length});
-      // TODO: need to make this only the case for the "Load more" option
-      console.log('current number of posts: ' + this.state.numPosts);
-      callback(posts);
-    });
+    if (this.props.searchTags) {
+      console.log('searching posts');
+      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts) => {
+        this.setState({numPosts: this.state.numPosts + posts.length});
+        callback(posts);
+      })
+    } else {
+      console.log('list sorty by', this.props.sortBy, 'page', page);
+      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts) => {
+        callback([])
+        this.setState({numPosts: this.state.numPosts + posts.length});
+        console.log(posts);
+        callback(posts);
+      });
+    }
   }
 
   /**
@@ -41,8 +55,9 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
+    console.log(this.props.navigation);
     return (
-      <PostRow post={rowData} navigation={this.props.navigation} refresh={()=> {
+      <PostRow post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
       }}/>
     );
@@ -82,8 +97,11 @@ class PostsListView extends Component {
    */
   paginationFetchingView() {
     return (
-      <View>
-       <Text>Loading...</Text>
+      <View alignItems='center'>
+       <Text style={customStyles.loading}>Loading Yips...</Text>
+       <Image
+        source={require('../../screenshots/Appa.png')}
+        style={customStyles.loadImg}/>
       </View>
     );
   }
@@ -134,47 +152,61 @@ class PostsListView extends Component {
   }
 
   render() {
-    return (
-      <View style={screenStyles.container}>
-        <GiftedListView
-          ref={ref => this.listview = ref}
-          rowView={this._renderRowView.bind(this)}
-          onFetch={this._onFetch}
+    if (this.props.long !== '') {
+      return (
+        <View style={screenStyles.container}>
+          <GiftedListView
+            ref={ref => this.listview = ref}
+            rowView={this._renderRowView.bind(this)}
+            onFetch={this._onFetch}
 
-          pagination={true} // enable infinite scrolling using touch to load more
-          refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
-          enableEmptySections={true}
+            pagination={true} // enable infinite scrolling using touch to load more
+            refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
+            enableEmptySections={true}
 
-          paginationFetchingView={this.paginationFetchingView}
-          paginationAllLoadedView={this._renderPaginationAllLoadedView} // view when you reach end of list
-          paginationWaitingView={this._renderPaginationWaitingView} // the 'load more' view
-          emptyView={this._renderEmptyView}
+            paginationFetchingView={this.paginationFetchingView}
+            paginationAllLoadedView={this._renderPaginationAllLoadedView} // view when you reach end of list
+            paginationWaitingView={this._renderPaginationWaitingView} // the 'load more' view
+            emptyView={this._renderEmptyView}
 
-          renderSeparator={this._renderSeparatorView}
-          withSections={false} // enable sections
+            renderSeparator={this._renderSeparatorView}
+            withSections={false} // enable sections
 
-          PullToRefreshViewAndroidProps={{
-            colors: ['#fff'],
-            progressBackgroundColor: '#003e82',
-          }}
+            PullToRefreshViewAndroidProps={{
+              colors: ['#fff'],
+              progressBackgroundColor: '#003e82',
+            }}
 
-          style={{ backgroundColor: '#F4F5F9'}}
+            style={{ backgroundColor: '#F4F5F9'}}
 
-          rowHasChanged={(r1,r2)=>{
-            r1.id !== r2.id
-          }}
-        />
+            rowHasChanged={(r1,r2)=>{
+              r1.id !== r2.id
+            }}
+          />
+        </View>
+      );
+    } else {
+      return (
+      <View>
+        <Text>Could not get location</Text>
       </View>
-    );
+      )}
   }
 }
 
 
 const customStyles = StyleSheet.create({
-  separator: {
-    height: 0,
-    backgroundColor: '#CCC'
+  loading: {
+    fontFamily: 'Gill Sans',
+    fontSize: 20,
+    color: '#6C56BA',
+    margin: 20,
   },
+  loadImg: {
+    width: '30%',
+    resizeMode: 'contain',
+  },
+
   refreshableView: {
     height: 50,
     backgroundColor: '#F4F5F9',
@@ -186,10 +218,8 @@ const customStyles = StyleSheet.create({
     color: '#6C56BA',
   },
   paginationView: {
-    height: 44,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F4F5F9',
   },
   defaultView: {
     justifyContent: 'center',
@@ -205,13 +235,6 @@ const customStyles = StyleSheet.create({
     padding: 10,
     height: 44,
   },
-  header: {
-    backgroundColor: '#50a4ff',
-    padding: 10,
-  },
-  headerTitle: {
-    color: '#fff',
-  },
 });
 
 const screenStyles = StyleSheet.create({
@@ -219,18 +242,6 @@ const screenStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFF',
   },
-  navBar: {
-    height: 64,
-    backgroundColor: '#007aff',
-
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  navBarTitle: {
-    color: '#fff',
-    fontSize: 16,
-    marginTop: 12,
-  }
 });
 
 

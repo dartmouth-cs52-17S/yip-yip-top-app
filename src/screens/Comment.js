@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Dimensions
 } from 'react-native';
+
 import moment from 'moment';
 import { Icon } from 'react-native-elements';
 

@@ -8,25 +8,23 @@ import {
 } from 'react-native' ;
 
 import moment from 'moment';
-
+import TouchableBounce from '../modifiedPackages/TouchableBounce';
 import { Icon } from 'react-native-elements';
 import { editPost } from '../api'
+
 
 class PostRow extends Component {
 
   constructor(props) {
     super(props);
 
-    // TODO: define username from app!!!
-    let user = 'Hello';
-
-    if (this.props.post.upvoters.includes(user)) {
+    if (this.props.post.upvoters.includes(this.props.user)) {
       this.state = {
         score: this.props.post.score,
         upvote: true,
         downvote: false
       }
-    } else if (this.props.post.downvoters.includes(user)) {
+    } else if (this.props.post.downvoters.includes(this.props.user)) {
       this.state = {
         score: this.props.post.score,
         upvote: false,
@@ -49,7 +47,7 @@ class PostRow extends Component {
   }
 
   upVote() {
-    editPost(this.props.post, null, 'UPVOTE_POST', () => {
+    editPost(this.props.post, { user_id: this.props.user }, 'UPVOTE_POST', () => {
       // this.props.refresh();
       console.log('upvote');
     });
@@ -70,7 +68,7 @@ class PostRow extends Component {
   }
 
   downVote() {
-    editPost(this.props.post, null, 'DOWNVOTE_POST', () => {
+    editPost(this.props.post, { user_id: this.props.user }, 'DOWNVOTE_POST', () => {
       // this.props.refresh();
       console.log('downvote');
     });
@@ -91,7 +89,6 @@ class PostRow extends Component {
   }
 
   render() {
-
     let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
     timeSince.splice(-1,1);
     if (timeSince[0] === 'an' | timeSince[0] === 'a') {
@@ -130,9 +127,14 @@ class PostRow extends Component {
             </View>
           </View>
           <View style={customStyles.vote}>
-            <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} onPress={this.upVote}/>
+            <TouchableBounce onPress={this.upVote}>
+              <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
+            </TouchableBounce>
+
             <Text style={customStyles.score}> {this.state.score} </Text>
-            <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
+            <TouchableBounce onPress={this.downVote}>
+              <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
+            </TouchableBounce>
           </View>
         </View>
       </TouchableHighlight>
