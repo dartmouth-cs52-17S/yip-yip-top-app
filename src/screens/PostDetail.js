@@ -4,25 +4,28 @@ import React, { Component } from 'react';
 
 import {
   Text,
+  Image,
   StyleSheet,
   View,
   ListView,
   TextInput,
-  TouchableOpacity,
-  KeyboardAvoidingView
+  TouchableHighlight,
+  KeyboardAvoidingView,
+  Dimensions
 } from 'react-native';
 
 import moment from 'moment';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-import { saveReport } from '../api-sheets';
+// import { saveReport } from '../api-sheets';
 
 import { Icon } from 'react-native-elements';
-import { getPost, editPost } from '../api';
+import { getPost, createReport, editPost } from '../api';
 import Comment from './Comment';
 
+const vw = Dimensions.get('window').width;
+const CHAR_LIMIT = 75;
 
-const CHAR_LIMIT = 50;
 class PostDetail extends Component {
   constructor(props) {
     super(props);
@@ -36,12 +39,44 @@ class PostDetail extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       text:'',
-      createCommentError: false,
     };
+    this.reportPostPressed = this.reportPostPressed.bind(this);
   }
 
+  reportPostPressed() {
+    const report = {
+      // reporter: this.state.user,
+      reporter: 'reporter',
+      item: JSON.stringify(this.state.post),
+      type: 'POST',
+      severity: 2,
+      additionalInfo: 'bad-- will come from a text box'
+    }
+
+    // put into a modal add a severity dropdown and a comment box (for 'additionalInfo')
+    createReport(report, (callback) => {
+      console.log(`callback from create report: ${JSON.stringify(callback)}`);
+      // this.props.navigation.goBack(null);
+    })
+  }
+
+  // should be in Comment.js
+  // reportCommentPressed() {
+  //   const report = {
+  //     reporter: 'reporter',
+  //     item: 'this.state.comment',
+  //     type: 'COMMENT',
+  //     severity: 2,
+  //     additionalInfo: 'bad'
+  //   }
+  //   createReport(report, (callback) => {
+  //     console.log(`callback from create: ${JSON.stringify(callback)}`);
+  //     this.props.navigation.goBack(null);
+  //   })
+  // }
+
   componentDidMount() {
-    this.fetchPost(this.props.navigation.state.params.postId);
+    this.fetchPost(this.props.navigation.state.params.post.id);
   }
 
   fetchPost(id) {
@@ -50,39 +85,30 @@ class PostDetail extends Component {
       this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments) });
     })
   }
+
   submitComment(input) {
     console.log(input)
     console.log('creating a comment');
     if (input){
-      const fields = {comment: input, user_id: 'nina'};
+      const fields = {comment: input, user_id: 'rose'};
       editPost(this.props.navigation.state.params.postId,fields, 'CREATE_COMMENT', (comment) => {
         this.setState({text:''});
         this.fetchPost(this.props.navigation.state.params.postId);
       });
-    } else {
-      this.setState({createCommentError:true});
     }
   }
+
   renderCommentCell(comment) {
-    console.log(comment);
+    // console.log(comment);
     return (
       <Comment comment={comment} />
     );
   }
 
-  renderPostDetailView(post) {
-
-    const reportInfo = {
-      timestamp: Date.now().toString(),
-      reporter: 'reporter',
-      reportee: 'reportee',
-      post_id: 'post_id',
-      text: 'text',
-      score: 'score',
-    }
-
+  renderPostDetailView(loaded) {
+    let post = this.props.navigation.state.params.post;
     const postDetail = (
-      <View style={customStyles.main}>
+      <View style={customStyles.postDetail}>
         <View style={customStyles.content}>
           <Text style={customStyles.mainText}>{post.text}</Text>
           <Text style={customStyles.tags}>
@@ -91,15 +117,13 @@ class PostDetail extends Component {
           <View style={customStyles.info}>
             <View style={customStyles.infoDetail}>
               <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
-              <Text>{post.commentsLen}</Text>
+              <Text style={customStyles.infoText}>{post.comments.length}</Text>
             </View>
             <View style={customStyles.infoDetail}>
               <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
-              <Text>{moment(post.timestamp).fromNow()}</Text>
+              <Text style={customStyles.infoText}>{moment(post.timestamp).fromNow()}</Text>
             </View>
-            <View>
-              <Text style={{ color: '#de1224' }} onPress={() => saveReport(reportInfo)}>report</Text>
-            </View>
+            {/* <Text style={{ color: '#de1224' }} onPress={() => this.reportPostPressed()}> Report </Text> */}
           </View>
         </View>
         <View style={customStyles.vote}>
@@ -119,55 +143,79 @@ class PostDetail extends Component {
       />
       </View>
     );
-    const newComment = (
-      <View style={{display: 'flex', flexDirection: 'row', height: 45}}>
-              <TextInput
-                placeholder="comment"
-                placeholderTextColor="#D0CCDF"
-                multiline={false}
-                value={this.state.text}
-                onChangeText={(text) => this.setState({text})}
-                style={customStyles.textBox}/>
 
-              <TouchableOpacity>
-              <View>
-              <Text onPress={() => {this.submitComment(this.state.text)}}
-                style={{backgroundColor:'purple', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
-              </View>
-              </TouchableOpacity>
+    const loadingView = (
+      <View style={{flex: 4, alignItems: 'center', justifyContent: 'space-around'}}>
+        <Text style={customStyles.loading}>Loading Comments...</Text>
+        <Image
+        source={{uri:'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png'}}
+        style={{width: '30%', height: '30%', resizeMode: 'contain'}}/>
       </View>
     );
-    return (
 
-        <View style={{flex:1}}>
-            {postDetail}
-            {commentListView}
-            {newComment}
-            <KeyboardSpacer topSpacing={-45}/>
+    const newComment = (
+      <View style={customStyles.newComment}>
+        <TextInput
+          placeholder="Add a comment..."
+          maxLength={CHAR_LIMIT}
+          placeholderTextColor="#D0CCDF"
+          multiline={false}
+          value={this.state.text}
+          onChangeText={(text) => this.setState({text})}
+          style={customStyles.textBox}/>
+        <TouchableHighlight>
+          <Text onPress={() => {this.submitComment(this.state.text)}}
+            style={customStyles.postButton}> POST </Text>
+        </TouchableHighlight>
+      </View>
+    );
+
+    if(loaded) {
+      return (
+        <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
+          {postDetail}
+          <Text style={customStyles.commentCount}> {post.comments.length} Comments </Text>
+          {commentListView}
+          {newComment}
+          <KeyboardSpacer topSpacing={-50}/>
         </View>
+      );
+    } else {
+      return (
+        <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
+          {postDetail}
+          <Text style={customStyles.commentCount}> {post.comments.length} Comments </Text>
+          {loadingView}
+          {newComment}
+          <KeyboardSpacer topSpacing={-50}/>
+        </View>
+      );
+    }
 
-    )
   }
 
   render() {
     if (this.state.loading) {
-      return (<Text> {this.props.navigation.state.params.postId} </Text>);
-    } else if (this.state.createCommentError) {
-      return (<Text> The comment is emptty! </Text>);
-    }
-    else {
-      return this.renderPostDetailView(this.state.post);
+      return (this.renderPostDetailView(false));
+    } else {
+      return (this.renderPostDetailView(true));
     }
   }
 
 }
 
 const customStyles = StyleSheet.create({
-  main: {
-    flex: 2,
+  loading: {
+    fontFamily: 'Gill Sans',
+    fontSize: 20,
+    color: '#6C56BA',
+    margin: 20,
+  },
+
+  postDetail: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    width: 340,
+    width: 0.9 * vw,
     margin: 7,
     borderRadius: 10,
     alignItems: 'center',
@@ -178,12 +226,28 @@ const customStyles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3,
   },
-
   content: {
-    flex: 2,
+    flex: 4,
     flexDirection: 'column',
     justifyContent: 'center',
     margin: 10,
+  },
+  mainText: {
+    color: '#3C3559',
+    fontFamily: 'Gill Sans',
+    fontSize: 20,
+    letterSpacing: -0.1,
+    lineHeight: 20,
+    paddingLeft: 5,
+    paddingTop: 5,
+  },
+  tags: {
+    fontSize: 18,
+    fontFamily: 'Gill Sans',
+    color: '#DA5AA4',
+    letterSpacing: -0.03,
+    margin: 5,
+    marginTop: 10
   },
   info: {
     flexDirection: 'row',
@@ -193,19 +257,22 @@ const customStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  mainText: {
-    color: '#3C3559',
-    fontSize: 15,
-    letterSpacing: -0.1,
-    lineHeight: 20,
-    paddingLeft: 5
-  },
-  tags: {
+  infoText: {
+    fontFamily: 'Gill Sans',
     fontSize: 12,
-    color: '#DA5AA4',
-    letterSpacing: -0.03,
-    margin: 5,
-    marginTop: 10
+    color: '#3C3559',
+  },
+
+  commentContainer: {
+    flex: 4,
+  },
+  commentCount: {
+    marginTop: 20,
+    marginLeft: 0.05 * vw,
+    marginBottom: 5,
+    fontSize: 16,
+    fontFamily: 'Gill Sans',
+    color: '#5C479D',
   },
 
   vote: {
@@ -213,27 +280,42 @@ const customStyles = StyleSheet.create({
     alignItems: 'center'
   },
   score: {
+    fontFamily: 'Gill Sans',
     fontSize: 18,
     color: '#3C3559',
     letterSpacing: -0.03
   },
-  commentContainer: {
-    flex:4,
+
+  newComment: {
+    display: 'flex',
+    flexDirection: 'row',
   },
   textBox: {
-    height: '100%',
-    width:'80%',
-    fontSize: 24,
+    height: 45,
+    paddingLeft: 0.07 * vw,
+    paddingRight: 5,
+    width: vw-100,
+    fontSize: 16,
     fontFamily: 'Gill Sans',
     color: '#3C3559',
     backgroundColor: 'white',
-    borderRadius: 5,
     shadowColor: '#291D56',
     shadowOffset: {height: 2},
     shadowOpacity: 0.3,
     shadowRadius: 3
   },
-
+  postButton: {
+    backgroundColor:'#5C479D',
+    height: 45,
+    width: 100,
+    fontFamily: 'Gill Sans',
+    color: 'white',
+    fontSize: 16,
+    textAlign:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 14
+  }
 });
 
 export default PostDetail;
