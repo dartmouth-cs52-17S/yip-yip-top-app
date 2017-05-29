@@ -260,6 +260,9 @@ export const AuthRoot = StackNavigator({
 })
 
 export const Root = StackNavigator({
+  Tutorial: {
+    screen: Tutorial,
+  },
   Tabs: {
     screen: Tabs,
   },
