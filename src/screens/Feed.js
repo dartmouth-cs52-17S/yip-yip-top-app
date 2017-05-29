@@ -98,6 +98,7 @@ class Feed extends Component {
           user={this.state.user}
           sortBy={this.state.sortBy}
           ref={instance => {this.child = instance}}
+          navigation={this.props.navigation}
         />
         {actionButton}
       </View>
