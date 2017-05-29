@@ -35,7 +35,7 @@ class Tutorial extends React.Component {
       title: 'Explore',
       description: 'See what the buzz is, around you or at your pinned location.',
       /* eslint-disable no-undef */
-      img: require('../../screenshots/feed.gif'),   /* eslint-enable */
+      img: 'http://i.imgur.com/TRMNhHg.gif',   /* eslint-enable */
       imgStyle: {
         height: 80 * 3,
         width: 100 * 2.5,
@@ -47,7 +47,7 @@ class Tutorial extends React.Component {
       title: 'Send a Yip',
       description: 'Want to share something? Send a yip to your location!',
       /* eslint-disable no-undef */
-      img: require('../../screenshots/new.gif'),   /* eslint-enable */
+      img: 'http://i.imgur.com/yrhpEYc.gif',   /* eslint-enable */
       imgStyle: {
         height: 80 * 3,
         width: 100 * 2.5,
@@ -59,7 +59,7 @@ class Tutorial extends React.Component {
       title: 'Vote and Comment',
       description: 'You get to shape the buzz, collectively!',
       /* eslint-disable no-undef */
-      img: require('../../screenshots/vote.gif'),   /* eslint-enable */
+      img: 'http://i.imgur.com/4F7lZmN.gif',   /* eslint-enable */
       imgStyle: {
         height: 70 * 3,
         width: 100 * 2.5,
