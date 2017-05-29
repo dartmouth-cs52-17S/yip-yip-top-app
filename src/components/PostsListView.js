@@ -27,6 +27,7 @@ class PostsListView extends Component {
   }
 
   triggerRefresh() {
+    console.log('refresh triggered', this.listview);
     if (this.listview) {
       this.listview._refresh();
     }
@@ -55,7 +56,6 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
-    console.log(this.props.navigation);
     return (
       <PostRow post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
