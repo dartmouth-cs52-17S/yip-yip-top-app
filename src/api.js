@@ -2,6 +2,25 @@ import axios from 'axios';
 
 const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
 
+export function startAuth(pn, cb)  {
+  const params = {
+    'client_id': 'z84JtDyqbr7VldTci4QupQaaD9akB0rT',
+    'connection': 'sms',
+    'phone_number': '+15712155245',
+    'send': 'code'
+  }
+  axios.post('https://bhollander823.auth0.com/passwordless/start', params, {headers: {
+    'Content-Type': 'application/json'
+  }}).
+  then((response) => {
+    console.log(response);
+    cb(response.data);
+  }).catch((error) => {
+    console.log('error in auth');
+    console.log(error.response);
+  })
+}
+
 export function fetchPosts(long, lat, cb) {
   axios.get(`${ROOT_URL}/posts/`, { params: { long, lat } }).
   then((response) => {

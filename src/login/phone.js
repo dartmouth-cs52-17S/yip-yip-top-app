@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, TextInput, Image, Alert, StyleSheet, Dimensions, Keyboard } from 'react-native';
 import Button from 'react-native-button';
-import Auth0Lock from 'react-native-lock';
+
+import { startAuth } from '../api';
 
 const vw = Dimensions.get('window').width;
 
@@ -81,12 +82,16 @@ class AuthPhone extends React.Component {
   }
 
   onPress() {
-    if (this.state.text.length === 10) {
-      console.log('Hello');
-      this.props.navigation.navigate('Passcode');
-    } else {
-      Alert.alert('Invalid Phone Number', 'Please enter your phone number and try again.');
-    }
+    // if (this.state.text.length === 10) {
+      // console.log('Hello');
+      // this.props.navigation.navigate('Passcode');
+    startAuth('5712155245', (data) => {
+      console.log('auth return');
+      console.log(data);
+    })
+    // } else {
+    //   Alert.alert('Invalid Phone Number', 'Please enter your phone number and try again.');
+    // }
   }
 
   render() {
