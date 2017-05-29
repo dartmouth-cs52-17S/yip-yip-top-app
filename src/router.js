@@ -164,7 +164,11 @@ export const FeedStack = StackNavigator({
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
         fontSize: 18
-      }
+      },
+      headerStyle: {
+        backgroundColor: mainColor,
+        shadowOpacity: 0
+      },
     }
   },
   PostDetail: {
