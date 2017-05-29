@@ -114,14 +114,7 @@ export function deletePost(post_id, cb) {
 export function editPost(postId, fields, action, cb) {
   const url = `${ROOT_URL}/posts/${postId}`;
   let params;
-  if (action == 'COMMENT_ACTION') {
-    params = {
-      action,
-      id: postId,
-      commentId: fields.commentId,
-      user: fields.userId,
-    }
-  } else if (action == 'CREATE_COMMENT') {
+  if (action == 'CREATE_COMMENT') {
     params = {
       comment: fields.comment,
       user: fields.userId,
