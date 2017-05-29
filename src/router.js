@@ -91,7 +91,6 @@ export const HerdStack = StackNavigator({
         size={25}
         onPress={()=>{ navigation.navigate('Settings'); }}
         style={{ marginRight: 10, padding: 5}}
-        underlayColor='yellow'
       />
     })
 })

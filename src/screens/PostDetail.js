@@ -52,6 +52,7 @@ class PostDetail extends Component {
       }),
       text:'',
     };
+
     this.voteComment = this.voteComment.bind(this);
     this.reportPostPressed = this.reportPostPressed.bind(this);
     this.submitComment = this.submitComment.bind(this);
@@ -72,24 +73,8 @@ class PostDetail extends Component {
     // put into a modal add a severity dropdown and a comment box (for 'additionalInfo')
     createReport(report, (callback) => {
       console.log(`callback from create report: ${JSON.stringify(callback)}`);
-      // this.props.navigation.goBack(null);
     })
   }
-
-  // should be in Comment.js
-  // reportCommentPressed() {
-  //   const report = {
-  //     reporter: 'reporter',
-  //     item: 'this.state.comment',
-  //     type: 'COMMENT',
-  //     severity: 2,
-  //     additionalInfo: 'bad'
-  //   }
-  //   createReport(report, (callback) => {
-  //     console.log(`callback from create: ${JSON.stringify(callback)}`);
-  //     this.props.navigation.goBack(null);
-  //   })
-  // }
 
   componentDidMount() {
     this.fetchPost(this.props.navigation.state.params.post.id);
