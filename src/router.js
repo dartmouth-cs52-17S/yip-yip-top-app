@@ -13,6 +13,10 @@ import {
 } from 'react-native';
 
 import Feed from './screens/Feed';
+import Auth from './screens/Auth';
+import AuthIntro from './login/intro';
+import AuthPhone from './login/phone';
+import AuthCode from './login/passcode';
 import DummyComponent from './screens/dummy';
 import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
@@ -91,6 +95,27 @@ export const SettingsStack = StackNavigator({
       title: 'Settings',
     }
   }
+})
+
+export const AuthStack = StackNavigator({
+  Intro: {
+    screen: AuthIntro
+  },
+  Phone: {
+    screen: AuthPhone
+  },
+  Passcode: {
+    screen: AuthCode
+  }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    gesturesEnabled: false,
+    header: null,
+    headerTintColor: mainColor,
+    headerStyle: {
+      backgroundColor: mainColor,
+    },
+  })
 })
 
 export const NewPostStack = StackNavigator({
@@ -178,7 +203,31 @@ export const Tabs = TabNavigator({
   }
 });
 
+export const AuthRoot = StackNavigator({
+  Auth: {
+    screen: AuthStack,
+  },
+  Tabs: {
+    screen: Tabs,
+  },
+  Tutorial: {
+    screen: Tutorial,
+  },
+  Settings: {
+    screen: SettingsStack,
+  },
+  NewPost: {
+    screen: NewPostStack,
+  }
+}, {
+  mode: 'modal',
+  headerMode: 'none',
+})
+
 export const Root = StackNavigator({
+  Tabs: {
+    screen: Tabs,
+  },
   Tutorial: {
     screen: Tutorial,
   },

@@ -82,13 +82,9 @@ class NewPostScreen extends Component {
       if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
       const post = {
         text: this.state.text,
-<<<<<<< HEAD
         tags: tagArray,
         coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
-=======
-        tags: ['tag', 'another'],
-        coordinates: [5, 6],
->>>>>>> post-detail
+        user: this.props.navigation.state.params.user,
       }
       createPost(post, (callback) => {
         console.log(`callback from create: ${JSON.stringify(callback)}`);
@@ -141,7 +137,6 @@ class NewPostScreen extends Component {
   }
 }
 
-<<<<<<< HEAD
 function findHashtags(text) {
   var regexp = /\B\#\w\w+\b/g;
   let result = text.match(regexp);
@@ -152,8 +147,6 @@ function findHashtags(text) {
     return false;
   }
 }
-=======
->>>>>>> post-detail
 
 const customStyles = StyleSheet.create({
   main: {

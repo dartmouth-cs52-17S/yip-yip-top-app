@@ -4,6 +4,7 @@ import {
   View,
   // Button,
   SegmentedControlIOS,
+  AsyncStorage,
 } from 'react-native';
 
 import ActionButton from 'react-native-action-button';
@@ -18,11 +19,34 @@ class Feed extends Component {
       selectedTab: 'new',
       long: '',
       lat: '',
-      sortBy: 'New',
+      user: '',
+      sortBy: 'New'
+    }
+  }
+
+  async retrieveProfile(callback) {
+    try {
+      const savedProfile = await AsyncStorage.getItem('@Profile:key');
+      if (savedProfile !== null) {
+        callback(savedProfile, null)
+      }
+    } catch (error) {
+      callback(null, error);
     }
   }
 
   componentDidMount() {
+    this.retrieveProfile((profile, err) => {
+      if (profile) {
+        console.log(`in feed here is profile ${profile}`)
+        this.setState({
+          user: profile
+          // Byrne is "sms|5929b16d961bda2fafde538e"
+        });
+      } else {
+        console.log(`could not get profile in componentDidMount in Feed ${err}. state.user is ${this.state.user}`);
+      }
+    })
     navigator.geolocation.getCurrentPosition(
       (p) => {
         console.log('location feed', 'lat:', p.coords.latitude, 'long:', p.coords.longitude);
@@ -59,7 +83,7 @@ class Feed extends Component {
 
     const actionButton = <ActionButton
       buttonColor='#6C56BA'
-      onPress={() => { this.props.navigation.navigate('NewPost', { long: this.state.long, lat: this.state.lat })}}
+      onPress={() => { this.props.navigation.navigate('NewPost', { long: this.state.long, lat: this.state.lat, user: this.state.user })}}
       icon={<Icon type='ionicon' name='ios-add-outline' size={45} color={'white'}/>}
       hideShadow={false}
       size={65}
@@ -72,6 +96,7 @@ class Feed extends Component {
         <PostsListView
           long={this.state.long}
           lat={this.state.lat}
+          user={this.state.user}
           sortBy={this.state.sortBy}
           ref={instance => {this.child = instance}}
         />

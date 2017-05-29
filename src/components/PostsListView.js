@@ -56,11 +56,7 @@ class PostsListView extends Component {
    */
   _renderRowView(rowData) {
     return (
-<<<<<<< HEAD
-      <PostRow post={rowData} id={rowData.id} refresh={()=> {
-=======
-      <PostRow post={rowData} navigation={this.props.navigation} refresh={()=> {
->>>>>>> post-detail
+      <PostRow post={rowData} id={rowData.id} user={this.props.user} refresh={()=> {
         this.listview._refresh();
       }}/>
     );
