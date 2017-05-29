@@ -254,6 +254,20 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		C6FFF2B11EDCC498000671E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B52B040E1784494CAACDFB41 /* RNSpinkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D42CB3511B2538DE00FD0AE2;
+			remoteInfo = RNSpinkit;
+		};
+		C6FFF2B41EDCC498000671E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3338741770BD42EFBEECA704 /* RNVectorIcons.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
+			remoteInfo = RNVectorIcons;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -561,6 +575,25 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+=======
+		C6FFF2931EDCC498000671E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C6FFF2B51EDCC498000671E4 /* libRNVectorIcons.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6FFF2951EDCC498000671E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C6FFF2B21EDCC498000671E4 /* libRNSpinkit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+>>>>>>> 80467644534330260496476e84973ebc6f4af851
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -647,10 +680,15 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = JKFU2K9BZM;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+<<<<<<< HEAD
 						DevelopmentTeam = 49TNG3NFKR;
+=======
+						DevelopmentTeam = JKFU2K9BZM;
+>>>>>>> 80467644534330260496476e84973ebc6f4af851
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -720,11 +758,19 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+<<<<<<< HEAD
 					ProductGroup = 808FC66C1EDCD02F00A51C9E /* Products */;
 					ProjectRef = B52B040E1784494CAACDFB41 /* RNSpinkit.xcodeproj */;
 				},
 				{
 					ProductGroup = 808FC66E1EDCD02F00A51C9E /* Products */;
+=======
+					ProductGroup = C6FFF2951EDCC498000671E4 /* Products */;
+					ProjectRef = B52B040E1784494CAACDFB41 /* RNSpinkit.xcodeproj */;
+				},
+				{
+					ProductGroup = C6FFF2931EDCC498000671E4 /* Products */;
+>>>>>>> 80467644534330260496476e84973ebc6f4af851
 					ProjectRef = 3338741770BD42EFBEECA704 /* RNVectorIcons.xcodeproj */;
 				},
 			);
@@ -928,6 +974,20 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C6FFF2B21EDCC498000671E4 /* libRNSpinkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSpinkit.a;
+			remoteRef = C6FFF2B11EDCC498000671E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C6FFF2B51EDCC498000671E4 /* libRNVectorIcons.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNVectorIcons.a;
+			remoteRef = C6FFF2B41EDCC498000671E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1072,6 +1132,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = JKFU2K9BZM;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1103,6 +1164,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+<<<<<<< HEAD
+=======
+				DEVELOPMENT_TEAM = JKFU2K9BZM;
+>>>>>>> 80467644534330260496476e84973ebc6f4af851
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
@@ -1131,7 +1196,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = 49TNG3NFKR;
+=======
+				DEVELOPMENT_TEAM = JKFU2K9BZM;
+>>>>>>> 80467644534330260496476e84973ebc6f4af851
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
@@ -1144,6 +1213,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.YipYip-dev";
 				PRODUCT_NAME = YipYip;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1154,7 +1224,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = 49TNG3NFKR;
+=======
+				DEVELOPMENT_TEAM = JKFU2K9BZM;
+>>>>>>> 80467644534330260496476e84973ebc6f4af851
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
@@ -1167,6 +1241,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.YipYip-dev";
 				PRODUCT_NAME = YipYip;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -32,7 +32,7 @@ class PostsListView extends Component {
   }
 
   triggerRefresh() {
-    console.log('refresh triggered', this.listview);
+    // console.log('refresh triggered', this.listview);
     this.setState({error: false, empty: false, endOfResults: false}, () => {
       if (this.listview) {
         this.listview._refresh();
@@ -42,7 +42,6 @@ class PostsListView extends Component {
 
   _onFetch(page = 1, callback, options) {
     if (this.props.searchTags) {
-      console.log('searching posts');
       searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts, error) => {
         if (error) {
           this.setState({error: true});
@@ -71,7 +70,7 @@ class PostsListView extends Component {
     }
 
     else {
-      console.log('list sorty by', this.props.sortBy, 'page', page);
+      // console.log('list sorty by', this.props.sortBy, 'page', page);
       fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
         callback([])
         if (error) {
