@@ -12,7 +12,6 @@ import TouchableBounce from '../modifiedPackages/TouchableBounce';
 import { Icon } from 'react-native-elements';
 import { editPost } from '../api'
 
-
 class PostRow extends Component {
 
   constructor(props) {
@@ -149,7 +148,7 @@ const customStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    width: 340,
+    width: '90%',
     margin: 7,
     borderRadius: 10,
     alignItems: 'center',
@@ -170,7 +169,7 @@ const customStyles = StyleSheet.create({
   mainText: {
     fontFamily: 'Gill Sans',
     color: '#3C3559',
-    fontSize: 15,
+    fontSize: 17,
     letterSpacing: -0.1,
     lineHeight: 20,
     paddingLeft: 5

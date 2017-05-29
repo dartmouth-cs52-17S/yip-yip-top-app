@@ -57,7 +57,7 @@ class PostsListView extends Component {
   _renderRowView(rowData) {
     console.log(this.props.navigation);
     return (
-      <PostRow post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
+      <PostRow post={rowData} id={rowData.id} user={'1234'} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
       }}/>
     );
@@ -85,7 +85,7 @@ class PostsListView extends Component {
         onPress={paginateCallback}
         style={customStyles.paginationView}
       >
-        <Text style={[customStyles.actionsLabel, {fontSize: 13}]}>
+        <Text style={customStyles.actionsLabel}>
           Load More
         </Text>
       </TouchableHighlight>
@@ -215,7 +215,9 @@ const customStyles = StyleSheet.create({
   },
   actionsLabel: {
     fontSize: 20,
+    fontFamily: 'Gill Sans',
     color: '#6C56BA',
+    margin: 15,
   },
   paginationView: {
     justifyContent: 'center',

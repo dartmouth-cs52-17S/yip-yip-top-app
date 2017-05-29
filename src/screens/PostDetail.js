@@ -119,10 +119,6 @@ class PostDetail extends Component {
           </Text>
           <View style={customStyles.info}>
             <View style={customStyles.infoDetail}>
-              <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
-              <Text style={customStyles.infoText}>{post.comments.length}</Text>
-            </View>
-            <View style={customStyles.infoDetail}>
               <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
               <Text style={customStyles.infoText}>{moment(post.timestamp).fromNow()}</Text>
             </View>
@@ -187,7 +183,7 @@ class PostDetail extends Component {
       return (
         <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
           {postDetail}
-          <Text style={customStyles.commentCount}> {post.comments.length} Comments </Text>
+          <Text style={customStyles.commentCount}> {this.state.commentsLen} Comments </Text>
           {loadingView}
           {newComment}
           <KeyboardSpacer topSpacing={-50}/>
@@ -238,23 +234,22 @@ const customStyles = StyleSheet.create({
   mainText: {
     color: '#3C3559',
     fontFamily: 'Gill Sans',
-    fontSize: 20,
+    fontSize: 18,
     letterSpacing: -0.1,
     lineHeight: 20,
     paddingLeft: 5,
-    paddingTop: 5,
+    paddingTop: 3,
   },
   tags: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Gill Sans',
     color: '#DA5AA4',
     letterSpacing: -0.03,
     margin: 5,
-    marginTop: 10
   },
   info: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'flex-end'
   },
   infoDetail: {
     flexDirection: 'row',

@@ -61,7 +61,7 @@ class Tutorial extends React.Component {
       /* eslint-disable no-undef */
       img: require('../../screenshots/vote.gif'),   /* eslint-enable */
       imgStyle: {
-        height: 80 * 3,
+        height: 70 * 3,
         width: 100 * 2.5,
       },
       backgroundColor: '#F4F5F9',
