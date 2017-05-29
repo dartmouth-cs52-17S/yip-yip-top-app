@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import { Icon } from 'react-native-elements';
-
+import { editPost } from '../api';
 class Comment extends Component {
   constructor(props) {
     super(props);
@@ -28,11 +28,14 @@ class Comment extends Component {
         upvote:false
       });
       this.props.comment.score -= 1;
+      this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
+
     }else {
       this.setState({
         upvote:true
       });
       this.props.comment.score += 1;
+      this.props.voteComment(this.props.comment._id, 'UPVOTE_COMMENT');
     }
   }
   downVote(){
@@ -46,11 +49,13 @@ class Comment extends Component {
         downvote:false
       });
       this.props.comment.score += 1;
+      this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
     }else {
       this.setState({
         downvote:true
       });
       this.props.comment.score -= 1;
+      this.props.voteComment(this.props.comment._id, 'UPVOTE_COMMENT');
     }
   }
   render() {

@@ -57,12 +57,24 @@ export function editPost(postId, fields, action, cb) {
       action,
       id: postId,
       commentId: fields.commentId,
-      user: fields.user_id,
+      user: fields.userId,
     }
   } else if (action == 'CREATE_COMMENT') {
     params = {
       comment: fields.comment,
-      user: fields.user_id,
+      user: fields.userId,
+      action,
+    }
+  } else if (action == 'DOWNVOTE_COMMENT') {
+    params = {
+      commentId: fields.commentId,
+      user: fields.userId,
+      action,
+    }
+  } else if (action == 'UPVOTE_COMMENT') {
+    params = {
+      commentId: fields.commentId,
+      user: fields.userId,
       action,
     }
   } else {

@@ -37,6 +37,7 @@ class PostDetail extends Component {
       }),
       text:'',
     };
+    this.voteComment = this.voteComment.bind(this);
   }
 
   componentDidMount() {
@@ -53,17 +54,23 @@ class PostDetail extends Component {
     console.log(input)
     console.log('creating a comment');
     if (input){
-      const fields = {comment: input, user_id: 'rose'};
+      const fields = {comment: input, userId: 'rose'};
       editPost(this.props.navigation.state.params.postId,fields, 'CREATE_COMMENT', (comment) => {
         this.setState({text:''});
         this.fetchPost(this.props.navigation.state.params.postId);
       });
     }
   }
+  voteComment(commentId, action) {
+    const fields = {commentId: commentId, userId: 'rose', action}
+    editPost(this.props.navigation.state.params.postId, fields, action, () => {
+      console.log('voted');
+    });
+  }
   renderCommentCell(comment) {
     console.log(comment);
     return (
-      <Comment comment={comment} />
+      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)} />
     );
   }
 
