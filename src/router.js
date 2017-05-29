@@ -147,12 +147,9 @@ export const FeedStack = StackNavigator({
     headerStyle: {
       backgroundColor: mainColor,
       shadowOpacity: 0
-<<<<<<< HEAD
     },
     headerTitleStyle: {
       fontFamily: 'Gill Sans'
-=======
->>>>>>> post-detail
     },
     headerRight:
       <Icon type='font-awesome'
