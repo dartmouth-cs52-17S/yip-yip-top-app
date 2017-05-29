@@ -8,7 +8,7 @@ import {
   View,
   ListView,
   TextInput,
-  TouchableOpacity,
+  TouchableHighlight,
   KeyboardAvoidingView
 } from 'react-native';
 
@@ -129,12 +129,12 @@ class PostDetail extends Component {
                 onChangeText={(text) => this.setState({text})}
                 style={customStyles.textBox}/>
 
-              <TouchableOpacity>
+              <TouchableHighlight>
               <View>
               <Text onPress={() => {this.submitComment(this.state.text)}}
-                style={{backgroundColor:'purple', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
+                style={{backgroundColor:'#6C56BA', height:45, width: 80, color: 'white', fontSize: 20, textAlign:'center', padding:10}}>Post</Text>
               </View>
-              </TouchableOpacity>
+              </TouchableHighlight>
       </View>
     );
     return (
@@ -233,7 +233,6 @@ const customStyles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3
   },
-
 });
 
 export default PostDetail;
