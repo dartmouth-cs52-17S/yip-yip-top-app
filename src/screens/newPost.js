@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 
 import {
@@ -7,7 +6,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Keyboard,
-  StyleSheet
+  StyleSheet,
+  Alert,
 } from 'react-native';
 
 // import ActionButton from 'react-native-action-button';
@@ -15,6 +15,8 @@ import {
 import { Icon } from 'react-native-elements';
 import { createPost } from '../api';
 import EventEmitter from 'react-native-eventemitter';
+
+import banned from '../banned';
 
 const CHAR_LIMIT = 140;
 
@@ -49,7 +51,8 @@ class NewPostScreen extends Component {
 
   componentWillMount () {
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
-    console.log('setting params');
+    // console.log('setting params');
+    console.log(`banned words are ${JSON.stringify(banned)}`);
     this.props.navigation.setParams({
       headerRight: <Icon type='font-awesome'
         name='send-o'
@@ -73,22 +76,32 @@ class NewPostScreen extends Component {
   }
 
   postSubmitPressed() {
+    let safe = true;
     if (this.state.text) {
       // need to set up user
-      console.log(`long prop ${this.props.navigation.state.params.long}`);
-      let tagArray = [];
-      if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
-      const post = {
-        text: this.state.text,
-        tags: tagArray,
-        coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
-        user: this.props.navigation.state.params.user,
+      for (var i = 0; i < banned.length; i++) {
+        if (this.state.text.toLowerCase().includes(banned[i])) {
+          Alert.alert('Cannot Post', 'Please remove profanity from post.');
+          safe = false;
+          break;
+        }
       }
-      createPost(post, (callback) => {
-        console.log(`callback from create: ${JSON.stringify(callback)}`);
-        EventEmitter.emit('refreshListView');
-        this.props.navigation.goBack(null);
-      })
+      if (safe){
+        console.log(`long prop ${this.props.navigation.state.params.long}`);
+        let tagArray = [];
+        if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
+        const post = {
+          text: this.state.text,
+          tags: tagArray,
+          coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
+          user: this.props.navigation.state.params.user,
+        }
+        createPost(post, (callback) => {
+          console.log(`callback from create: ${JSON.stringify(callback)}`);
+          EventEmitter.emit('refreshListView');
+          this.props.navigation.goBack(null);
+        })
+      }
     }
   }
 

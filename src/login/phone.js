@@ -2,6 +2,7 @@ import React from 'react';
 /* eslint-disable no-unused-vars */
 import { View, Text, TextInput, Image, Alert, StyleSheet, Dimensions, Keyboard } from 'react-native';
 import Button from 'react-native-button';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import { startAuth } from '../api';
 
@@ -124,6 +125,7 @@ class AuthPhone extends React.Component {
             SEND CODE
           </Button>
         </View>
+        <KeyboardSpacer />
       </View>
     )
   }

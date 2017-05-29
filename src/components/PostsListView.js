@@ -11,8 +11,9 @@ import {
 import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
 
-import { fetchPosts, searchPosts } from '../api.js';
+import { fetchPosts, searchPosts, getUserPosts } from '../api.js';
 import PostRow from './PostRow';
+import ErrorView from './ErrorView';
 
 class PostsListView extends Component {
 
@@ -21,31 +22,64 @@ class PostsListView extends Component {
 
     this.state = {
       numPosts: 0,
+      error: false,
+      empty: false,
+      endOfResults: false,
     }
 
     this._onFetch = this._onFetch.bind(this);
+    this._renderPaginationWaitingView = this._renderPaginationWaitingView.bind(this);
   }
 
   triggerRefresh() {
-    console.log('refresh triggered', this.listview);
-    if (this.listview) {
-      this.listview._refresh();
-    }
+    // console.log('refresh triggered', this.listview);
+    this.setState({error: false, empty: false, endOfResults: false}, () => {
+      if (this.listview) {
+        this.listview._refresh();
+      }
+    });
   }
 
   _onFetch(page = 1, callback, options) {
     if (this.props.searchTags) {
-      console.log('searching posts');
-      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts) => {
-        this.setState({numPosts: this.state.numPosts + posts.length});
+      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts, error) => {
+        if (error) {
+          this.setState({error: true});
+        } else {
+          if (page === 1 && posts.length === 0) {
+            this.setState({empty: true});
+          } else if (posts.length === 0) {
+            this.setState({endOfResults: true});
+          }
+        }
         callback(posts);
       })
-    } else {
-      console.log('list sorty by', this.props.sortBy, 'page', page);
-      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts) => {
+    } else if (this.props.userId) {
+      getUserPosts(this.props.userId, page, (posts, error) => {
+        if (error) {
+          this.setState({error: true});
+        } else {
+          if (page === 1 && posts.length === 0) {
+            this.setState({empty: true});
+          } else if (posts.length === 0) {
+            this.setState({endOfResults: true})
+          }
+        }
+        callback(posts);
+      })
+    }
+
+    else {
+      // console.log('list sorty by', this.props.sortBy, 'page', page);
+      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
         callback([])
-        this.setState({numPosts: this.state.numPosts + posts.length});
-        console.log(posts);
+        if (error) {
+          this.setState({error: true});
+        } else {
+          if (page === 1 && posts.length === 0) {
+            this.setState({empty: true});
+          }
+        }
         callback(posts);
       });
     }
@@ -79,6 +113,15 @@ class PostsListView extends Component {
    * @param {function} paginateCallback The function to call to load more rows
    */
   _renderPaginationWaitingView(paginateCallback) {
+    if (this.state && this.state.endOfResults) {
+      return (
+        <View style={customStyles.paginationView}>
+          <Text style={customStyles.actionsLabel}>
+            End of Results
+          </Text>
+        </View>
+      );
+    }
     return (
       <TouchableHighlight
         underlayColor='#D0CCDF'
@@ -154,6 +197,15 @@ class PostsListView extends Component {
   }
 
   render() {
+
+    if (this.state.error) {
+      return <ErrorView message={'Error loading Yips'}/>
+    }
+
+    if (this.state.empty) {
+      return <ErrorView message={'No Yips in this area yet \n You should make one!'} />
+    }
+
     if (this.props.long !== '') {
       return (
         <View style={screenStyles.container}>

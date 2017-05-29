@@ -23,6 +23,7 @@ import PostDetail from './screens/PostDetail';
 import NewPostScreen from './screens/newPost';
 import HerdScreen from './screens/Herd';
 import SearchScreen from './screens/Search';
+import ProfilePage from './screens/User';
 
 const navBarMainColor='#F4F5F9';
 const navBarTintColor='#6C56BA';
@@ -91,7 +92,6 @@ export const HerdStack = StackNavigator({
         size={25}
         onPress={()=>{ navigation.navigate('Settings'); }}
         style={{ marginRight: 10, padding: 5}}
-        underlayColor='yellow'
       />
     })
 })
@@ -119,10 +119,10 @@ export const SearchStack = StackNavigator({
 })
 
 export const SettingsStack = StackNavigator({
-  Settings: {
-    screen: Settings,
+  Profile: {
+    screen: ProfilePage,
     navigationOptions: {
-      title: 'Settings',
+      title: 'Profile',
     }
   }
 })
@@ -178,26 +178,6 @@ export const FeedStack = StackNavigator({
       }
     }
   },
-}, {
-  navigationOptions: ({ navigation }) => ({
-    gesturesEnabled: false,
-    headerStyle: {
-      backgroundColor: mainColor,
-      shadowOpacity: 0
-    },
-    headerTitleStyle: {
-      fontFamily: 'Gill Sans'
-    },
-    headerRight:
-      <Icon type='font-awesome'
-        name='user-circle-o'
-        color='#6C56BA'
-        size={25}
-        onPress={()=>{ navigation.navigate('Settings'); }}
-        style={{ marginRight: 10, padding: 5}}
-        underlayColor='yellow'
-      />
-    })
 })
 
 export const Tabs = TabNavigator({

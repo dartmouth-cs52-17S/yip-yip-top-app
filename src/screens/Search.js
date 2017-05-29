@@ -180,6 +180,7 @@ const searchStyle = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
+    backgroundColor: '#F4F5F9',
   },
   textBox: {
     height: 45,
