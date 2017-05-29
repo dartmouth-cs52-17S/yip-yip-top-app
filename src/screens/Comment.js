@@ -11,9 +11,34 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      upvote:false,
+      downvote:false
+    }
+    this.upVote = this.upVote.bind(this);
+    this.downVote = this.downVote.bind(this);
+  }
+  upVote(){
+    if (this.state.upvote){
+      this.setState({
+        upvote:false
+      });
+    }else {
+      this.setState({
+        upvote:true
+      });
     }
   }
-
+  downVote(){
+    if (this.state.downvote){
+      this.setState({
+        downvote:false
+      });
+    }else {
+      this.setState({
+        downvote:true
+      });
+    }
+  }
   render() {
     const comm = this.props.comment;
     let timeSince = moment(comm.timestamp).fromNow().split(' ');
@@ -51,7 +76,7 @@ class Comment extends Component {
             </View>
 
           <View style={{flex: 1, alignItems: 'center'}}>
-            <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} />
+            <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} onPress={this.upVote} />
             <Text> {comm.score} </Text>
             <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
           </View>
