@@ -80,13 +80,6 @@ class PostDetail extends Component {
   }
 
   componentDidMount() {
-<<<<<<< HEAD
-    this.fetchPost(this.props.navigation.state.params.post._id);
-  }
-
-  componentWillReceiveProps() {
-    this.setState({commentsLen: this.props.navigation.state.params.post.comments.length});
-=======
     this.fetchPost(this.props.navigation.state.params.post.id);
     this.props.navigation.setParams({
       headerRight: <Icon type='font-awesome'
@@ -98,7 +91,6 @@ class PostDetail extends Component {
       />
     })
 
->>>>>>> f7fc0ad7e96e53b8035cf78281230302401f1d51
   }
 
   fetchPost(id) {
@@ -117,14 +109,6 @@ class PostDetail extends Component {
 
   submitComment(input) {
     if (input){
-<<<<<<< HEAD
-      const fields = {comment: input, user_id: this.props.navigation.state.params.user};
-      editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
-        this.setState({text:''});
-        this.setState({commentsLen:this.state.commentsLen + 1});
-        this.fetchPost(this.props.navigation.state.params.post._id);
-      });
-=======
       let safe = true;
       for (var i = 0; i < banned.length; i++) {
         if (input.toLowerCase().includes(banned[i])) {
@@ -141,7 +125,6 @@ class PostDetail extends Component {
           this.fetchPost(this.props.navigation.state.params.post.id);
         });
       }
->>>>>>> f7fc0ad7e96e53b8035cf78281230302401f1d51
     }
   }
 
@@ -208,7 +191,7 @@ class PostDetail extends Component {
       <View style={{flex: 4, alignItems: 'center', justifyContent: 'space-around'}}>
         <Text style={customStyles.loading}>Loading Comments...</Text>
         <Image
-        source={{uri:'https://i.imgur.com/gQIYpxd.png'}}
+        source={{uri:'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png'}}
         style={{width: '30%', height: '30%', resizeMode: 'contain'}}/>
       </View>
     );
@@ -274,7 +257,7 @@ class PostDetail extends Component {
     if (this.state.loading) {
       return (this.renderPostDetailView(false));
     } else {
-      // console.log(`user in post detail is ${this.props.navigation.state.params.user}`);
+      console.log(`user in post detail is ${this.props.navigation.state.params.user}`);
       return (this.renderPostDetailView(true));
     }
   }
