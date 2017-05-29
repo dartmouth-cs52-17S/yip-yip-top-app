@@ -14,6 +14,9 @@ import {
 
 import Feed from './screens/Feed';
 import Auth from './screens/Auth';
+import AuthIntro from './login/intro';
+import AuthPhone from './login/phone';
+import AuthCode from './login/passcode';
 import DummyComponent from './screens/dummy';
 import Settings from './screens/settings';
 import Tutorial from './screens/tutorial';
@@ -76,6 +79,27 @@ export const SettingsStack = StackNavigator({
       title: 'Settings',
     }
   }
+})
+
+export const AuthStack = StackNavigator({
+  Intro: {
+    screen: AuthIntro
+  },
+  Phone: {
+    screen: AuthPhone
+  },
+  Passcode: {
+    screen: AuthCode
+  }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    gesturesEnabled: false,
+    header: null,
+    headerTintColor: mainColor,
+    headerStyle: {
+      backgroundColor: mainColor,
+    },
+  })
 })
 
 export const NewPostStack = StackNavigator({
@@ -154,9 +178,9 @@ export const Tabs = TabNavigator({
   }
 });
 
-export const AuthRoot = StackNavigator({
+export const Root = StackNavigator({
   Auth: {
-    screen: Auth,
+    screen: AuthStack,
   },
   Tabs: {
     screen: Tabs,
@@ -175,7 +199,7 @@ export const AuthRoot = StackNavigator({
   headerMode: 'none',
 })
 
-export const Root = StackNavigator({
+export const DummyRoot = StackNavigator({
   Tabs: {
     screen: Tabs,
   },
