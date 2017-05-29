@@ -104,7 +104,7 @@ class PostDetail extends Component {
   voteComment(commentId, action) {
     const fields = {commentId: commentId, userId: 'rose', action}
     editPost(this.props.navigation.state.params.postId, fields, action, () => {
-      console.log('voted');
+      console.log('voted success');
     });
   }
 
