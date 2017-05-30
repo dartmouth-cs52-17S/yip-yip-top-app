@@ -17,23 +17,22 @@ const ErrorView = (props) => {
     Refresh
   </Button>
 
-  // if (this.props.hideAppa) {
-  return (
+  if (props.hideAppa) {
+    return (
       <View style={customStyles.container}>
         <Text style={customStyles.text}> {props.message} </Text>
         {refreshButton}
       </View>
-  );
-  // }
-  //  else {
-  //   return (
-  //     <View style={customStyles.container}>
-  //       {appa}
-  //       <Text style={customStyles.text}> {props.message} </Text>
-  //       {refreshButton}
-  //     </View>
-  //   );
-  // }
+    );
+  } else {
+    return (
+      <View style={customStyles.container}>
+        {appa}
+        <Text style={customStyles.text}> {props.message} </Text>
+        {refreshButton}
+      </View>
+    );
+  }
 
 };
 
