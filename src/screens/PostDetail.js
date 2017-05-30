@@ -82,10 +82,18 @@ class PostDetail extends Component {
       additionalInfo: 'bad-- will come from a text box'
     }
 
-    // put into a modal add a severity dropdown and a comment box (for 'additionalInfo')
-    createReport(report, (callback) => {
-      // console.log(`callback from create report: ${JSON.stringify(callback)}`);
-    })
+    Alert.alert(
+      'Report Yip?',
+      'Our team will be notified',
+      [
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+        {text: 'Yes', onPress: () => {
+          createReport(report, (callback) => {
+          })
+        }},
+      ],
+      { cancelable: false }
+    )
   }
 
   componentDidMount() {

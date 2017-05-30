@@ -17,7 +17,6 @@ class PostRow extends Component {
   constructor(props) {
     super(props);
 
-    console.log('user in postrow', this.props.user);
     if (this.props.post.upvoters.includes(this.props.user)) {
       this.state = {
         score: this.props.post.score,

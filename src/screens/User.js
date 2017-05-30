@@ -27,9 +27,6 @@ class ProfilePage extends Component {
   })
 
   render() {
-
-    console.log("Userid in profilepage", this.props.navigation.state.params.userId);
-
     return (
       <View style={{flex: 1}}>
         <PostsListView
