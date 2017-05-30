@@ -8,6 +8,70 @@ import { startAuth } from '../api';
 
 const vw = Dimensions.get('window').width;
 
+class AuthPhone extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: '',
+      buttonDisabled: false,
+    };
+  }
+
+  onPress() {
+    if (this.state.text.length === 10) {
+      this.setState({buttonDisabled: true});
+      startAuth('+1'.concat(this.state.text), (data, error) => {
+        if (error) {
+          this.setState({buttonDisabled: false});
+          Alert.alert('Something went wrong', 'We are probably down for maintenance. Please try again later');
+        }
+        // console.log('auth return');
+        // console.log(data);
+        this.props.navigation.navigate('Passcode', {phone: '+1'.concat(this.state.text)});
+      })
+    } else {
+      Alert.alert('Invalid Phone Number', 'Please enter your phone number and try again.');
+    }
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.logo}>
+          <Image
+            style={styles.logoImg}
+            source={{uri:'https://i.imgur.com/fdh8TNp.png'}}
+          />
+          <Text style={styles.logoFont}> Yip Yip </Text>
+        </View>
+        <Text style={styles.instructions}> Enter your phone number </Text>
+        <View style={styles.numArea}>
+          <Text style={styles.instructions}> +1 </Text>
+          <TextInput
+            maxLength={10}
+            keyboardType='numeric'
+            style={styles.textArea}
+            onChangeText={(text) => this.setState({text})}
+            onBlur={() => Keyboard.dismiss()}
+            value={this.state.text}
+          />
+        </View>
+        <View style={styles.buttonArea}>
+          <Button
+            disabled={this.state.buttonDisabled}
+            containerStyle={styles.button}
+            style={styles.buttonFont}
+            onPress={this.onPress.bind(this)}>
+            SEND CODE
+          </Button>
+        </View>
+        <KeyboardSpacer />
+      </View>
+    )
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,7 +87,11 @@ const styles = StyleSheet.create({
   logoImg: {
     width: vw * 0.6,
     height: vw * 0.4,
-    resizeMode: 'cover'
+    resizeMode: 'contain',
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.4,
+    shadowRadius: 3
   },
   logoFont: {
     fontSize: 45,
@@ -75,71 +143,5 @@ const styles = StyleSheet.create({
     margin: 5
   },
 });
-
-class AuthPhone extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: '',
-      buttonDisabled: false,
-    };
-  }
-
-  onPress() {
-    if (this.state.text.length === 10) {
-      this.setState({buttonDisabled: true});
-      startAuth('+1'.concat(this.state.text), (data, error) => {
-        if (error) {
-          this.setState({buttonDisabled: false});
-          Alert.alert('Something went wrong', 'We are probably down for maintenance. Please try again later');
-        }
-        // console.log('auth return');
-        // console.log(data);
-        this.props.navigation.navigate('Passcode', {phone: '+1'.concat(this.state.text)});
-      })
-    } else {
-      Alert.alert('Invalid Phone Number', 'Please enter your phone number and try again.');
-    }
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.logo}>
-          <Image
-            style={styles.logoImg}
-            source={{uri:'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png'}}
-          />
-          <Text style={styles.logoFont}> Yip Yip </Text>
-        </View>
-        <Text style={styles.instructions}> Enter your phone number </Text>
-        <View style={styles.numArea}>
-          <Text style={styles.instructions}> +1 </Text>
-          <TextInput
-            maxLength={10}
-            keyboardType='numeric'
-            style={styles.textArea}
-            onChangeText={(text) => this.setState({text})}
-            onBlur={() => Keyboard.dismiss()}
-            value={this.state.text}
-          />
-        </View>
-        <View style={styles.buttonArea}>
-          <Button
-            disabled={this.state.buttonDisabled}
-            containerStyle={styles.button}
-            style={styles.buttonFont}
-            onPress={this.onPress.bind(this)}>
-            SEND CODE
-          </Button>
-        </View>
-        <KeyboardSpacer />
-      </View>
-    )
-  }
-}
-
-
 
 export default AuthPhone;
