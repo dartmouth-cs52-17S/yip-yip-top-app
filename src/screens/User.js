@@ -28,10 +28,13 @@ class ProfilePage extends Component {
 
   render() {
 
+    console.log("Userid in profilepage", this.props.navigation.state.params.userId);
+
     return (
       <View style={{flex: 1}}>
         <PostsListView
           userId={this.props.navigation.state.params.userId}
+          user={this.props.navigation.state.params.userId}
           navigation={this.props.navigation}
         />
       </View>
