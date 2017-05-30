@@ -9,6 +9,7 @@ import {
 
 import moment from 'moment';
 import { Icon } from 'react-native-elements';
+import { editPost } from '../api';
 
 const vw = Dimensions.get('window').width;
 
@@ -21,6 +22,7 @@ class Comment extends Component {
     }
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
   upVote(){
     if (this.state.downvote) {
@@ -63,6 +65,9 @@ class Comment extends Component {
       this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
     }
   }
+  deleteComment(commentId){
+
+  }
   render() {
     const comm = this.props.comment;
     let timeSince = moment(comm.timestamp).fromNow().split(' ');
@@ -79,9 +84,11 @@ class Comment extends Component {
       timeSince[2] = 'secs'
     }
     const time = timeSince.join(' ');
+    console.log('load the commentId');
+    console.log(comm._id);
     let del= null;
     if (comm.user == this.props.user){
-      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15}}>delete</Text>
+      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15}} onPress={this.deleteComment(comm._id)}>delete</Text>
     }
     return (
         <View style={customStyles.container}>
