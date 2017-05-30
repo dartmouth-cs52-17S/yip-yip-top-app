@@ -60,6 +60,7 @@ class PostDetail extends Component {
     this.reportPostPressed = this.reportPostPressed.bind(this);
     this.submitComment = this.submitComment.bind(this);
     this.upvotePost = this.upvotePost.bind(this);
+    this.deleteComment= this.deleteComment.bind(this);
   }
 
   reportPostPressed() {
@@ -135,13 +136,19 @@ class PostDetail extends Component {
     });
   }
 
+  deleteComment(commentId, action) {
+    const fields = {commentId: commentId, action}
+    editPost(this.props.navigation.state.params.post.id, fields, action, () => {
+      console.log('deleted successfully.');
+    });
+  }
   upvotePost() {
     console.log('in upvote');
   }
 
   renderCommentCell(comment) {
     return (
-      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)} user = {this.props.navigation.state.params.user}/>
+      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)} deleteComment={(commentId, action) => this.deleteComment(commentId, action)}/>
     );
   }
 
