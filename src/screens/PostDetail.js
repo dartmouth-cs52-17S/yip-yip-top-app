@@ -140,9 +140,9 @@ class PostDetail extends Component {
   }
 
   renderCommentCell(comment) {
-    console.log(this.props.navigation.state.params.user);
+    const user = this.props.navigation.state.params.user;
     return (
-      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)}/>
+      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)} user/>
     );
   }
 
