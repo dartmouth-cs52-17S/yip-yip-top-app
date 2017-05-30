@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   Dimensions,
+  KeyboardAvoidingView,
   ScrollView
 } from 'react-native'
 
@@ -213,7 +214,7 @@ const searchStyle = StyleSheet.create({
     overflow:'hidden',
   },
   tags: {
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: 'Gill Sans',
     fontWeight:'normal',
     color: '#6C56BA',

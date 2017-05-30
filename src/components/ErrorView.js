@@ -1,12 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import EventEmitter from 'react-native-eventemitter';
 import Button from 'react-native-button';
 
 const ErrorView = (props) => {
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={customStyles.container}>
+      <Image
+        source={{uri:'https://i.imgur.com/424SJFg.png'}}
+        style={customStyles.img}/>
       <Text style={customStyles.text}> {props.message} </Text>
       <Button
         containerStyle={customStyles.button}
@@ -20,10 +23,25 @@ const ErrorView = (props) => {
 };
 
 const customStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F4F5F9',
+  },
+  img: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
+  },
   text: {
     fontFamily: 'Gill Sans',
     color: '#6C56BA',
-    fontSize: 18,
+    fontSize: 20,
     lineHeight: 25,
     textAlign: 'center'
   },

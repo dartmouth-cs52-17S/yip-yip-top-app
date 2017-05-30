@@ -169,13 +169,13 @@ const customStyles = StyleSheet.create({
   mainText: {
     fontFamily: 'Gill Sans',
     color: '#3C3559',
-    fontSize: 17,
+    fontSize: 18,
     letterSpacing: -0.1,
     lineHeight: 20,
     paddingLeft: 5
   },
   tags: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: 'Gill Sans',
     color: '#DA5AA4',
     letterSpacing: -0.03,
@@ -193,7 +193,7 @@ const customStyles = StyleSheet.create({
   },
   infoText: {
     fontFamily: 'Gill Sans',
-    fontSize: 12,
+    fontSize: 14,
     color: '#3C3559',
   },
 
@@ -202,7 +202,7 @@ const customStyles = StyleSheet.create({
     alignItems: 'center'
   },
   score: {
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: 'Gill Sans',
     color: '#3C3559',
     letterSpacing: -0.03
