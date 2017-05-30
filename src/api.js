@@ -136,13 +136,13 @@ export function editPost(postId, fields, action, cb) {
   } else if (action == 'DOWNVOTE_COMMENT') {
     params = {
       commentId: fields.commentId,
-      user: fields.userId,
+      user: fields.user,
       action,
     }
   } else if (action == 'UPVOTE_COMMENT') {
     params = {
       commentId: fields.commentId,
-      user: fields.userId,
+      user: fields.user,
       action,
     }
   } else if (action == 'DELETE_COMMENT') {
