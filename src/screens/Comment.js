@@ -79,7 +79,14 @@ class Comment extends Component {
       timeSince[2] = 'secs'
     }
     const time = timeSince.join(' ');
-
+    console.log('from the comments');
+    console.log(comm.user);
+    console.log(this.props.user);
+    if (comm.user == this.props.user){
+      console.log('its the same user');
+    }else {
+      console.log('its not the same user');
+    }
     return (
         <View style={customStyles.container}>
           <View style={customStyles.icon}>
