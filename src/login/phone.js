@@ -80,14 +80,22 @@ class AuthPhone extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = {
+      text: '',
+      buttonDisabled: false,
+    };
   }
 
   onPress() {
     if (this.state.text.length === 10) {
-      startAuth('+1'.concat(this.state.text), (data) => {
-        console.log('auth return');
-        console.log(data);
+      this.setState({buttonDisabled: true});
+      startAuth('+1'.concat(this.state.text), (data, error) => {
+        if (error) {
+          this.setState({buttonDisabled: false});
+          Alert.alert('Something went wrong', 'We are probably down for maintenance. Please try again later');
+        }
+        // console.log('auth return');
+        // console.log(data);
         this.props.navigation.navigate('Passcode', {phone: '+1'.concat(this.state.text)});
       })
     } else {
@@ -119,6 +127,7 @@ class AuthPhone extends React.Component {
         </View>
         <View style={styles.buttonArea}>
           <Button
+            disabled={this.state.buttonDisabled}
             containerStyle={styles.button}
             style={styles.buttonFont}
             onPress={this.onPress.bind(this)}>

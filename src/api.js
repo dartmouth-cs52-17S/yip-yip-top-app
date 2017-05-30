@@ -40,8 +40,9 @@ export function startAuth(pn, cb)  {
   }}).
   then((response) => {
     // console.log(response.data);
-    cb(response.data);
+    cb(response.data, null);
   }).catch((error) => {
+    cb(null, error);
     // console.log /('error in auth');
     // console.log(error.response);
   })
@@ -59,8 +60,9 @@ export function codeAuth(pn, code, cb) {
     { headers: { 'Content-Type': 'application/json' }})
   .then((response) => {
     // console.log(response.data);
-    cb(response.data);
+    cb(response.data, null);
   }).catch((error) => {
+    cb(null, error)
     // console.log(`error in codeAuth. ${error}`);
   })
 }

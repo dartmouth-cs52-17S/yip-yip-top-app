@@ -209,6 +209,7 @@ class PostDetail extends Component {
 
   renderPostDetailView() {
     let post = this.state.post;
+    const spacerVar = this.props.navigation.state.params.user ? -50 : 0
     const postDetail = (
       <View style={customStyles.postDetail}>
         <View style={customStyles.content}>
@@ -275,7 +276,7 @@ class PostDetail extends Component {
         <Text style={customStyles.commentCount}> {this.state.commentsLen} Comments </Text>
         {commentListView}
         {newComment}
-        <KeyboardSpacer topSpacing={-50}/>
+        <KeyboardSpacer topSpacing={spacerVar}/>
         </View>
       );
     } else {
@@ -284,11 +285,10 @@ class PostDetail extends Component {
         {postDetail}
         <ErrorView message={'No Comments'} />
         {newComment}
-        <KeyboardSpacer topSpacing={-50}/>
+        <KeyboardSpacer topSpacing={spacerVar}/>
         </View>
       );
     }
-
   }
 
   render() {
