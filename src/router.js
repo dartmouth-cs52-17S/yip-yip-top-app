@@ -125,7 +125,7 @@ export const SettingsStack = StackNavigator({
   Profile: {
     screen: ProfilePage,
     navigationOptions: {
-      title: 'Profile',
+      title: 'My Posts',
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
