@@ -47,7 +47,7 @@ class PostRow extends Component {
 
   upVote() {
     editPost(this.props.post._id, { user_id: this.props.user }, 'UPVOTE_POST', () => {
-      console.log('upvote');
+      // console.log('upvote');
     });
     if (!this.state.upvote) {
       if (this.state.downvote) {
@@ -68,7 +68,7 @@ class PostRow extends Component {
   downVote() {
     editPost(this.props.post._id, { user_id: this.props.user }, 'DOWNVOTE_POST', () => {
       // this.props.refresh();
-      console.log('downvote');
+      // console.log('downvote');
     });
     if (!this.state.downvote) {
       if (this.state.upvote) {
@@ -105,7 +105,7 @@ class PostRow extends Component {
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
         onPress={() => {
-          console.log('user', this.props.user);
+          // console.log('user', this.props.user);
           this.props.navigation.navigate('PostDetail', {post: this.props.post, user: this.props.user});
         }}>
         <View style={customStyles.main}>

@@ -83,7 +83,7 @@ class SearchScreen extends Component {
         this.child.triggerRefresh();
       }
     } else {
-      console.log('error in search entry');
+      // console.log('error in search entry');
     }
   }
 

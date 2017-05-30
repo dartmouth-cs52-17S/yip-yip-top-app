@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 class AuthIntro extends React.Component {
 
   onPress(navigation) {
-    console.log('Hello');
+    // console.log('Hello');
     this.props.navigation.navigate('Phone');
   }
 

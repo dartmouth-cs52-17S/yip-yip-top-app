@@ -60,9 +60,9 @@ class HerdScreen extends Component {
       (p) => {
         this.saveLocation(p.coords.latitude, p.coords.longitude, (lat, long, err) => {
           if (err) {
-            console.log('Could not save location');
+            // console.log('Could not save location');
           } else {
-            console.log('Saved location!');
+            // console.log('Saved location!');
             this.setState({
               herdSet: true,
               lat,
@@ -100,13 +100,13 @@ class HerdScreen extends Component {
 
   clearStoragePressed() {
 
-    console.log('About to clear storage');
+    // console.log('About to clear storage');
     this.clearStorage((err) => {
       if (!err) {
-        console.log('setting to false');
+        // console.log('setting to false');
         this.setState({ herdSet: false});
       } else {
-        console.log(err);
+        // console.log(err);
       }
     })
   }
@@ -154,7 +154,7 @@ class HerdScreen extends Component {
 
     const floatLat = Number(this.state.lat);
     const floatLong = Number(this.state.long);
-    console.log('location herd', floatLat, floatLong);
+    // console.log('location herd', floatLat, floatLong);
     const herdListView = (
       <View style={styles.container}>
         <PostsListView

@@ -72,7 +72,7 @@ class PostDetail extends Component {
   }
 
   reportPostPressed() {
-    console.log('report pressed');
+    // console.log('report pressed');
     const report = {
       // reporter: this.state.user,
       reporter: 'reporter',
@@ -84,7 +84,7 @@ class PostDetail extends Component {
 
     // put into a modal add a severity dropdown and a comment box (for 'additionalInfo')
     createReport(report, (callback) => {
-      console.log(`callback from create report: ${JSON.stringify(callback)}`);
+      // console.log(`callback from create report: ${JSON.stringify(callback)}`);
     })
   }
 
@@ -113,7 +113,7 @@ class PostDetail extends Component {
         this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments), score: post.score });
         if (this.state.post.upvoters.includes(params.user)) {
           this.setState({upvote: true});
-          console.log(this.state);
+          // console.log(this.state);
         } else if (this.state.post.downvoters.includes(params.user)) {
           this.setState({downvote: true});
         }
@@ -148,15 +148,15 @@ class PostDetail extends Component {
   voteComment(commentId, action) {
     const fields = {commentId: commentId, userId: this.props.navigation.state.params.user, action}
     editPost(this.props.navigation.state.params.post.id, fields, action, () => {
-      console.log(action);
-      console.log('success');
+      // console.log(action);
+      // console.log('success');
     });
   }
 
   upvotePost() {
     let params=this.props.navigation.state.params;
     editPost(params.post.id, { user_id: params.user }, 'UPVOTE_POST', () => {
-      console.log('upvote');
+      // console.log('upvote');
     });
     if (!this.state.upvote) {
       if (this.state.downvote) {
@@ -178,7 +178,7 @@ class PostDetail extends Component {
     let params=this.props.navigation.state.params;
     editPost(params.post.id, { user_id: params.user }, 'DOWNVOTE_POST', () => {
       // this.props.refresh();
-      console.log('downvote');
+      // console.log('downvote');
     });
     if (!this.state.downvote) {
       if (this.state.upvote) {

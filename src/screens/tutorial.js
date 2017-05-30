@@ -5,17 +5,17 @@ import AppIntro from 'react-native-app-intro';
 class Tutorial extends React.Component {
 
   onSkipBtnHandle = (index) => {
-    console.log(index);
+    // console.log(index);
     this.props.navigation.navigate('Tabs');
   }
   doneBtnHandle = () => {
     this.props.navigation.navigate('Tabs');
   }
   nextBtnHandle = (index) => {
-    console.log(index);
+    // console.log(index);
   }
   onSlideChangeHandle = (index, total) => {
-    console.log(index, total);
+    // console.log(index, total);
   }
 
   render() {
