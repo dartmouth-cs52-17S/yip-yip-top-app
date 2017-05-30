@@ -146,9 +146,6 @@ export function editPost(postId, fields, action, cb) {
       action,
     }
   } else if (action == 'DELETE_COMMENT') {
-    params = {
-      commentId: fields.commentId,
-    }
   }
   axios.put(url, params).
   then((response) => {
