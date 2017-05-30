@@ -283,7 +283,7 @@ class PostDetail extends Component {
       return (
         <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
         {postDetail}
-        <ErrorView message={'No Comments'} />
+        <ErrorView message={'No Comments'} hideAppa={true} />
         {newComment}
         <KeyboardSpacer topSpacing={spacerVar}/>
         </View>
@@ -317,7 +317,7 @@ class PostDetail extends Component {
 const customStyles = StyleSheet.create({
   loading: {
     fontFamily: 'Gill Sans',
-    fontSize: 20,
+    fontSize: 22,
     color: '#6C56BA',
     margin: 20,
   },

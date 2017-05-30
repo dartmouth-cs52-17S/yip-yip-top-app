@@ -78,6 +78,8 @@ class PostsListView extends Component {
         } else {
           if (page === 1 && posts.length === 0) {
             this.setState({empty: true});
+          } else if (posts.length === 0) {
+            this.setState({endOfResults: true});
           }
         }
         callback(posts);

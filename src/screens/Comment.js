@@ -139,7 +139,7 @@ const customStyles = StyleSheet.create({
     marginTop: 5,
     fontFamily: 'Gill Sans',
     alignSelf: 'flex-start',
-    fontSize: 15,
+    fontSize: 18,
     color: '#3C3559',
   },
   timestamp: {

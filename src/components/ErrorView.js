@@ -5,21 +5,36 @@ import Button from 'react-native-button';
 
 const ErrorView = (props) => {
 
+  const appa = <Image
+    source={{uri:'https://i.imgur.com/424SJFg.png'}}
+    style={customStyles.img}/>
+
+  const refreshButton = <Button
+    containerStyle={customStyles.button}
+    style={customStyles.tags}
+    onPress={() => {
+      EventEmitter.emit('refreshListView')}}>
+    Refresh
+  </Button>
+
+  // if (this.props.hideAppa) {
   return (
-    <View style={customStyles.container}>
-      <Image
-        source={{uri:'https://i.imgur.com/424SJFg.png'}}
-        style={customStyles.img}/>
-      <Text style={customStyles.text}> {props.message} </Text>
-      <Button
-        containerStyle={customStyles.button}
-        style={customStyles.tags}
-        onPress={() => {
-          EventEmitter.emit('refreshListView')}}>
-        REFRESH
-      </Button>
-    </View>
+      <View style={customStyles.container}>
+        <Text style={customStyles.text}> {props.message} </Text>
+        {refreshButton}
+      </View>
   );
+  // }
+  //  else {
+  //   return (
+  //     <View style={customStyles.container}>
+  //       {appa}
+  //       <Text style={customStyles.text}> {props.message} </Text>
+  //       {refreshButton}
+  //     </View>
+  //   );
+  // }
+
 };
 
 const customStyles = StyleSheet.create({

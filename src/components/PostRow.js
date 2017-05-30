@@ -175,7 +175,7 @@ const customStyles = StyleSheet.create({
     paddingLeft: 5
   },
   tags: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: 'Gill Sans',
     color: '#DA5AA4',
     letterSpacing: -0.03,
