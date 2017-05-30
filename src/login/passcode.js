@@ -58,7 +58,7 @@ class AuthCode extends React.Component {
         <View style={styles.logo}>
           <Image
             style={styles.logoImg}
-            source={{uri:'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png'}}
+            source={{uri:'https://i.imgur.com/fdh8TNp.png'}}
           />
           <Text style={styles.logoFont}> Yip Yip </Text>
         </View>
@@ -109,7 +109,11 @@ const styles = StyleSheet.create({
   logoImg: {
     width: vw * 0.6,
     height: vw * 0.4,
-    resizeMode: 'cover'
+    resizeMode: 'contain',
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.4,
+    shadowRadius: 3
   },
   logoFont: {
     fontSize: 45,
