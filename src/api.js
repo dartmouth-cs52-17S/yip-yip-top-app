@@ -130,7 +130,7 @@ export function editPost(postId, fields, action, cb) {
   if (action == 'CREATE_COMMENT') {
     params = {
       comment: fields.comment,
-      user: fields.userId,
+      user: fields.user,
       action,
     }
   } else if (action == 'DOWNVOTE_COMMENT') {
