@@ -91,6 +91,9 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
+    if (this.props.profilepage) {
+      console.log('it is the profile page');
+    }
     return (
       <PostRow post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();

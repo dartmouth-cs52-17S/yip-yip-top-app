@@ -131,8 +131,7 @@ class PostDetail extends Component {
   voteComment(commentId, action) {
     const fields = {commentId: commentId, user: this.props.navigation.state.params.user, action}
     editPost(this.props.navigation.state.params.post.id, fields, action, () => {
-      console.log(action);
-      console.log('success');
+      console.log('voted successfully.');
     });
   }
 
@@ -141,9 +140,9 @@ class PostDetail extends Component {
   }
 
   renderCommentCell(comment) {
-    // console.log(comment);
+    console.log(this.props.navigation.state.params.user);
     return (
-      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)} />
+      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)}/>
     );
   }
 

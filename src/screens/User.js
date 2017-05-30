@@ -20,6 +20,7 @@ class ProfilePage extends Component {
       <View style={{flex: 1}}>
         <PostsListView
           userId={this.props.navigation.state.params.userId}
+          profilepage = {true}
         />
       </View>
     );
