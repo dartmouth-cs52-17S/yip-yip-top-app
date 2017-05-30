@@ -80,13 +80,14 @@ class Comment extends Component {
     }
     const time = timeSince.join(' ');
     console.log('from the comments');
-    console.log(comm.user);
-    console.log(this.props.user);
+    let del= null;
     if (comm.user == this.props.user){
-      console.log('its the same user');
+      console.log('same uesr');
+      del = <Text> delete</Text>
     }else {
       console.log('its not the same user');
     }
+
     return (
         <View style={customStyles.container}>
           <View style={customStyles.icon}>
@@ -97,6 +98,7 @@ class Comment extends Component {
             <View style={customStyles.timestamp}>
               <Icon type='font-awesome' name='hourglass-half' size={12} color={'#6C56BA'} margin={3} />
               <Text style={customStyles.time}> {time} </Text>
+              {del}
             </View>
           </View>
           <View style={{flex: 1, alignItems: 'center'}}>
