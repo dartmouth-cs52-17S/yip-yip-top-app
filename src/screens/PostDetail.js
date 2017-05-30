@@ -129,7 +129,7 @@ class PostDetail extends Component {
   }
 
   voteComment(commentId, action) {
-    const fields = {commentId: commentId, userId: this.props.navigation.state.params.user, action}
+    const fields = {commentId: commentId, user: this.props.navigation.state.params.user, action}
     editPost(this.props.navigation.state.params.post.id, fields, action, () => {
       console.log(action);
       console.log('success');
