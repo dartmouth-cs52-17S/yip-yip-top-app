@@ -5,9 +5,12 @@ import {
   TextInput,
   StyleSheet,
   Text,
-  Button,
+  Dimensions,
+  KeyboardAvoidingView,
   ScrollView
 } from 'react-native'
+
+import Button from 'react-native-button';
 
 import PostsListView from '../components/PostsListView';
 
@@ -15,6 +18,8 @@ import { getTrendingTags } from '../api.js';
 
 
 const CHAR_LIMIT = 30;
+const vw = Dimensions.get('window').width;
+
 
 class SearchScreen extends Component {
   constructor(props) {
@@ -85,9 +90,16 @@ class SearchScreen extends Component {
   makeTrendingButtons(tags) {
 
     return tags.map((tag) => {
-      return <Button key={tag} title={tag} onPress={()=> {
-        this.setState({searchTerm: tag, showSearchResults: true});
-      }} />
+      return (
+        <Button key={tag}
+          containerStyle={searchStyle.button}
+          style={searchStyle.tags}
+          onPress={()=> {
+            this.setState({searchTerm: tag, showSearchResults: true})
+          }}>
+          {tag}
+        </Button>
+      )
     })
   }
 
@@ -99,7 +111,8 @@ class SearchScreen extends Component {
         selectTextOnFocus={false}
         maxLength={CHAR_LIMIT}
         clearButtonMode={'while-editing'}
-        placeholder="Search by #tag"
+        placeholder="Search by #tag..."
+        placeholderTextColor="#D0CCDF"
         value={this.state.searchTerm}
         returnKeyType='search'
         onChangeText={(searchTerm) => {
@@ -112,7 +125,7 @@ class SearchScreen extends Component {
 
     if (this.state.showSearchResults && (!this.state.lat || !this.state.long)) {
       return (
-        <Text> Still waiting for location </Text>
+        <Text style={searchStyle.loading}> Still waiting for location... </Text>
       );
     }
 
@@ -132,7 +145,7 @@ class SearchScreen extends Component {
       return (
         <View style={searchStyle.buttonContainer}>
           {searchBar}
-          <Text> Loading trending tags... </Text>
+          <Text style={searchStyle.loading}> Loading trending tags... </Text>
         </View>
       )
     }
@@ -142,7 +155,7 @@ class SearchScreen extends Component {
       return (
         <View style={searchStyle.buttonContainer}>
           {searchBar}
-          <Text style={searchStyle.text}> #Trending Tags </Text>
+          <Text style={searchStyle.mainText}> #Trending Tags </Text>
           <ScrollView>
             {trendingButtons}
           </ScrollView>
@@ -155,6 +168,12 @@ class SearchScreen extends Component {
 
 
 const searchStyle = StyleSheet.create({
+  loading: {
+    fontFamily: 'Gill Sans',
+    fontSize: 20,
+    color: '#6C56BA',
+    margin: 20,
+  },
   buttonContainer: {
     flex: 1,
     alignItems: 'center',
@@ -164,16 +183,11 @@ const searchStyle = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F4F5F9',
   },
-  text: {
-    fontSize: 20,
-    color: '#291D56',
-    fontFamily: 'Gill Sans',
-  },
   textBox: {
-    height: 55,
+    height: 45,
     fontSize: 20,
     color: '#291D56',
-    margin: 20,
+    margin: 12,
     paddingLeft: 20,
     paddingRight: 20,
     fontFamily: 'Gill Sans',
@@ -183,6 +197,29 @@ const searchStyle = StyleSheet.create({
     shadowOffset: {height: 2},
     shadowOpacity: 0.3,
     shadowRadius: 3
+  },
+  mainText: {
+    fontFamily: 'Gill Sans',
+    color: '#DA5AA4',
+    fontSize: 25,
+    letterSpacing: -0.1,
+    lineHeight: 20,
+    padding: 35,
+  },
+  button: {
+    padding: 5,
+    margin: 5,
+    width: vw*0.7,
+    height: 45,
+    overflow:'hidden',
+  },
+  tags: {
+    fontSize: 20,
+    fontFamily: 'Gill Sans',
+    fontWeight:'normal',
+    color: '#6C56BA',
+    letterSpacing: -0.03,
+    margin: 5,
   },
 
 });

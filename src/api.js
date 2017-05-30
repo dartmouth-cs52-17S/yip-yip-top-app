@@ -5,12 +5,13 @@ const ROOT_URL = 'https://yip-yip.herokuapp.com/api';
 
 
 export function getUserPosts(user_id, page, cb) {
+  console.log('user id', user_id);
   axios.get(`${ROOT_URL}/userPosts/${user_id}`, { params: { page }}).
   then((response) => {
     // console.log('posts for user', user_id, page, response);
     cb(response.data, null);
   }).catch((error) => {
-    // console.log('error in user posts', error);
+    console.log('error in user posts', error.data);
     cb(null, error);
   })
 }

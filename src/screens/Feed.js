@@ -58,7 +58,7 @@ class Feed extends Component {
           name='user-circle-o'
           color='#6C56BA'
           size={25}
-          onPress={()=>{ this.props.navigation.navigate('Settings', { userId: this.state.user}) }}
+          onPress={()=>{ this.props.navigation.navigate('Settings', { userId: this.state.user.id}) }}
           style={{ marginRight: 10, padding: 5}}
         />
     })

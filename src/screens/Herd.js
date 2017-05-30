@@ -4,6 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Image,
   AsyncStorage
 } from 'react-native';
 
@@ -124,13 +125,17 @@ class HerdScreen extends Component {
 
     const herdNotSavedView = (
       <View style={styles.saveLocationView}>
-        <Text> You have not set your Herd yet! </Text>
+        <Image
+          source={{uri: 'https://i.imgur.com/424SJFg.png'}}
+          style={styles.loadImg}/>
+        <Text style={styles.text}> You have not set your Herd yet! </Text>
         <Button
           raised
           icon={{name: 'map'}}
           borderRadius={50}
           title='Save this location!'
           backgroundColor='red'
+          fontFamily='Gill Sans'
           buttonStyle={styles.button}
           containerViewStyle={{backgroundColor: 'transparent'}}
           onPress={() => this.setHerdPressed()}
@@ -176,6 +181,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#F4F5F9',
+  },
+  loadImg: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
+  },
+  text: {
+    fontFamily: 'Gill Sans',
+    fontSize: 18,
+    color: '#6C56BA',
   },
   button: {
     padding: 10,

@@ -31,25 +31,33 @@ const CHAR_LIMIT = 75;
 
 class PostDetail extends Component {
 
-
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'Herd',
-    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: ''
-
+    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: '',
+    headerTintColor: '#6C56BA',
+    headerTitleStyle: {
+      fontFamily: 'Gill Sans',
+      fontSize: 18
+    },
+    headerStyle: {
+      backgroundColor: '#F4F5F9',
+      shadowOpacity: 0
+    },
   })
-
 
   constructor(props) {
     super(props);
+    let params=this.props.navigation.state.params;
 
     this.state = {
       loading: true,
       empty: false,
       error: false,
       post: '',
+      score: params.post.score,
       upvote: false,
       downvote: false,
-      commentsLen: this.props.navigation.state.params.post.comments.length,
+      commentsLen: params.post.comments.length,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
@@ -60,6 +68,7 @@ class PostDetail extends Component {
     this.reportPostPressed = this.reportPostPressed.bind(this);
     this.submitComment = this.submitComment.bind(this);
     this.upvotePost = this.upvotePost.bind(this);
+    this.downvotePost = this.downvotePost.bind(this);
   }
 
   reportPostPressed() {
@@ -94,12 +103,20 @@ class PostDetail extends Component {
   }
 
   fetchPost(id) {
+    let params=this.props.navigation.state.params;
+
     getPost(id, (post, error) => {
       if (error) {
         this.setState({error: true});
       } else {
         const comments = post.comments;
-        this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments) });
+        this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments), score: post.score });
+        if (this.state.post.upvoters.includes(params.user)) {
+          this.setState({upvote: true});
+          console.log(this.state);
+        } else if (this.state.post.downvoters.includes(params.user)) {
+          this.setState({downvote: true});
+        }
         if (comments.length === 0) {
           this.setState({empty: true});
         }
@@ -137,21 +154,62 @@ class PostDetail extends Component {
   }
 
   upvotePost() {
-    console.log('in upvote');
+    let params=this.props.navigation.state.params;
+    editPost(params.post.id, { user_id: params.user }, 'UPVOTE_POST', () => {
+      console.log('upvote');
+    });
+    if (!this.state.upvote) {
+      if (this.state.downvote) {
+        this.setState({
+          upvote: true,
+          downvote: false,
+          score: this.state.score + 2
+        })
+      } else {
+        this.setState({
+          upvote: true,
+          score: this.state.score + 1
+        })
+      }
+    }
   }
+
+  downvotePost() {
+    let params=this.props.navigation.state.params;
+    editPost(params.post.id, { user_id: params.user }, 'DOWNVOTE_POST', () => {
+      // this.props.refresh();
+      console.log('downvote');
+    });
+    if (!this.state.downvote) {
+      if (this.state.upvote) {
+        this.setState({
+          upvote: false,
+          downvote: true,
+          score: this.state.score - 2
+        })
+      } else {
+        this.setState({
+          downvote: true,
+          score: this.state.score - 1
+        })
+      }
+    }
+  }
+
 
   renderCommentCell(comment) {
     // console.log(comment);
     return (
-      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)} />
+      <Comment
+        comment={comment}
+        userId={this.props.navigation.state.params.user}
+        voteComment={(commentId, action) => this.voteComment(commentId, action)} />
     );
   }
 
-  renderPostDetailView(loaded) {
-
+  renderPostDetailView() {
+    let post = this.state.post;
     const spacerVar = this.props.navigation.state.params.user ? -50 : 0
-
-    let post = this.props.navigation.state.params.post;
     const postDetail = (
       <View style={customStyles.postDetail}>
         <View style={customStyles.content}>
@@ -171,8 +229,8 @@ class PostDetail extends Component {
           <TouchableBounce onPress={this.upvotePost}>
             <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} />
           </TouchableBounce>
-          <Text style={customStyles.score}> {post.score} </Text>
-          <TouchableBounce onPress={() => {this.downvotePost}}>
+          <Text style={customStyles.score}> {this.state.score} </Text>
+          <TouchableBounce onPress={this.downvotePost}>
             <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
           </TouchableBounce>
         </View>
@@ -187,15 +245,6 @@ class PostDetail extends Component {
         renderRow={this.renderCommentCell.bind(this)}
         style={customStyles.commentlist}
       />
-      </View>
-    );
-
-    const loadingView = (
-      <View style={{flex: 4, alignItems: 'center', justifyContent: 'space-around'}}>
-        <Text style={customStyles.loading}>Loading Comments...</Text>
-        <Image
-        source={{uri:'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png'}}
-        style={{width: '30%', height: '30%', resizeMode: 'contain'}}/>
       </View>
     );
 
@@ -220,47 +269,46 @@ class PostDetail extends Component {
       return <ErrorView message={'Error loading post :('} />
     }
 
-    if(loaded) {
-      if (!this.state.empty) {
-        return (
-          <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
-          {postDetail}
-          <Text style={customStyles.commentCount}> {this.state.commentsLen} Comments </Text>
-          {commentListView}
-          {newComment}
-          <KeyboardSpacer topSpacing={spacerVar}/>
-          </View>
-        );
-      } else {
-        return (
-          <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
-          {postDetail}
-          <ErrorView message={'No Comments'} />
-          {newComment}
-          <KeyboardSpacer topSpacing={spacerVar}/>
-          </View>
-        );
-      }
-    }
-    else {
+    if (!this.state.empty) {
       return (
         <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
-          {postDetail}
-          <Text style={customStyles.commentCount}> {this.state.commentsLen} Comments </Text>
-          {loadingView}
-          {newComment}
-          <KeyboardSpacer topSpacing={spacerVar}/>
+        {postDetail}
+        <Text style={customStyles.commentCount}> {this.state.commentsLen} Comments </Text>
+        {commentListView}
+        {newComment}
+        <KeyboardSpacer topSpacing={spacerVar}/>
+        </View>
+      );
+    } else {
+      return (
+        <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
+        {postDetail}
+        <ErrorView message={'No Comments'} />
+        {newComment}
+        <KeyboardSpacer topSpacing={spacerVar}/>
         </View>
       );
     }
   }
 
   render() {
+    const loadingView = (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text style={customStyles.loading}>Loading Post...</Text>
+        <Image
+        source={{uri:'https://i.imgur.com/fdh8TNp.png'}}
+        style={customStyles.loadImg}/>
+      </View>
+    );
+
     if (this.state.loading) {
-      return (this.renderPostDetailView(false));
+      return (
+        <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
+          {loadingView}
+        </View>
+      );
     } else {
-      console.log(`user in post detail is ${this.props.navigation.state.params.user}`);
-      return (this.renderPostDetailView(true));
+      return (this.renderPostDetailView());
     }
   }
 
@@ -272,6 +320,15 @@ const customStyles = StyleSheet.create({
     fontSize: 20,
     color: '#6C56BA',
     margin: 20,
+  },
+  loadImg: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
   },
 
   postDetail: {
@@ -297,7 +354,7 @@ const customStyles = StyleSheet.create({
   mainText: {
     color: '#3C3559',
     fontFamily: 'Gill Sans',
-    fontSize: 18,
+    fontSize: 20,
     letterSpacing: -0.1,
     lineHeight: 20,
     paddingLeft: 5,
@@ -320,7 +377,7 @@ const customStyles = StyleSheet.create({
   },
   infoText: {
     fontFamily: 'Gill Sans',
-    fontSize: 12,
+    fontSize: 14,
     color: '#3C3559',
   },
 

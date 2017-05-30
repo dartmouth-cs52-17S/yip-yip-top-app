@@ -16,12 +16,13 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      upvote:false,
-      downvote:false
+      upvote: (this.props.comment.upvoters.includes(this.props.userId))? true:false,
+      downvote: (this.props.comment.downvoters.includes(this.props.userId))? true:false,
     }
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
   }
+
   upVote(){
     if (this.state.downvote) {
       this.setState({
@@ -35,7 +36,7 @@ class Comment extends Component {
       this.props.comment.score -= 1;
       this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
 
-    }else {
+    } else {
       this.setState({
         upvote:true
       });
@@ -43,6 +44,7 @@ class Comment extends Component {
       this.props.voteComment(this.props.comment._id, 'UPVOTE_COMMENT');
     }
   }
+
   downVote(){
     if (this.state.upvote) {
       this.setState({
@@ -148,7 +150,7 @@ const customStyles = StyleSheet.create({
   },
   time: {
     fontFamily: 'Gill Sans',
-    fontSize: 12,
+    fontSize: 14,
     color: '#2E234E',
   },
 
