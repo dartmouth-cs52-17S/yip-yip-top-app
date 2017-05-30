@@ -81,7 +81,7 @@ class Comment extends Component {
     const time = timeSince.join(' ');
     let del= null;
     if (comm.user == this.props.user){
-      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', marginLeft: 3, fontSize: 15}}>delete</Text>
+      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15}}>delete</Text>
     }
     return (
         <View style={customStyles.container}>
