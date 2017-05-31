@@ -38,7 +38,7 @@ class PostsListView extends Component {
   }
 
   triggerRefresh(isSegmentedChange) {
-    console.log('refresh triggered', this.listview);
+    // console.log('refresh triggered', this.listview);
 
     let currentPostlist;
     if (this.props.sortBy === 'New') {
@@ -50,7 +50,7 @@ class PostsListView extends Component {
     if (!isSegmentedChange || !currentPostlist) {
       this.useCached = false
     } else if (isSegmentedChange && currentPostlist.length != 0) {
-      console.log(currentPostlist);
+      // console.log(currentPostlist);
       this.useCached = true
     }
 
@@ -90,7 +90,7 @@ class PostsListView extends Component {
         callback(posts);
       })
     } else if (this.useCached) {
-      console.log('using cached', this.props.sortBy);
+      // console.log('using cached', this.props.sortBy);
       if (this.props.sortBy === 'New') {
         callback(this.newPosts)
       } else if (this.props.sortBy === 'Top') {
@@ -98,7 +98,7 @@ class PostsListView extends Component {
       } else { callback(this.commentPosts) }
 
     } else {
-      console.log('list sorty by', this.props.sortBy, 'page', page);
+      // console.log('list sorty by', this.props.sortBy, 'page', page);
       fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
         callback([])
         if (error) {
