@@ -89,7 +89,7 @@ class Comment extends Component {
     let del= null;
     if (comm.user == this.props.user){
       console.log('same user');
-      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15}}>delete</Text>
+      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15}} onPress={() => this.del(comm._id)}>delete</Text>
     }
     return (
         <View style={customStyles.container}>

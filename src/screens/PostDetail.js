@@ -140,6 +140,7 @@ class PostDetail extends Component {
     const fields = {commentId: commentId, action}
     editPost(this.props.navigation.state.params.post.id, fields, action, () => {
       console.log('deleted successfully.');
+      this.fetchPost(this.props.navigation.state.params.post.id);
     });
   }
   upvotePost() {
