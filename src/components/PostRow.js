@@ -101,7 +101,10 @@ class PostRow extends Component {
       timeSince[2] = 'secs'
     }
     const time = timeSince.join(' ');
-
+    let del = null;
+    if (this.props.manageProfile) {
+      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15}}>delete</Text>
+    }
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
         onPress={() => {
@@ -118,6 +121,9 @@ class PostRow extends Component {
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
                 <Text style={customStyles.infoText}>{this.props.post.comments.length} comments</Text>
+              </View>
+              <View>
+                {del}
               </View>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
