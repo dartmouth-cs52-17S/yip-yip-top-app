@@ -88,6 +88,7 @@ class PostsListView extends Component {
     }
   }
 
+
   /**
    * Render a row
    * @param {object} rowData Row data

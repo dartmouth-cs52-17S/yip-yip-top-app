@@ -10,7 +10,8 @@ import {
 import moment from 'moment';
 import TouchableBounce from '../modifiedPackages/TouchableBounce';
 import { Icon } from 'react-native-elements';
-import { editPost, deletePost } from '../api'
+import { editPost, deletePost } from '../api';
+import EventEmitter from 'react-native-eventemitter';
 
 class PostRow extends Component {
 
@@ -89,6 +90,7 @@ class PostRow extends Component {
   del(postId) {
     deletePost(this.props.post._id, () => {
       this.props.refresh();
+      EventEmitter.emit('refreshListView');
     });
   }
 
