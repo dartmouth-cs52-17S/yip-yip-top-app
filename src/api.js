@@ -133,25 +133,25 @@ export function editPost(postId, fields, action, cb) {
   if (action == 'CREATE_COMMENT') {
     params = {
       comment: fields.comment,
-      user: fields.userId,
+      user: fields.user,
       action,
     }
   } else if (action == 'DOWNVOTE_COMMENT') {
     params = {
       commentId: fields.commentId,
-      user: fields.userId,
+      user: fields.user,
       action,
     }
   } else if (action == 'UPVOTE_COMMENT') {
     params = {
       commentId: fields.commentId,
-      user: fields.userId,
+      user: fields.user,
       action,
     }
-  } else {
+  } else if (action == 'DELETE_COMMENT') {
     params = {
-      user: fields.user_id,
-      action
+      commentId: fields.commentId,
+      action,
     }
   }
   axios.put(url, params).
@@ -162,7 +162,6 @@ export function editPost(postId, fields, action, cb) {
     // console.log(error);
   });
 }
-
 
 export function getTrendingTags(long, lat, cb) {
   // console.log('getting trending');

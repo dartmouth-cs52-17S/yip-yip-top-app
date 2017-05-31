@@ -68,6 +68,8 @@ class PostDetail extends Component {
     this.reportPostPressed = this.reportPostPressed.bind(this);
     this.submitComment = this.submitComment.bind(this);
     this.upvotePost = this.upvotePost.bind(this);
+
+    this.deleteComment= this.deleteComment.bind(this);
     this.downvotePost = this.downvotePost.bind(this);
   }
 
@@ -143,7 +145,7 @@ class PostDetail extends Component {
         }
       }
       if (safe){
-        const fields = {comment: input, user_id: this.props.navigation.state.params.user};
+        const fields = {comment: input, user: this.props.navigation.state.params.user};
         editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
           this.setState({text:''});
           this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
@@ -154,13 +156,19 @@ class PostDetail extends Component {
   }
 
   voteComment(commentId, action) {
-    const fields = {commentId: commentId, userId: this.props.navigation.state.params.user, action}
+    const fields = {commentId: commentId, user: this.props.navigation.state.params.user, action}
     editPost(this.props.navigation.state.params.post.id, fields, action, () => {
-      // console.log(action);
-      // console.log('success');
+
     });
   }
 
+  deleteComment(commentId, action) {
+    const fields = {commentId: commentId, action}
+    editPost(this.props.navigation.state.params.post.id, fields, action, () => {
+      this.setState({commentsLen:this.state.commentsLen - 1, empty: false});
+      this.fetchPost(this.props.navigation.state.params.post.id);
+    });
+  }
   upvotePost() {
     let params=this.props.navigation.state.params;
     editPost(params.post.id, { user_id: params.user }, 'UPVOTE_POST', () => {
@@ -206,12 +214,9 @@ class PostDetail extends Component {
 
 
   renderCommentCell(comment) {
-    // console.log(comment);
     return (
-      <Comment
-        comment={comment}
-        userId={this.props.navigation.state.params.user}
-        voteComment={(commentId, action) => this.voteComment(commentId, action)} />
+      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)}
+       deleteComment={(commentId, action) => this.deleteComment(commentId, action)} user={this.props.navigation.state.params.user}/>
     );
   }
 

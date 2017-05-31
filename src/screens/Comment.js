@@ -23,6 +23,7 @@ class Comment extends Component {
     }
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
+    this.del= this.del.bind(this);
   }
 
   upVote(){
@@ -47,6 +48,10 @@ class Comment extends Component {
     this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
   }
 
+  del(commentId) {
+    this.props.deleteComment(commentId, 'DELETE_COMMENT');
+  }
+
   render() {
     const comm = this.props.comment;
     let timeSince = moment(comm.timestamp).fromNow().split(' ');
@@ -63,7 +68,10 @@ class Comment extends Component {
       timeSince[2] = 'secs'
     }
     const time = timeSince.join(' ');
-
+    let del;
+    if (comm.user == this.props.user){
+      del = <Text style={{fontFamily: 'Gill Sans', color:'red', flex:1, fontSize: 15}} onPress={() => this.del(comm._id)}>delete</Text>
+    }
     return (
         <View style={customStyles.container}>
           <View style={customStyles.icon}>
@@ -72,6 +80,7 @@ class Comment extends Component {
           <View style={customStyles.content}>
             <Text style={customStyles.comment}> {comm.text} </Text>
             <View style={customStyles.timestamp}>
+              {del}
               <Icon type='font-awesome' name='hourglass-half' size={12} color={'#6C56BA'} margin={3} />
               <Text style={customStyles.time}> {time} </Text>
             </View>

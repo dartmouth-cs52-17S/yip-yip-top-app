@@ -112,7 +112,7 @@ class PostRow extends Component {
     const time = timeSince.join(' ');
     let del;
     if (this.props.manageProfile) {
-      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15, marginTop:5}} onPress={() => this.del(this.props.post._id)}>delete</Text>
+      del = <Text style={{fontFamily: 'Gill Sans', color:'red', flex:1, fontSize: 15, marginTop:5}} onPress={() => this.del()}>delete</Text>
     }
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
