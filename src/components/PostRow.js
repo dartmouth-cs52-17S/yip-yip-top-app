@@ -87,7 +87,8 @@ class PostRow extends Component {
       }
     }
   }
-  del(postId) {
+
+  del() {
     deletePost(this.props.post._id, () => {
       this.props.refresh();
       EventEmitter.emit('refreshListView');
