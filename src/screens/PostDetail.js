@@ -148,7 +148,8 @@ class PostDetail extends Component {
 
   renderCommentCell(comment) {
     return (
-      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)} deleteComment={(commentId, action) => this.deleteComment(commentId, action)}/>
+      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)}
+       deleteComment={(commentId, action) => this.deleteComment(commentId, action)} user={this.props.navigation.state.params.user}/>
     );
   }
 

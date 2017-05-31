@@ -148,6 +148,7 @@ export function editPost(postId, fields, action, cb) {
   } else if (action == 'DELETE_COMMENT') {
     params = {
       commentId: fields.commentId,
+      action,
     }
   }
   axios.put(url, params).
@@ -158,7 +159,6 @@ export function editPost(postId, fields, action, cb) {
     console.log(error);
   });
 }
-
 
 export function getTrendingTags(long, lat, cb) {
   console.log('getting trending');
