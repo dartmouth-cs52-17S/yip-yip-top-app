@@ -291,7 +291,7 @@ class PostDetail extends Component {
       return (
         <View style={{flex:1, backgroundColor: '#F4F5F9'}}>
         {postDetail}
-        <ErrorView message={'No Comments'}         hideAppa={true} />
+        <ErrorView message={'No Comments'} hideAppa={true} />
         {newComment}
         <KeyboardSpacer topSpacing={spacerVar}/>
         </View>

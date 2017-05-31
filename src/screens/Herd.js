@@ -35,10 +35,10 @@ class HerdScreen extends Component {
   componentWillMount() {
 
     this.props.navigation.setParams({
-      headerRight: <Icon type='ionicon'
-        name='ios-refresh-outline'
+      headerRight: <Icon type='font-awesome'
+        name='minus-square'
         color='#6C56BA'
-        size={30}
+        size={25}
         onPress={this.clearStoragePressed}
         style={{ marginRight: 10, padding: 5}}
       />
@@ -132,23 +132,15 @@ class HerdScreen extends Component {
         <Button
           raised
           icon={{name: 'map'}}
-          borderRadius={50}
+          borderRadius={60}
           title='Save this location!'
           backgroundColor='red'
           fontFamily='Gill Sans'
+          fontSize={20}
           buttonStyle={styles.button}
           containerViewStyle={{backgroundColor: 'transparent'}}
           onPress={() => this.setHerdPressed()}
            />
-      </View>
-    )
-
-    const herdSavedView = (
-      <View style={styles.container}>
-        <Text> You have saved your Herd! </Text>
-        <Text> Lat {this.state.lat} </Text>
-        <Text> Long {this.state.long} </Text>
-        <Button title='clear' onPress={() => this.clearStoragePressed()} />
       </View>
     )
 
@@ -201,7 +193,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 20,
     paddingRight: 20,
-    marginTop: 50,
+    marginTop: 35,
     backgroundColor: '#6C56BA',
   }
 });

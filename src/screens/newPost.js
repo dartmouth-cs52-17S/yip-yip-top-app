@@ -15,6 +15,7 @@ import {
 import { Icon } from 'react-native-elements';
 import { createPost } from '../api';
 import EventEmitter from 'react-native-eventemitter';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import banned from '../banned';
 
@@ -52,7 +53,8 @@ class NewPostScreen extends Component {
     this.state={
       keyboardCounter: 1,
       text: '',
-      remainingCharacters: CHAR_LIMIT
+      remainingCharacters: CHAR_LIMIT,
+      showLoader: false
     }
 
     this.keyboardWillHide = this.keyboardWillHide.bind(this);
@@ -62,7 +64,7 @@ class NewPostScreen extends Component {
   componentWillMount () {
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
     // console.log('setting params');
-    console.log(`banned words are ${JSON.stringify(banned)}`);
+    // console.log(`banned words are ${JSON.stringify(banned)}`);
     this.props.navigation.setParams({
       headerRight: <Icon type='font-awesome'
         name='send-o'
@@ -86,18 +88,20 @@ class NewPostScreen extends Component {
   }
 
   postSubmitPressed() {
+    this.setState({showLoader: true});
     let safe = true;
     if (this.state.text) {
       // need to set up user
       for (var i = 0; i < banned.length; i++) {
         if (this.state.text.toLowerCase().includes(banned[i])) {
-          Alert.alert('Cannot Post', 'Please remove profanity from post.');
+          this.setState({showLoader: false}, () => {
+            Alert.alert('Cannot Post', 'Please remove profanity from post.');
+          });
           safe = false;
           break;
         }
       }
       if (safe){
-        console.log(`long prop ${this.props.navigation.state.params.long}`);
         let tagArray = [];
         if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
         const post = {
@@ -107,28 +111,21 @@ class NewPostScreen extends Component {
           user: this.props.navigation.state.params.user,
         }
         createPost(post, (callback) => {
-          console.log(`callback from create: ${JSON.stringify(callback)}`);
+          // console.log(`callback from create: ${JSON.stringify(callback)}`);
           EventEmitter.emit('refreshListView');
-          this.props.navigation.goBack(null);
+          this.setState({showLoader: false}, () => {
+            this.props.navigation.goBack(null);
+          });
         })
       }
     }
   }
 
   render() {
-    // const actionButton = (
-    //  <ActionButton
-    //     buttonColor='#FF906F'
-    //     onPress={this.postSubmitPressed}
-    //     hideShadow={false}
-    //     shadowRadius={1}
-    //     size={50}
-    //     offsetY={height(30)}
-    //     icon={<Icon type='font-awesome' name='send-o' size={20} color={'white'}/>}
-    //    />)
 
     return (
       <View style={customStyles.main}>
+        <Spinner visible={this.state.showLoader} textContent={'Posting Comment...'} textStyle={{color: '#FFF'}} />
         <KeyboardAvoidingView
           behavior={'height'}
           key={this.state.keyboardCounter}
@@ -163,7 +160,7 @@ function findHashtags(text) {
   var regexp = /\B\#\w\w+\b/g;
   let result = text.match(regexp);
   if (result) {
-    console.log(result);
+    // console.log(result);
     return result;
   } else {
     return false;

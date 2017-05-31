@@ -6,8 +6,9 @@ import {
   StyleSheet,
   Text,
   Dimensions,
-  KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
+  Keyboard,
+  TouchableOpacity,
 } from 'react-native'
 
 import Button from 'react-native-button';
@@ -110,7 +111,7 @@ class SearchScreen extends Component {
         multiline={false}
         selectTextOnFocus={false}
         maxLength={CHAR_LIMIT}
-        clearButtonMode={'while-editing'}
+        clearButtonMode={'always'}
         placeholder="Search by #tag..."
         placeholderTextColor="#D0CCDF"
         value={this.state.searchTerm}

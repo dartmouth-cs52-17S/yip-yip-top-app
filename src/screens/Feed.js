@@ -102,7 +102,7 @@ class Feed extends Component {
     const segmented = <SegmentedControlIOS
       values={['New', 'Top', 'Comments']}
       selectedIndex={0}
-      margin={10}
+      margin={12}
       tintColor={'#6C56BA'}
       onValueChange={(val) => {
         this.updateSortParam(val);
@@ -113,9 +113,9 @@ class Feed extends Component {
     const actionButton = <ActionButton
       buttonColor='#6C56BA'
       onPress={() => { this.props.navigation.navigate('NewPost', { long: this.state.long, lat: this.state.lat, user: this.state.user })}}
-      icon={<Icon type='ionicon' name='ios-add-outline' size={45} color={'white'}/>}
+      icon={<Icon type='font-awesome' name='plus' size={30} color={'white'}/>}
       hideShadow={false}
-      size={65}
+      size={60}
     />
 
     return (
