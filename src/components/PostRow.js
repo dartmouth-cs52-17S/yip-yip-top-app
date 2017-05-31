@@ -39,6 +39,7 @@ class PostRow extends Component {
 
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
+    this.del = this.del.bind(this);
   }
 
   componentWillReceiveProps() {
@@ -87,7 +88,7 @@ class PostRow extends Component {
   }
   del(postId) {
     deletePost(this.props.post._id, () => {
-      console.log('deleted post');
+      this.props.refresh();
     });
   }
 
