@@ -110,7 +110,7 @@ class PostRow extends Component {
       timeSince[2] = 'secs'
     }
     const time = timeSince.join(' ');
-    let del = null;
+    let del;
     if (this.props.manageProfile) {
       del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15, marginTop:5}} onPress={() => this.del(this.props.post._id)}>delete</Text>
     }
