@@ -10,7 +10,8 @@ import {
 import moment from 'moment';
 import TouchableBounce from '../modifiedPackages/TouchableBounce';
 import { Icon } from 'react-native-elements';
-import { editPost } from '../api'
+import { editPost, deletePost } from '../api';
+import EventEmitter from 'react-native-eventemitter';
 
 class PostRow extends Component {
 
@@ -39,6 +40,7 @@ class PostRow extends Component {
 
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
+    this.del = this.del.bind(this);
   }
 
   componentWillReceiveProps() {
@@ -86,6 +88,13 @@ class PostRow extends Component {
     }
   }
 
+  del() {
+    deletePost(this.props.post._id, () => {
+      this.props.refresh();
+      EventEmitter.emit('refreshListView');
+    });
+  }
+
   render() {
     let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
     timeSince.splice(-1,1);
@@ -101,7 +110,10 @@ class PostRow extends Component {
       timeSince[2] = 'secs'
     }
     const time = timeSince.join(' ');
-
+    let del;
+    if (this.props.manageProfile) {
+      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15, marginTop:5}} onPress={() => this.del(this.props.post._id)}>delete</Text>
+    }
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
         onPress={() => {
@@ -118,6 +130,9 @@ class PostRow extends Component {
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
                 <Text style={customStyles.infoText}>{this.props.post.comments.length} comments</Text>
+              </View>
+              <View>
+                {del}
               </View>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />

@@ -26,11 +26,13 @@ class ProfilePage extends Component {
     />
   })
 
+
   render() {
     return (
       <View style={{flex: 1}}>
         <PostsListView
           userId={this.props.navigation.state.params.userId}
+          manageProfile={true}
           user={this.props.navigation.state.params.userId}
           navigation={this.props.navigation}
         />
