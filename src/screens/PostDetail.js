@@ -138,6 +138,7 @@ class PostDetail extends Component {
   deleteComment(commentId, action) {
     const fields = {commentId: commentId, action}
     editPost(this.props.navigation.state.params.post.id, fields, action, () => {
+      this.setState({commentsLen:this.state.commentsLen - 1, empty: false});
       this.fetchPost(this.props.navigation.state.params.post.id);
     });
   }
