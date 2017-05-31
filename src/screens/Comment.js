@@ -68,12 +68,8 @@ class Comment extends Component {
       timeSince[2] = 'secs'
     }
     const time = timeSince.join(' ');
-    console.log('load the commentId');
-    console.log(this.props);
-    console.log(comm._id);
     let del= null;
     if (comm.user == this.props.user){
-      console.log('same user');
       del = <Text style={{fontFamily: 'Gill Sans', color:'red', flex:1, fontSize: 15}} onPress={() => this.del(comm._id)}>delete</Text>
     }
     return (
