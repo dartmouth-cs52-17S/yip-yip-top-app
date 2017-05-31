@@ -10,7 +10,7 @@ import {
 import moment from 'moment';
 import TouchableBounce from '../modifiedPackages/TouchableBounce';
 import { Icon } from 'react-native-elements';
-import { editPost } from '../api'
+import { editPost, deletePost } from '../api'
 
 class PostRow extends Component {
 
@@ -85,6 +85,11 @@ class PostRow extends Component {
       }
     }
   }
+  del(postId) {
+    deletePost(this.props.post._id, () => {
+      console.log('deleted post');
+    });
+  }
 
   render() {
     let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
@@ -103,7 +108,7 @@ class PostRow extends Component {
     const time = timeSince.join(' ');
     let del = null;
     if (this.props.manageProfile) {
-      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15, marginTop:5}}>delete</Text>
+      del = <Text style={{fontFamily: 'Gill Sans', color:'pink', flex:1, fontSize: 15, marginTop:5}} onPress={() => this.del(this.props.post._id)}>delete</Text>
     }
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
