@@ -9,6 +9,8 @@ import {
 
 import moment from 'moment';
 import { Icon } from 'react-native-elements';
+import TouchableBounce from '../modifiedPackages/TouchableBounce';
+
 
 const vw = Dimensions.get('window').width;
 
@@ -16,53 +18,35 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      upvote:false,
-      downvote:false
+      upvote: (this.props.comment.upvoters.includes(this.props.userId))? true:false,
+      downvote: (this.props.comment.downvoters.includes(this.props.userId))? true:false,
     }
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
   }
+
   upVote(){
     if (this.state.downvote) {
-      this.setState({
-        downvote:false
-      });
+      this.props.comment.score += 2
+    } else if (!this.state.upvote) {
+      this.props.comment.score += 1
     }
-    if (this.state.upvote){
-      this.setState({
-        upvote:false
-      });
-      this.props.comment.score -= 1;
-      this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
+    this.setState({upvote: true, downvote: false})
+    this.props.voteComment(this.props.comment._id, 'UPVOTE_COMMENT');
+  }
 
-    }else {
-      this.setState({
-        upvote:true
-      });
-      this.props.comment.score += 1;
-      this.props.voteComment(this.props.comment._id, 'UPVOTE_COMMENT');
-    }
-  }
+
   downVote(){
+    console.log('downvote', this.state.upvote, this.state.downvote);
     if (this.state.upvote) {
-      this.setState({
-        upvote:false
-      });
+      this.props.comment.score -= 2
+    } else if (!this.state.downvote) {
+      this.props.comment.score -= 1
     }
-    if (this.state.downvote){
-      this.setState({
-        downvote:false
-      });
-      this.props.comment.score += 1;
-      this.props.voteComment(this.props.comment._id, 'UPVOTE_COMMENT');
-    } else {
-      this.setState({
-        downvote:true
-      });
-      this.props.comment.score -= 1;
-      this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
-    }
+    this.setState({upvote: false, downvote: true})
+    this.props.voteComment(this.props.comment._id, 'DOWNVOTE_COMMENT');
   }
+
   render() {
     const comm = this.props.comment;
     let timeSince = moment(comm.timestamp).fromNow().split(' ');
@@ -93,9 +77,15 @@ class Comment extends Component {
             </View>
           </View>
           <View style={{flex: 1, alignItems: 'center'}}>
-            <Icon type="ionicon" name='ios-arrow-up' size={25} color={(this.state.upvote? '#DA5AA4':'#6C56BA')} onPress={this.upVote} />
-            <Text> {comm.score} </Text>
-            <Icon type="ionicon" name='ios-arrow-down' size={25} color={(this.state.downvote? '#DA5AA4':'#6C56BA')} onPress={this.downVote}/>
+            <TouchableBounce onPress={this.upVote}>
+              <Icon type="ionicon" name='ios-arrow-up' size={25} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
+            </TouchableBounce>
+
+              <Text> {comm.score} </Text>
+
+            <TouchableBounce onPress={this.downVote}>
+              <Icon type="ionicon" name='ios-arrow-down' size={25} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
+            </TouchableBounce>
           </View>
         </View>
     );
@@ -137,7 +127,7 @@ const customStyles = StyleSheet.create({
     marginTop: 5,
     fontFamily: 'Gill Sans',
     alignSelf: 'flex-start',
-    fontSize: 15,
+    fontSize: 18,
     color: '#3C3559',
   },
   timestamp: {
@@ -148,7 +138,7 @@ const customStyles = StyleSheet.create({
   },
   time: {
     fontFamily: 'Gill Sans',
-    fontSize: 12,
+    fontSize: 14,
     color: '#2E234E',
   },
 

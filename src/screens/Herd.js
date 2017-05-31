@@ -4,6 +4,7 @@ import {
   View,
   Text,
   StyleSheet,
+  Image,
   AsyncStorage
 } from 'react-native';
 
@@ -59,9 +60,9 @@ class HerdScreen extends Component {
       (p) => {
         this.saveLocation(p.coords.latitude, p.coords.longitude, (lat, long, err) => {
           if (err) {
-            console.log('Could not save location');
+            // console.log('Could not save location');
           } else {
-            console.log('Saved location!');
+            // console.log('Saved location!');
             this.setState({
               herdSet: true,
               lat,
@@ -99,13 +100,13 @@ class HerdScreen extends Component {
 
   clearStoragePressed() {
 
-    console.log('About to clear storage');
+    // console.log('About to clear storage');
     this.clearStorage((err) => {
       if (!err) {
-        console.log('setting to false');
+        // console.log('setting to false');
         this.setState({ herdSet: false});
       } else {
-        console.log(err);
+        // console.log(err);
       }
     })
   }
@@ -124,13 +125,17 @@ class HerdScreen extends Component {
 
     const herdNotSavedView = (
       <View style={styles.saveLocationView}>
-        <Text> You have not set your Herd yet! </Text>
+        <Image
+          source={{uri: 'https://i.imgur.com/424SJFg.png'}}
+          style={styles.loadImg}/>
+        <Text style={styles.text}> You have not set your Herd yet! </Text>
         <Button
           raised
           icon={{name: 'map'}}
           borderRadius={50}
           title='Save this location!'
           backgroundColor='red'
+          fontFamily='Gill Sans'
           buttonStyle={styles.button}
           containerViewStyle={{backgroundColor: 'transparent'}}
           onPress={() => this.setHerdPressed()}
@@ -149,7 +154,7 @@ class HerdScreen extends Component {
 
     const floatLat = Number(this.state.lat);
     const floatLong = Number(this.state.long);
-    console.log('location herd', floatLat, floatLong);
+    // console.log('location herd', floatLat, floatLong);
     const herdListView = (
       <View style={styles.container}>
         <PostsListView
@@ -176,6 +181,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#F4F5F9',
+  },
+  loadImg: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
+  },
+  text: {
+    fontFamily: 'Gill Sans',
+    fontSize: 18,
+    color: '#6C56BA',
   },
   button: {
     padding: 10,

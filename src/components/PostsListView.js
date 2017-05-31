@@ -32,7 +32,7 @@ class PostsListView extends Component {
   }
 
   triggerRefresh() {
-    console.log('refresh triggered', this.listview);
+    // console.log('refresh triggered', this.listview);
     this.setState({error: false, empty: false, endOfResults: false}, () => {
       if (this.listview) {
         this.listview._refresh();
@@ -42,7 +42,6 @@ class PostsListView extends Component {
 
   _onFetch(page = 1, callback, options) {
     if (this.props.searchTags) {
-      console.log('searching posts');
       searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts, error) => {
         if (error) {
           this.setState({error: true});
@@ -72,7 +71,7 @@ class PostsListView extends Component {
     }
 
     else {
-      console.log('list sorty by', this.props.sortBy, 'page', page);
+      // console.log('list sorty by', this.props.sortBy, 'page', page);
       fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
         callback([])
         if (error) {
@@ -80,6 +79,8 @@ class PostsListView extends Component {
         } else {
           if (page === 1 && posts.length === 0) {
             this.setState({empty: true});
+          } else if (posts.length === 0) {
+            this.setState({endOfResults: true});
           }
         }
         callback(posts);
@@ -142,11 +143,13 @@ class PostsListView extends Component {
    */
   paginationFetchingView() {
     return (
-      <View alignItems='center'>
-       <Text style={customStyles.loading}>Loading Yips...</Text>
-       <Image
-        source={require('../../screenshots/Appa.png')}
-        style={customStyles.loadImg}/>
+      <View style={customStyles.loadingView}>
+        <View>
+          <Text style={customStyles.loading}>Loading Yips...</Text>
+          <Image
+            source={{uri: 'https://i.imgur.com/fdh8TNp.png'}}
+            style={customStyles.loadImg}/>
+        </View>
       </View>
     );
   }
@@ -241,8 +244,11 @@ class PostsListView extends Component {
       );
     } else {
       return (
-      <View>
-        <Text>Could not get location</Text>
+      <View style={customStyles.loadingView}>
+        <Text style={customStyles.loading}>Could not get location</Text>
+        <Image
+          source={{uri: 'https://i.imgur.com/424SJFg.png'}}
+          style={customStyles.loadImg}/>
       </View>
       )}
   }
@@ -250,6 +256,12 @@ class PostsListView extends Component {
 
 
 const customStyles = StyleSheet.create({
+  loadingView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F4F5F9',
+  },
   loading: {
     fontFamily: 'Gill Sans',
     fontSize: 20,
@@ -257,8 +269,13 @@ const customStyles = StyleSheet.create({
     margin: 20,
   },
   loadImg: {
-    width: '30%',
+    width: 150,
+    height: 150,
     resizeMode: 'contain',
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
   },
 
   refreshableView: {

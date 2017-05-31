@@ -59,18 +59,20 @@ export const HerdStack = StackNavigator({
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 18
-      }
+        fontWeight: 'normal',
+        fontSize: 22
+      },
     }
   },
   PostDetail: {
     screen: PostDetail,
     navigationOptions: {
-      title: 'Detail',
+      title: 'Details',
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 18
+        fontWeight: 'normal',
+        fontSize: 22
       }
     }
   },
@@ -104,7 +106,8 @@ export const SearchStack = StackNavigator({
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 18
+        fontWeight: 'normal',
+        fontSize: 22
       }
     }
   }
@@ -122,9 +125,30 @@ export const SettingsStack = StackNavigator({
   Profile: {
     screen: ProfilePage,
     navigationOptions: {
-      title: 'Profile',
+      title: 'My Posts',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontWeight: 'normal',
+        fontSize: 22
+      },
+      headerStyle: {
+        backgroundColor: mainColor,
+        shadowOpacity: 0
+      },
     }
-  }
+  },
+  PostDetail: {
+    screen: PostDetail,
+    navigationOptions: {
+      title: 'Detail',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 18
+      }
+    }
+  },
 })
 
 export const AuthStack = StackNavigator({
@@ -157,24 +181,29 @@ export const NewPostStack = StackNavigator({
 export const FeedStack = StackNavigator({
   Feed: {
     screen: Feed,
-
     navigationOptions: {
       title: 'Feed',
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 18
-      }
+        fontWeight: 'normal',
+        fontSize: 22
+      },
+      headerStyle: {
+        backgroundColor: mainColor,
+        shadowOpacity: 0
+      },
     }
   },
   PostDetail: {
     screen: PostDetail,
     navigationOptions: {
-      title: 'Detail',
+      title: 'Details',
       headerTintColor: '#6C56BA',
       headerTitleStyle: {
         fontFamily: 'Gill Sans',
-        fontSize: 18
+        fontWeight: 'normal',
+        fontSize: 22
       }
     }
   },

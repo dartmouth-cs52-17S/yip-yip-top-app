@@ -73,12 +73,12 @@ class Feed extends Component {
           // Byrne is "sms|5929b16d961bda2fafde538e"
         });
       } else {
-        console.log(`could not get profile in componentDidMount in Feed ${err}. state.user is ${this.state.user}`);
+        // console.log(`could not get profile in componentDidMount in Feed ${err}. state.user is ${this.state.user}`);
       }
     })
     navigator.geolocation.getCurrentPosition(
       (p) => {
-        console.log('location feed', 'lat:', p.coords.latitude, 'long:', p.coords.longitude);
+        // console.log('location feed', 'lat:', p.coords.latitude, 'long:', p.coords.longitude);
         this.setState({long: p.coords.longitude, lat: p.coords.latitude})
       },
       (error) => alert(JSON.stringify(error)),
@@ -90,7 +90,7 @@ class Feed extends Component {
 
     this.setState({sortBy: segmentedVal}, () => {
       if (this.child) {
-        console.log('feed sort by', this.state.sortBy);
+        // console.log('feed sort by', this.state.sortBy);
         this.child.triggerRefresh();
       }
     });
