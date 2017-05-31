@@ -132,14 +132,12 @@ class PostDetail extends Component {
   voteComment(commentId, action) {
     const fields = {commentId: commentId, user: this.props.navigation.state.params.user, action}
     editPost(this.props.navigation.state.params.post.id, fields, action, () => {
-      console.log('voted successfully.');
     });
   }
 
   deleteComment(commentId, action) {
     const fields = {commentId: commentId, action}
     editPost(this.props.navigation.state.params.post.id, fields, action, () => {
-      console.log('deleted successfully.');
       this.fetchPost(this.props.navigation.state.params.post.id);
     });
   }
