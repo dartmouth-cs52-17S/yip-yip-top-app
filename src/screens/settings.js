@@ -12,7 +12,7 @@ import {
 class Settings extends Component {
 
   render() {
-    console.log("profile user", this.props.userId);
+    // console.log("profile user", this.props.userId);
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>

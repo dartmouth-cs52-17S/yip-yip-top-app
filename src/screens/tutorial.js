@@ -5,27 +5,27 @@ import AppIntro from 'react-native-app-intro';
 class Tutorial extends React.Component {
 
   onSkipBtnHandle = (index) => {
-    console.log(index);
+    // console.log(index);
     this.props.navigation.navigate('Tabs');
   }
   doneBtnHandle = () => {
     this.props.navigation.navigate('Tabs');
   }
   nextBtnHandle = (index) => {
-    console.log(index);
+    // console.log(index);
   }
   onSlideChangeHandle = (index, total) => {
-    console.log(index, total);
+    // console.log(index, total);
   }
 
   render() {
     const pageArray = [{
       title: 'Welcome to Yip Yip,',
       description: 'where you can share your thoughts with the people around you.',
-      img: 'https://vignette3.wikia.nocookie.net/camphalfbloodroleplay/images/8/89/Tumblr_mpgoldBy461ri41kbo1_500.png',
+      img: 'https://i.imgur.com/gQIYpxd.png',
       imgStyle: {
-        height: 80 * 2.5,
-        width: 100 * 2.5,
+        height: 100 * 2,
+        width: 100 * 2,
       },
       backgroundColor: '#F4F5F9',
       fontColor: '#3C3559',

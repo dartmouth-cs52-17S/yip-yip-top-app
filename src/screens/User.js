@@ -9,18 +9,33 @@ import {
   Button
 } from 'react-native';
 
-import PostsListView from '../components/PostsListView';
+import { Icon } from 'react-native-elements';
 
+import PostsListView from '../components/PostsListView';
 
 class ProfilePage extends Component {
 
-  render() {
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: 'My Posts',
+    headerLeft: <Icon type='font-awesome'
+      name='close'
+      color='#6C56BA'
+      size={20}
+      onPress={()=>{ navigation.goBack(null); }}
+      style={{ marginLeft: 10, padding: 5}}
+    />
+  })
 
+
+  render() {
     return (
       <View style={{flex: 1}}>
         <PostsListView
           userId={this.props.navigation.state.params.userId}
-          profilepage = {true}
+
+          manageProfile={true}
+          user={this.props.navigation.state.params.userId}
+          navigation={this.props.navigation}
         />
       </View>
     );
