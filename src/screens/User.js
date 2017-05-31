@@ -15,11 +15,11 @@ import PostsListView from '../components/PostsListView';
 class ProfilePage extends Component {
 
   render() {
-
     return (
       <View style={{flex: 1}}>
         <PostsListView
           userId={this.props.navigation.state.params.userId}
+          manageProfile={true}
         />
       </View>
     );
