@@ -67,7 +67,6 @@ class PostsListView extends Component {
         }
         callback(posts);
       })
-      console.log('getting user posts');
     }
 
     else {
