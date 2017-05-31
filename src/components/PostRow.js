@@ -10,7 +10,8 @@ import {
 import moment from 'moment';
 import TouchableBounce from '../modifiedPackages/TouchableBounce';
 import { Icon } from 'react-native-elements';
-import { editPost } from '../api'
+import { editPost, deletePost } from '../api';
+import EventEmitter from 'react-native-eventemitter';
 
 class PostRow extends Component {
 
@@ -39,6 +40,7 @@ class PostRow extends Component {
 
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
+    this.del = this.del.bind(this);
   }
 
   componentWillReceiveProps() {
@@ -86,6 +88,13 @@ class PostRow extends Component {
     }
   }
 
+  del() {
+    deletePost(this.props.post._id, () => {
+      this.props.refresh();
+      EventEmitter.emit('refreshListView');
+    });
+  }
+
   render() {
     let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
     timeSince.splice(-1,1);
@@ -101,7 +110,10 @@ class PostRow extends Component {
       timeSince[2] = 'secs'
     }
     const time = timeSince.join(' ');
-
+    let del;
+    if (this.props.manageProfile) {
+      del = <Text style={{fontFamily: 'Gill Sans', color:'red', flex:1, fontSize: 15, marginTop:5}} onPress={() => this.del()}>delete</Text>
+    }
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
         onPress={() => {
@@ -118,6 +130,9 @@ class PostRow extends Component {
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
                 <Text style={customStyles.infoText}>{this.props.post.comments.length} comments</Text>
+              </View>
+              <View>
+                {del}
               </View>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
@@ -147,27 +162,32 @@ const customStyles = StyleSheet.create({
   main: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
     margin: 12,
     marginTop: 5,
     marginBottom: 5,
     borderRadius: 10,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignSelf: 'center',
     shadowColor: '#291D56',
     shadowOffset: {height: 2},
     shadowOpacity: 0.3,
-    shadowRadius: 3
+    shadowRadius: 3,
+    backgroundColor: '#FFF',
+    paddingBottom: 5
   },
 
   content: {
+    paddingTop: 5,
+    paddingLeft: 5,
     flex: 4,
     flexDirection: 'column',
-    justifyContent: 'center',
-    margin: 10,
+    justifyContent: 'space-between',
+    margin: 5,
+    height: '100%',
   },
   mainText: {
+    paddingTop: 10,
     fontFamily: 'Gill Sans',
     color: '#3C3559',
     fontSize: 18,
@@ -181,12 +201,11 @@ const customStyles = StyleSheet.create({
     color: '#DA5AA4',
     letterSpacing: -0.03,
     margin: 5,
-    marginTop: 10
   },
 
   info: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   infoDetail: {
     flexDirection: 'row',

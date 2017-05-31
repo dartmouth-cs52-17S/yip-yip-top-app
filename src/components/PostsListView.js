@@ -126,6 +126,7 @@ class PostsListView extends Component {
     this.useCached = false
   }
 
+
   /**
    * Render a row
    * @param {object} rowData Row data
@@ -134,7 +135,7 @@ class PostsListView extends Component {
     return (
       <PostRow post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
-      }}/>
+      }} manageProfile={this.props.manageProfile}/>
     );
   }
 

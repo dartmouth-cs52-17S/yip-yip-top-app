@@ -14,11 +14,8 @@ We once had gradients... but React Native does not support them so we had to do 
 
 TODO:  descriptions of code organization and tools and libraries used
 
-#### Styling on app
-Also, I think the standard for styles on React Native is inline (`const styles = StyleSheet.create({ everyStyleIsAnObject })`) and we `import { StyleSheet } from ‘react-native’;` In general, `docs/ARCHITECTURE.md` is very helpful for understanding the project’s setup and some of the differences between React and React Native.
-
 #### Authentication
-We are using auth0 for passwordless
+We are using auth0 and twilio for sms verification.
 
 ## You need to bundle the app for deployment
 
@@ -105,18 +102,7 @@ Once the iOS simulator is running, you can open the developer tools menu by pres
 
 ## Deployment
 
-We can use CodePush to deploy our app.
-  ```
-  npm install -g code-push-cli
-  ```
-  After creating a CodePush account, you can simply use the following commands via the CLI and authenticate with either your GitHub or Microsoft account:
-  ```
-  code-push register
-  code-push app add Yip Yip
-  ```
-  Add the appropriate CodePush client SDKs to your app, and configure them to query for updates against the app deployment created above.
-  For the react-native platform, follow https://github.com/Microsoft/react-native-code-push#getting-started
-  For updates, run the release-react comand in the CodePush CLI, which will handle bundling your JavaScript and asset files and releasing the update to the CodePush server. For example: code-push release-react MyApp ios.
+We're currently deploying using Test Flight (fill out [this form](https://docs.google.com/forms/d/e/1FAIpQLSelji9rZ4L2O7h_oZRaofPLjgtg2_jhCBS-w9Jnr9j0CZsTfw/viewform?c=0&w=1) if you want to be added to our signup list) and hope to have it on the Apple App Store soon.
 
 ## Authors
 
@@ -124,4 +110,4 @@ Armin Mahban, Byrne Hollander, Ellis Guo, Jenny Seong, Ying Liu
 
 ## Acknowledgments
 
-Tim and Irene, probably
+Tim and Irene

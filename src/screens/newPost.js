@@ -88,9 +88,9 @@ class NewPostScreen extends Component {
   }
 
   postSubmitPressed() {
-    this.setState({showLoader: true});
     let safe = true;
     if (this.state.text) {
+      this.setState({showLoader: true});
       // need to set up user
       for (var i = 0; i < banned.length; i++) {
         if (this.state.text.toLowerCase().includes(banned[i])) {
