@@ -68,6 +68,7 @@ class PostsListView extends Component {
         }
         callback(posts);
       })
+      console.log('getting user posts');
     }
 
     else {
@@ -94,7 +95,7 @@ class PostsListView extends Component {
     return (
       <PostRow post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
-      }}/>
+      }} manageProfile={this.props.manageProfile}/>
     );
   }
 
