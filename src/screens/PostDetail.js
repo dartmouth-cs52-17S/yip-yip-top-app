@@ -143,7 +143,7 @@ class PostDetail extends Component {
         }
       }
       if (safe){
-        const fields = {comment: input, user_id: this.props.navigation.state.params.user};
+        const fields = {comment: input, userId: this.props.navigation.state.params.user};
         editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
           this.setState({text:''});
           this.setState({commentsLen:this.state.commentsLen + 1, empty: false});

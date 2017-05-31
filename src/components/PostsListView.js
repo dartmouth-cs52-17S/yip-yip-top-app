@@ -27,18 +27,40 @@ class PostsListView extends Component {
       endOfResults: false,
     }
 
+    this.newPosts = []
+    this.topPosts = []
+    this.commentPosts = []
+
+    this.useCached = false
+
     this._onFetch = this._onFetch.bind(this);
     this._renderPaginationWaitingView = this._renderPaginationWaitingView.bind(this);
   }
 
-  triggerRefresh() {
-    // console.log('refresh triggered', this.listview);
+  triggerRefresh(isSegmentedChange) {
+    console.log('refresh triggered', this.listview);
+
+    let currentPostlist;
+    if (this.props.sortBy === 'New') {
+      currentPostlist = this.newPosts;
+    } else if (this.props.sortBy === 'Top') {
+      currentPostlist = this.topPosts;
+    } else { currentPostlist = this.commentPosts }
+
+    if (!isSegmentedChange || !currentPostlist) {
+      this.useCached = false
+    } else if (isSegmentedChange && currentPostlist.length != 0) {
+      console.log(currentPostlist);
+      this.useCached = true
+    }
+
     this.setState({error: false, empty: false, endOfResults: false}, () => {
       if (this.listview) {
         this.listview._refresh();
       }
     });
   }
+
 
   _onFetch(page = 1, callback, options) {
     if (this.props.searchTags) {
@@ -67,10 +89,16 @@ class PostsListView extends Component {
         }
         callback(posts);
       })
-    }
+    } else if (this.useCached) {
+      console.log('using cached', this.props.sortBy);
+      if (this.props.sortBy === 'New') {
+        callback(this.newPosts)
+      } else if (this.props.sortBy === 'Top') {
+        callback(this.topPosts)
+      } else { callback(this.commentPosts) }
 
-    else {
-      // console.log('list sorty by', this.props.sortBy, 'page', page);
+    } else {
+      console.log('list sorty by', this.props.sortBy, 'page', page);
       fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
         callback([])
         if (error) {
@@ -82,9 +110,20 @@ class PostsListView extends Component {
             this.setState({endOfResults: true});
           }
         }
+
+        if (this.props.sortBy === 'New') {
+          this.newPosts = posts
+        } else if (this.props.sortBy === 'Top') {
+          this.topPosts = posts
+        } else {
+          this.commentPosts = posts
+        }
+
         callback(posts);
       });
     }
+
+    this.useCached = false
   }
 
   /**
