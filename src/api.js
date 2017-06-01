@@ -153,13 +153,19 @@ export function editPost(postId, fields, action, cb) {
       commentId: fields.commentId,
       action,
     }
+  } else {
+    params = {
+      user: fields.user,
+      action
+    }
   }
+
   axios.put(url, params).
   then((response) => {
-    // console.log(response.data);
+
     cb(response.data);
   }).catch((error) => {
-    // console.log(error);
+
   });
 }
 

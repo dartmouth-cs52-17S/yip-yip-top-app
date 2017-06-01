@@ -48,7 +48,8 @@ class PostRow extends Component {
   }
 
   upVote() {
-    editPost(this.props.post._id, { user_id: this.props.user }, 'UPVOTE_POST', () => {
+    console.log('upvoting', this.props.user, this.props.post._id);
+    editPost(this.props.post._id, { user: this.props.user }, 'UPVOTE_POST', () => {
       // console.log('upvote');
     });
     if (!this.state.upvote) {
@@ -68,9 +69,7 @@ class PostRow extends Component {
   }
 
   downVote() {
-    editPost(this.props.post._id, { user_id: this.props.user }, 'DOWNVOTE_POST', () => {
-      // this.props.refresh();
-      // console.log('downvote');
+    editPost(this.props.post._id, { user: this.props.user }, 'DOWNVOTE_POST', () => {
     });
     if (!this.state.downvote) {
       if (this.state.upvote) {
