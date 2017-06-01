@@ -225,7 +225,7 @@ class PostDetail extends Component {
 
   renderPostDetailView() {
     let post = this.state.post;
-    const spacerVar = this.props.navigation.state.params.user ? -50 : 0
+    const spacerVar = this.props.navigation.state.params.manageProfile ? 0 : -50
     const postDetail = (
       <View style={customStyles.postDetail}>
         <View style={customStyles.content}>

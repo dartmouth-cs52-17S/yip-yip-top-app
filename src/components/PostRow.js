@@ -44,7 +44,6 @@ class PostRow extends Component {
   }
 
   componentWillMount() {
-    console.log('score is', this.props.post.score, 'comment', this.props.post.text);
     this.setState({score: this.props.post.score});
   }
 
@@ -117,7 +116,7 @@ class PostRow extends Component {
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
         onPress={() => {
           // console.log('user', this.props.user);
-          this.props.navigation.navigate('PostDetail', {post: this.props.post, user: this.props.user});
+          this.props.navigation.navigate('PostDetail', {post: this.props.post, user: this.props.user, manageProfile: this.props.manageProfile});
         }}>
         <View style={customStyles.main}>
           <View style={customStyles.content}>

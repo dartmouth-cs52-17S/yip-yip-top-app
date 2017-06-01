@@ -98,7 +98,7 @@ class PostsListView extends Component {
       } else { callback(this.commentPosts) }
 
     } else {
-      console.log('list sort by', this.props.sortBy, 'page', page);
+      // console.log('list sort by', this.props.sortBy, 'page', page);
       fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
         callback([])
         if (error) {
@@ -113,7 +113,6 @@ class PostsListView extends Component {
 
         if (this.props.sortBy === 'New') {
           page === 1 ? this.newPosts = posts : this.newPosts = this.newPosts.concat(posts)
-          console.log(this.newPosts);
         } else if (this.props.sortBy === 'Top') {
           page === 1 ? this.topPosts = posts : this.topPosts = this.topPosts.concat(posts)
         } else {

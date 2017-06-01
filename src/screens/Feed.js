@@ -90,7 +90,6 @@ class Feed extends Component {
 
     this.setState({sortBy: segmentedVal}, () => {
       if (this.child) {
-        // console.log('feed sort by', this.state.sortBy);
         this.child.triggerRefresh(true);
       }
     });
