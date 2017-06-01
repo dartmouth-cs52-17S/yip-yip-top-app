@@ -7,6 +7,7 @@ import {
   Text,
   Dimensions,
   ScrollView,
+  AsyncStorage,
 } from 'react-native'
 
 import Button from 'react-native-button';
@@ -28,10 +29,22 @@ class SearchScreen extends Component {
       showSearchResults: false,
       trendingTags: [],
       loadingTags: true,
+      user:'',
     };
   }
 
   componentDidMount() {
+    this.retrieveProfile((profile, err) => {
+      if (profile) {
+        // console.log(`in feed here is profile ${profile}`)
+        this.setState({
+          user: profile
+          // Byrne is "sms|5929b16d961bda2fafde538e"
+        });
+      } else {
+        // console.log(`could not get profile in componentDidMount in Feed ${err}. state.user is ${this.state.user}`);
+      }
+    })
     navigator.geolocation.getCurrentPosition(
       (p) => {
         this.setState({long: p.coords.longitude, lat: p.coords.latitude})
@@ -42,6 +55,17 @@ class SearchScreen extends Component {
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
+  }
+
+  async retrieveProfile(callback) {
+    try {
+      const savedProfile = await AsyncStorage.getItem('@Profile:key');
+      if (savedProfile !== null) {
+        callback(savedProfile, null)
+      }
+    } catch (error) {
+      callback(null, error);
+    }
   }
 
   isBackspacing(searchTerm) {
@@ -137,6 +161,7 @@ class SearchScreen extends Component {
             long={this.state.long}
             searchTags={this.state.searchTerm}
             navigation={this.props.navigation}
+            user={this.state.user}
           />
         </View>
       );

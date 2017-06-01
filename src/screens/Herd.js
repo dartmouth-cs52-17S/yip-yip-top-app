@@ -27,6 +27,7 @@ class HerdScreen extends Component {
       herdSet: false,
       lat: 0,
       long: 0,
+      user:'',
     };
 
     this.clearStoragePressed = this.clearStoragePressed.bind(this);
@@ -34,14 +35,16 @@ class HerdScreen extends Component {
 
   componentWillMount() {
 
-    this.props.navigation.setParams({
-      headerRight: <Icon type='font-awesome'
-        name='minus-square'
-        color='#6C56BA'
-        size={25}
-        onPress={this.clearStoragePressed}
-        style={{ marginRight: 10, padding: 5}}
-      />
+    this.retrieveProfile((profile, err) => {
+      if (profile) {
+        // console.log(`in feed here is profile ${profile}`)
+        this.setState({
+          user: profile
+          // Byrne is "sms|5929b16d961bda2fafde538e"
+        });
+      } else {
+        // console.log(`could not get profile in componentDidMount in Feed ${err}. state.user is ${this.state.user}`);
+      }
     })
 
     this.retrieveLocation((lat,long, err) => {
@@ -53,6 +56,17 @@ class HerdScreen extends Component {
         });
       }
     })
+
+    this.props.navigation.setParams({
+      headerRight: <Icon type='font-awesome'
+        name='minus-square'
+        color='#6C56BA'
+        size={25}
+        onPress={this.clearStoragePressed}
+        style={{ marginRight: 10, padding: 5}}
+      />
+    })
+
   }
 
   setHerdPressed() {
@@ -121,6 +135,17 @@ class HerdScreen extends Component {
     }
   }
 
+  async retrieveProfile(callback) {
+    try {
+      const savedProfile = await AsyncStorage.getItem('@Profile:key');
+      if (savedProfile !== null) {
+        callback(savedProfile, null)
+      }
+    } catch (error) {
+      callback(null, error);
+    }
+  }
+
   render() {
 
     const herdNotSavedView = (
@@ -151,6 +176,7 @@ class HerdScreen extends Component {
       <View style={styles.container}>
         <PostsListView
           navigation={this.props.navigation}
+          user={this.state.user}
           long={floatLong}
           lat={floatLat}/>
       </View>
