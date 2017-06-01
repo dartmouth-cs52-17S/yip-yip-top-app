@@ -141,12 +141,12 @@ class PostRow extends Component {
           </View>
           <View style={customStyles.vote}>
             <TouchableBounce onPress={this.upVote}>
-              <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
+              <Icon type="ionicon" name='ios-arrow-up' size={40} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
             </TouchableBounce>
 
             <Text style={customStyles.score}> {this.state.score} </Text>
             <TouchableBounce onPress={this.downVote}>
-              <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
+              <Icon type="ionicon" name='ios-arrow-down' size={40} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
             </TouchableBounce>
           </View>
         </View>

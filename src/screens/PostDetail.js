@@ -13,6 +13,7 @@ import {
   KeyboardAvoidingView,
   Dimensions,
   Alert,
+  Keyboard,
 } from 'react-native';
 
 import moment from 'moment';
@@ -135,6 +136,7 @@ class PostDetail extends Component {
   }
 
   submitComment(input) {
+    Keyboard.dismiss();
     if (input){
       let safe = true;
       for (var i = 0; i < banned.length; i++) {
