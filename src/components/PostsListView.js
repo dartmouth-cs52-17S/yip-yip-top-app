@@ -90,7 +90,7 @@ class PostsListView extends Component {
         callback(posts);
       })
     } else if (this.useCached) {
-      // console.log('using cached', this.props.sortBy);
+      callback([])
       if (this.props.sortBy === 'New') {
         callback(this.newPosts)
       } else if (this.props.sortBy === 'Top') {
@@ -98,7 +98,7 @@ class PostsListView extends Component {
       } else { callback(this.commentPosts) }
 
     } else {
-      // console.log('list sorty by', this.props.sortBy, 'page', page);
+      console.log('list sort by', this.props.sortBy, 'page', page);
       fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
         callback([])
         if (error) {
@@ -112,11 +112,12 @@ class PostsListView extends Component {
         }
 
         if (this.props.sortBy === 'New') {
-          this.newPosts = posts
+          page === 1 ? this.newPosts = posts : this.newPosts = this.newPosts.concat(posts)
+          console.log(this.newPosts);
         } else if (this.props.sortBy === 'Top') {
-          this.topPosts = posts
+          page === 1 ? this.topPosts = posts : this.topPosts = this.topPosts.concat(posts)
         } else {
-          this.commentPosts = posts
+          page === 1 ? this.commentPosts = posts : this.commentPosts = this.commentPosts.concat(posts)
         }
 
         callback(posts);
@@ -133,7 +134,7 @@ class PostsListView extends Component {
    */
   _renderRowView(rowData) {
     return (
-      <PostRow post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
+      <PostRow key={rowData.id} post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
       }} manageProfile={this.props.manageProfile}/>
     );

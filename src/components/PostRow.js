@@ -43,12 +43,12 @@ class PostRow extends Component {
     this.del = this.del.bind(this);
   }
 
-  componentWillReceiveProps() {
+  componentWillMount() {
+    console.log('score is', this.props.post.score, 'comment', this.props.post.text);
     this.setState({score: this.props.post.score});
   }
 
   upVote() {
-    console.log('upvoting', this.props.user, this.props.post._id);
     editPost(this.props.post._id, { user: this.props.user }, 'UPVOTE_POST', () => {
       // console.log('upvote');
     });
@@ -97,7 +97,7 @@ class PostRow extends Component {
   render() {
     let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
     timeSince.splice(-1,1);
-    if (timeSince[0] === 'an') {
+    if (timeSince[0] === 'an' || timeSince[0] === 'a') {
       timeSince[0] = '1'
     }
     if (timeSince[1] === 'minutes') {
@@ -111,7 +111,7 @@ class PostRow extends Component {
     const time = timeSince.join(' ');
     let del;
     if (this.props.manageProfile) {
-      del = <Text style={{fontFamily: 'Gill Sans', color:'#DA5AA4', flex:1, fontSize: 15, marginTop:5}} onPress={() => this.del()}>delete</Text>
+      del = <Text style={{fontFamily: 'Gill Sans', color:'#DA5AA4', flex:1, fontSize: 15, marginTop:5}} onPress={() => this.del()}> delete </Text>
     }
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
