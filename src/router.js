@@ -110,7 +110,18 @@ export const SearchStack = StackNavigator({
         fontSize: 22
       }
     }
-  }
+  },
+  PostDetail: {
+    screen: PostDetail,
+    navigationOptions: {
+      title: 'Detail',
+      headerTintColor: '#6C56BA',
+      headerTitleStyle: {
+        fontFamily: 'Gill Sans',
+        fontSize: 18
+      }
+    }
+  },
 }, {
   navigationOptions: ({ navigation }) => ({
     gesturesEnabled: false,

@@ -7,14 +7,11 @@ import {
   Text,
   Dimensions,
   ScrollView,
-  Keyboard,
-  TouchableOpacity,
 } from 'react-native'
 
 import Button from 'react-native-button';
 
 import PostsListView from '../components/PostsListView';
-
 import { getTrendingTags } from '../api.js';
 
 
@@ -139,6 +136,7 @@ class SearchScreen extends Component {
             lat={this.state.lat}
             long={this.state.long}
             searchTags={this.state.searchTerm}
+            navigation={this.props.navigation}
           />
         </View>
       );
