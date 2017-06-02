@@ -136,13 +136,7 @@ export function editPost(postId, fields, action, cb) {
       user: fields.user,
       action,
     }
-  } else if (action == 'DOWNVOTE_COMMENT') {
-    params = {
-      commentId: fields.commentId,
-      user: fields.user,
-      action,
-    }
-  } else if (action == 'UPVOTE_COMMENT') {
+  } else if (action == 'DOWNVOTE_COMMENT' || action == 'UPVOTE_COMMENT') {
     params = {
       commentId: fields.commentId,
       user: fields.user,
@@ -162,7 +156,6 @@ export function editPost(postId, fields, action, cb) {
 
   axios.put(url, params).
   then((response) => {
-
     cb(response.data);
   }).catch((error) => {
 
