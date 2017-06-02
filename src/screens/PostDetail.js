@@ -24,6 +24,7 @@ import { Icon } from 'react-native-elements';
 import { getPost, createReport, editPost } from '../api';
 import Comment from './Comment';
 import ErrorView from '../components/ErrorView';
+import EventEmitter from 'react-native-eventemitter';
 
 import banned from '../banned';
 
@@ -174,7 +175,7 @@ class PostDetail extends Component {
   }
   upvotePost() {
     let params=this.props.navigation.state.params;
-    editPost(params.post.id, { user_id: params.user }, 'UPVOTE_POST', () => {
+    editPost(params.post.id, { user: params.user }, 'UPVOTE_POST', () => {
       // console.log('upvote');
     });
     if (!this.state.upvote) {
@@ -195,9 +196,9 @@ class PostDetail extends Component {
 
   downvotePost() {
     let params=this.props.navigation.state.params;
-    editPost(params.post.id, { user_id: params.user }, 'DOWNVOTE_POST', () => {
+    editPost(params.post.id, { user: params.user }, 'DOWNVOTE_POST', () => {
       // this.props.refresh();
-      // console.log('downvote');
+      // coinsole.log('downvote');
     });
     if (!this.state.downvote) {
       if (this.state.upvote) {
