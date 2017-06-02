@@ -4,7 +4,8 @@ import {
     Text,
     View,
     StyleSheet,
-    Dimensions
+    Dimensions,
+    Alert
 } from 'react-native';
 
 import moment from 'moment';
@@ -70,7 +71,17 @@ class Comment extends Component {
     const time = timeSince.join(' ');
     let del;
     if (comm.user == this.props.user){
-      del = <Text style={{fontFamily: 'Gill Sans', color:'#DA5AA4', flex:1, fontSize: 15}} onPress={() => this.del(comm._id)}>delete</Text>
+      del = <Text style={{fontFamily: 'Gill Sans', color:'#DA5AA4', flex:1, fontSize: 15}} onPress={() => {
+        Alert.alert(
+              'Delete Comment',
+              'Are you sure you want to delete your comment?',
+          [
+                {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+                {text: 'Delete', onPress: () => this.del(comm._id)},
+          ]
+            )
+      }}>
+      delete</Text>
     }
     return (
         <View style={customStyles.container}>
