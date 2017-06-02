@@ -89,7 +89,7 @@ class Comment extends Component {
             <Icon reverse name={comm.icon} type='font-awesome' color={comm.color} />
           </View>
           <View style={customStyles.content}>
-            <Text style={customStyles.comment}> {comm.text} </Text>
+            <Text style={customStyles.comment}>{comm.text}</Text>
             <View style={customStyles.timestamp}>
               {del}
               <Icon type='font-awesome' name='hourglass-half' size={12} color={'#6C56BA'} margin={3} />
@@ -98,13 +98,13 @@ class Comment extends Component {
           </View>
           <View style={{flex: 1, alignItems: 'center'}}>
             <TouchableBounce onPress={this.upVote}>
-              <Icon type="ionicon" name='ios-arrow-up' size={25} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
+              <Icon type="ionicon" name='ios-arrow-up' size={35} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
             </TouchableBounce>
 
-              <Text> {comm.score} </Text>
+              <Text style={customStyles.score}>{comm.score}</Text>
 
             <TouchableBounce onPress={this.downVote}>
-              <Icon type="ionicon" name='ios-arrow-down' size={25} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
+              <Icon type="ionicon" name='ios-arrow-down' size={35} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
             </TouchableBounce>
           </View>
         </View>
