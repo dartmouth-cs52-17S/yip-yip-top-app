@@ -29,7 +29,7 @@ import EventEmitter from 'react-native-eventemitter';
 import banned from '../banned';
 
 const vw = Dimensions.get('window').width;
-const CHAR_LIMIT = 75;
+const CHAR_LIMIT = 90;
 
 class PostDetail extends Component {
 
@@ -87,16 +87,15 @@ class PostDetail extends Component {
     }
 
     Alert.alert(
-      'Report Yip?',
+      'Report Post?',
       'Our team will be notified',
       [
         {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-        {text: 'Yes', onPress: () => {
+        {text: 'Report', onPress: () => {
           createReport(report, (callback) => {
           })
         }},
-      ],
-      { cancelable: false }
+      ]
     )
   }
 
@@ -141,11 +140,17 @@ class PostDetail extends Component {
     Keyboard.dismiss();
     if (input){
       let safe = true;
-      for (var i = 0; i < banned.length; i++) {
-        if (input.toLowerCase().includes(banned[i])) {
-          Alert.alert('Cannot Save Comment', 'Please remove profanity from comment.');
-          safe = false;
-          break;
+      if (input.length < 2) {
+        Alert.alert('Cannot Submit Comment', 'This comment is too short.');
+        safe = false;
+      }
+      if (safe){
+        for (var i = 0; i < banned.length; i++) {
+          if (input.toLowerCase().includes(banned[i])) {
+            Alert.alert('Cannot Save Comment', 'Please remove profanity from comment.');
+            safe = false;
+            break;
+          }
         }
       }
       if (safe){

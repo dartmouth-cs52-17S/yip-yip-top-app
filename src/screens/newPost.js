@@ -76,7 +76,6 @@ class NewPostScreen extends Component {
     })
   }
 
-
   componentWillUnmount () {
     this.keyboardWillHideListener.remove();
   }
@@ -90,18 +89,23 @@ class NewPostScreen extends Component {
   postSubmitPressed() {
     let safe = true;
     if (this.state.text) {
-      this.setState({showLoader: true});
-      // need to set up user
-      for (var i = 0; i < banned.length; i++) {
-        if (this.state.text.toLowerCase().includes(banned[i])) {
-          this.setState({showLoader: false}, () => {
-            Alert.alert('Cannot Post', 'Please remove profanity from post.');
-          });
-          safe = false;
-          break;
+      if (this.state.text.length < 8) {
+        Alert.alert('Cannot Submit Post', 'This post is too short.');
+        safe = false;
+      }
+      if (safe) {
+        for (var i = 0; i < banned.length; i++) {
+          if (this.state.text.toLowerCase().includes(banned[i])) {
+            this.setState({showLoader: false}, () => {
+              Alert.alert('Cannot Post', 'Please remove profanity from post.');
+            });
+            safe = false;
+            break;
+          }
         }
       }
       if (safe){
+        this.setState({showLoader: true});
         let tagArray = [];
         if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
         const post = {
@@ -125,7 +129,7 @@ class NewPostScreen extends Component {
 
     return (
       <View style={customStyles.main}>
-        <Spinner visible={this.state.showLoader} textContent={'Posting Comment...'} textStyle={{color: '#FFF'}} />
+        <Spinner visible={this.state.showLoader} textStyle={{color: '#FFF'}} />
         <KeyboardAvoidingView
           behavior={'height'}
           key={this.state.keyboardCounter}
