@@ -177,6 +177,7 @@ class PostDetail extends Component {
     let params=this.props.navigation.state.params;
     editPost(params.post.id, { user: params.user }, 'UPVOTE_POST', () => {
       // console.log('upvote');
+      EventEmitter.emit('refreshListView');
     });
     if (!this.state.upvote) {
       if (this.state.downvote) {
@@ -192,7 +193,6 @@ class PostDetail extends Component {
         })
       }
     }
-    EventEmitter.emit('refreshListView');
   }
 
   downvotePost() {
@@ -200,6 +200,7 @@ class PostDetail extends Component {
     editPost(params.post.id, { user: params.user }, 'DOWNVOTE_POST', () => {
       // this.props.refresh();
       // coinsole.log('downvote');
+      EventEmitter.emit('refreshListView');
     });
     if (!this.state.downvote) {
       if (this.state.upvote) {
@@ -215,7 +216,6 @@ class PostDetail extends Component {
         })
       }
     }
-    EventEmitter.emit('refreshListView');
   }
 
 
