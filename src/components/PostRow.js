@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TouchableHighlight,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from 'react-native' ;
 
 import moment from 'moment';
@@ -110,7 +111,16 @@ class PostRow extends Component {
     const time = timeSince.join(' ');
     let del;
     if (this.props.manageProfile) {
-      del = <Text style={{fontFamily: 'Gill Sans', color:'#DA5AA4', flex:1, fontSize: 15, marginTop:5}} onPress={() => this.del()}> delete </Text>
+      del = <Text style={{fontFamily: 'Gill Sans', color:'#DA5AA4', flex:1, fontSize: 15, marginTop:5}} onPress={() => {
+        Alert.alert(
+                'Delete Post',
+                'Are you sure you want to delete your post?',
+          [
+                  {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+                  {text: 'Delete', onPress: () => this.del()},
+          ]
+              )
+      }}>delete </Text>
     }
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
