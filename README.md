@@ -34,7 +34,7 @@ react-native link
 react-native run-ios
 ```
 
-If you run into an error after running `react-native run-ios`, run `react-native upgrade` and return `y` to all prompts. Then re-run `link` followed by `run-ios`.
+If you run into an error after running `react-native run-ios`, close down the simulator and terminal process, run `react-native upgrade`, and return `y` to all prompts. Then re-run `react-native link` followed by `react-native run-ios`.
 
 If you want to run the simulator on a specific iPhone model you can run a similar command: `react-native run-ios --simulator="iPhone 7 Plus"`
 
