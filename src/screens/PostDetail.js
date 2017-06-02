@@ -30,6 +30,7 @@ import banned from '../banned';
 
 const vw = Dimensions.get('window').width;
 const CHAR_LIMIT = 90;
+const MIN_SCORE = -5; // also in PostsListView
 
 class PostDetail extends Component {
 
@@ -223,7 +224,7 @@ class PostDetail extends Component {
 
 
   renderCommentCell(comment) {
-    if (comment.score > -5) {
+    if (comment.score > MIN_SCORE) {
       return (
         <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)}
          deleteComment={(commentId, action) => this.deleteComment(commentId, action)} user={this.props.navigation.state.params.user}/>
