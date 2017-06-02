@@ -2,9 +2,9 @@
 
 **Yip Yip** is a social app that allows users to create and view discussion threads within a 5-mile radius. Posts can be voted and commented on. Users can save a popular location as a “herd” to read  posts from the saved spot no matter where they travel to. Users can also search and see which hashtags are trending. Finally, we have a profile page so users can keep track of their activity. Importantly, we require that users signup with a phone number so there’s accountability when people post inappropriate content. Harassment and hate speech of any kind will not be tolerated. We are currently only on iOS, but hope to expand to Android in the coming weeks. If you want to be notified of our releases, please fill out [this form](https://yipwithme.typeform.com/to/ZzKVCb).
 
-You can view all of our mockups [here](https://dartmouth-cs52-17s.github.io/yip-yip-top-app/). Here's one:
+You can view all of our mockups [here](https://dartmouth-cs52-17s.github.io/yip-yip-top-app/). Here's a screenshot of our actual app:
 
-![](screenshots/HerdFeed.png)
+![](screenshots/actualScreenshot.png)
 
 <!--
 
