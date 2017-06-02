@@ -136,6 +136,7 @@ class PostDetail extends Component {
   }
 
   submitComment(input) {
+    this.setState({text:''});
     Keyboard.dismiss();
     if (input){
       let safe = true;
@@ -150,7 +151,6 @@ class PostDetail extends Component {
 
         const fields = {comment: input, user: this.props.navigation.state.params.user};
         editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
-          this.setState({text:''});
           this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
           this.fetchPost(this.props.navigation.state.params.post.id);
         });
