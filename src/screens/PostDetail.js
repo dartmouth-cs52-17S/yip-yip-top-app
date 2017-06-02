@@ -198,8 +198,6 @@ class PostDetail extends Component {
   downvotePost() {
     let params=this.props.navigation.state.params;
     editPost(params.post.id, { user: params.user }, 'DOWNVOTE_POST', () => {
-      // this.props.refresh();
-      // coinsole.log('downvote');
       EventEmitter.emit('refreshListView');
     });
     if (!this.state.downvote) {
