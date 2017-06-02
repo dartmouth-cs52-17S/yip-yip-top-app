@@ -223,10 +223,14 @@ class PostDetail extends Component {
 
 
   renderCommentCell(comment) {
-    return (
-      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)}
-       deleteComment={(commentId, action) => this.deleteComment(commentId, action)} user={this.props.navigation.state.params.user}/>
-    );
+    if (comment.score > -5) {
+      return (
+        <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)}
+         deleteComment={(commentId, action) => this.deleteComment(commentId, action)} user={this.props.navigation.state.params.user}/>
+      );
+    } else {
+      return false
+    }
   }
 
   renderPostDetailView() {

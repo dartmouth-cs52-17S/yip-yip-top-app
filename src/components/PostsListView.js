@@ -132,6 +132,15 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
+    let numComments = 0
+    console.log(rowData)
+    for (var comment in rowData.comments) {
+      if (rowData.comments[comment].score > -5) {
+        numComments += 1;
+      }
+    }
+    rowData.commentsLen = numComments;
+    console.log(`num comments after is ${rowData.commentsLen}`)
     return (
       <PostRow key={rowData.id} post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
