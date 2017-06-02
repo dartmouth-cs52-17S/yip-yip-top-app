@@ -192,6 +192,7 @@ class PostDetail extends Component {
         })
       }
     }
+    EventEmitter.emit('refreshListView');
   }
 
   downvotePost() {
