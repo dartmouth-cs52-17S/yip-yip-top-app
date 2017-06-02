@@ -5,7 +5,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from 'react-native';
 
 import { Button, Icon } from 'react-native-elements'
@@ -54,19 +55,17 @@ class HerdScreen extends Component {
           lat,
           long
         });
+        this.props.navigation.setParams({
+          headerRight: <Icon type='font-awesome'
+            name='minus-square'
+            color='#6C56BA'
+            size={25}
+            onPress={this.clearStoragePressed}
+            style={{ marginRight: 10, padding: 5}}
+          />
+        })
       }
     })
-
-    this.props.navigation.setParams({
-      headerRight: <Icon type='font-awesome'
-        name='minus-square'
-        color='#6C56BA'
-        size={25}
-        onPress={this.clearStoragePressed}
-        style={{ marginRight: 10, padding: 5}}
-      />
-    })
-
   }
 
   setHerdPressed() {
@@ -81,6 +80,15 @@ class HerdScreen extends Component {
               herdSet: true,
               lat,
               long
+            })
+            this.props.navigation.setParams({
+              headerRight: <Icon type='font-awesome'
+                name='minus-square'
+                color='#6C56BA'
+                size={25}
+                onPress={this.clearStoragePressed}
+                style={{ marginRight: 10, padding: 5}}
+              />
             })
           }
         });
@@ -113,16 +121,25 @@ class HerdScreen extends Component {
 
 
   clearStoragePressed() {
-
-    // console.log('About to clear storage');
-    this.clearStorage((err) => {
-      if (!err) {
-        // console.log('setting to false');
-        this.setState({ herdSet: false});
-      } else {
-        // console.log(err);
-      }
-    })
+    Alert.alert(
+        'Clear Herd',
+        'Are you sure you want to clear your herd? As a reminder, you can only set your current location as your herd.',
+      [
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+        {text: 'Clear Herd', onPress: () => {
+          this.clearStorage((err) => {
+            if (!err) {
+              this.setState({ herdSet: false});
+              this.props.navigation.setParams({
+                headerRight: ''
+              })
+            } else {
+                // console.log(err);
+            }
+          })
+        }},
+      ]
+      )
   }
 
   async clearStorage(callback) {
