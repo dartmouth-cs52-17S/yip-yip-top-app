@@ -30,7 +30,7 @@ import banned from '../banned';
 
 const vw = Dimensions.get('window').width;
 const CHAR_LIMIT = 90;
-const MIN_SCORE = -5; // also in PostsListView
+const MIN_SCORE = 0; // also in PostsListView
 
 class PostDetail extends Component {
 
@@ -60,7 +60,7 @@ class PostDetail extends Component {
       score: params.post.score,
       upvote: false,
       downvote: false,
-      commentsLen: params.post.comments.length,
+      commentsLen: params.post.commentsLen,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
