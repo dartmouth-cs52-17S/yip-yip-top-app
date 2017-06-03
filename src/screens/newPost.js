@@ -4,6 +4,7 @@ import {
   Text,
   View,
   TextInput,
+  AsyncStorage,
   KeyboardAvoidingView,
   Keyboard,
   StyleSheet,
@@ -86,6 +87,21 @@ class NewPostScreen extends Component {
     });
   }
 
+  async isPostTooRecent(callback) {
+    try {
+      const now = Date.now();
+      const lastPost = await AsyncStorage.getItem('@LastPost:key');
+      if (lastPost && now - lastPost < 60000) {
+        callback('BAD', null)
+      } else {
+        await AsyncStorage.setItem('@LastPost:key', now.toString);
+        callback('OK', null)
+      }
+    } catch (error) {
+      callback(null, error);
+    }
+  }
+
   postSubmitPressed() {
     let safe = true;
     if (this.state.text) {
@@ -105,21 +121,29 @@ class NewPostScreen extends Component {
         }
       }
       if (safe){
-        this.setState({showLoader: true});
-        let tagArray = [];
-        if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
-        const post = {
-          text: this.state.text,
-          tags: tagArray,
-          coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
-          user: this.props.navigation.state.params.user,
-        }
-        createPost(post, (callback) => {
-          // console.log(`callback from create: ${JSON.stringify(callback)}`);
-          EventEmitter.emit('refreshListView');
-          this.setState({showLoader: false}, () => {
-            this.props.navigation.goBack(null);
-          });
+        this.isPostTooRecent((result, err) => {
+          if (err) {
+            Alert.alert('Error', 'Cannot submit post. Please try again.');
+          } else if (result === 'BAD') {
+            Alert.alert('Cannot Post', 'You posted too recently. Wait a bit and try again.');
+          } else {
+            this.setState({showLoader: true});
+            let tagArray = [];
+            if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
+            const post = {
+              text: this.state.text,
+              tags: tagArray,
+              coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
+              user: this.props.navigation.state.params.user,
+            }
+            createPost(post, (callback) => {
+              // console.log(`callback from create: ${JSON.stringify(callback)}`);
+              EventEmitter.emit('refreshListView');
+              this.setState({showLoader: false}, () => {
+                this.props.navigation.goBack(null);
+              });
+            })
+          }
         })
       }
     }
