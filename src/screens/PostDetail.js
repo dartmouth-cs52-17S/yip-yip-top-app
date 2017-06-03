@@ -117,9 +117,7 @@ class PostDetail extends Component {
     let params=this.props.navigation.state.params;
 
     getPost(id, params.user, (post, error) => {
-      console.log('in fetch post', id, params.user);
       if (error) {
-        console.log(error);
         this.setState({error: true});
       } else {
         const comments = post.comments;
@@ -159,13 +157,9 @@ class PostDetail extends Component {
         const fields = {comment: input, user: this.props.navigation.state.params.user};
         console.log('here',fields, this.props.navigation.state.params.post._id);
         editPost(this.props.navigation.state.params.post._id, fields, 'CREATE_COMMENT', (comment, error) => {
-
-          if (error) {
-            console.log('error', error);
-          }
-          console.log('comment is', comment);
           this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
           this.fetchPost(this.props.navigation.state.params.post._id);
+          EventEmitter.emit('refreshListView');
         });
       }
     }
@@ -185,6 +179,7 @@ class PostDetail extends Component {
       this.fetchPost(this.props.navigation.state.params.post._id);
     });
   }
+
   upvotePost() {
     let params=this.props.navigation.state.params;
     editPost(params.post._id, { user: params.user }, 'UPVOTE_POST', () => {

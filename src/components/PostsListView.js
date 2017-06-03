@@ -38,8 +38,6 @@ class PostsListView extends Component {
     this._renderPaginationWaitingView = this._renderPaginationWaitingView.bind(this);
   }
 
-  componentWillMount() {
-  }
 
   triggerRefresh(isSegmentedChange) {
     // console.log('refresh triggered', this.listview);

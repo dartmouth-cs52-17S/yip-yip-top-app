@@ -91,6 +91,7 @@ class NewPostScreen extends Component {
     try {
       const now = Date.now();
       const lastPost = await AsyncStorage.getItem('@LastPost:key');
+      // if (lastPost && now - lastPost < 0) {
       if (lastPost && now - lastPost < 60000) {
         console.log('bad post', now, lastPost, now - lastPost);
         callback('BAD', null)
