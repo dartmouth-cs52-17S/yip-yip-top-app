@@ -67,7 +67,7 @@ export function codeAuth(pn, code, cb) {
   })
 }
 
-export function fetchPosts(long, lat, sort, page, cb) {
+export function fetchPosts(long, lat, sort, page, user, cb) {
   // console.log(`sort by ${sort}`);
   axios.get(`${ROOT_URL}/posts/`, { params: { long, lat, sort, page } }).
   then((response) => {
@@ -80,9 +80,9 @@ export function fetchPosts(long, lat, sort, page, cb) {
   });
 }
 
-export function searchPosts(long, lat, tags, page, cb) {
+export function searchPosts(long, lat, tags, page, user, cb) {
   // console.log('search posts lat:', lat, 'long:', long);
-  axios.get(`${ROOT_URL}/search/`, { params: { long, lat, tags, page } }).
+  axios.get(`${ROOT_URL}/search/`, { params: { long, lat, tags, page, user } }).
   then((response) => {
     // console.log(response, null);
     cb(response.data);
@@ -104,9 +104,9 @@ export function createPost(post, cb) {
   });
 }
 
-export function getPost(post_id, cb) {
+export function getPost(post_id, user, cb) {
   const url = `${ROOT_URL}/posts/${post_id}`;
-  axios.get(url, {params: {post_id}}).
+  axios.get(url, {params: {post_id, user}}).
   then((response) => {
     // console.log(response.data);
     cb(response.data, null);

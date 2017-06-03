@@ -36,6 +36,7 @@ class AuthCode extends React.Component {
       codeAuth(this.props.navigation.state.params.phone, this.state.text, (response, error) => {
         if (error) {
           this.setState({buttonDisabled: false});
+          console.log(error);
           Alert.alert('Something went wrong');
         } else {
           // console.log(`response is ${JSON.stringify(response)}`);

@@ -19,13 +19,13 @@ class PostRow extends Component {
   constructor(props) {
     super(props);
 
-    if (this.props.post.upvoters.includes(this.props.user)) {
+    if (this.props.post.voted === 'UP') {
       this.state = {
         score: this.props.post.score,
         upvote: true,
         downvote: false
       }
-    } else if (this.props.post.downvoters.includes(this.props.user)) {
+    } else if (this.props.post.voted === 'DOWN') {
       this.state = {
         score: this.props.post.score,
         upvote: false,

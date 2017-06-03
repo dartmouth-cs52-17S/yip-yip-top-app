@@ -117,16 +117,16 @@ class PostDetail extends Component {
   fetchPost(id) {
     let params=this.props.navigation.state.params;
 
-    getPost(id, (post, error) => {
+    getPost(id, this.props.navigation.state.params.user, (post, error) => {
       if (error) {
         this.setState({error: true});
       } else {
         const comments = post.comments;
         this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments), score: post.score });
-        if (this.state.post.upvoters.includes(params.user)) {
+        if (this.state.post.voted === 'UP') {
           this.setState({upvote: true});
           // console.log(this.state);
-        } else if (this.state.post.downvoters.includes(params.user)) {
+        } else if (this.state.post.voted === 'DOWN') {
           this.setState({downvote: true});
         }
         if (comments.length === 0) {

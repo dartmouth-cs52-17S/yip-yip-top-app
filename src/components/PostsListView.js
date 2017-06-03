@@ -66,7 +66,7 @@ class PostsListView extends Component {
 
   _onFetch(page = 1, callback, options) {
     if (this.props.searchTags) {
-      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts, error) => {
+      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, this.props.user, (posts, error) => {
         if (error) {
           this.setState({error: true});
         } else {
@@ -101,7 +101,7 @@ class PostsListView extends Component {
 
     } else {
       // console.log('list sort by', this.props.sortBy, 'page', page);
-      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
+      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, this.props.user, (posts, error) => {
         callback([])
         if (error) {
           this.setState({error: true});

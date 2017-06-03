@@ -19,8 +19,8 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      upvote: (this.props.comment.upvoters.includes(this.props.user))? true:false,
-      downvote: (this.props.comment.downvoters.includes(this.props.user))? true:false,
+      upvote: (this.props.comment.voted === 'UP')? true:false,
+      downvote: (this.props.comment.voted === 'DOWN')? true:false,
     }
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);

@@ -13,7 +13,7 @@ class AuthPhone extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: '+1',
+      text: '',
       buttonDisabled: false,
     };
   }
