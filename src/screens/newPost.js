@@ -8,6 +8,7 @@ import {
   Keyboard,
   StyleSheet,
   Alert,
+  AsyncStorage
 } from 'react-native';
 
 // import ActionButton from 'react-native-action-button';
@@ -86,18 +87,36 @@ class NewPostScreen extends Component {
     });
   }
 
+  async isPostTooRecent(callback) {
+    try {
+      const now = Date.now();
+      const lastPost = await AsyncStorage.getItem('@LastPost:key');
+      if (lastPost && now - lastPost < 60000) {
+        console.log('bad post', now, lastPost, now - lastPost);
+        callback('BAD', null)
+      } else {
+        await AsyncStorage.setItem('@LastPost:key', now.toString());
+        console.log('good post');
+        callback('OK', null)
+      }
+    } catch (error) {
+      console.log('error post');
+      callback(null, error);
+    }
+  }
+
   postSubmitPressed() {
     let safe = true;
     if (this.state.text) {
-      if (this.state.text.length < 8) {
-        Alert.alert('Cannot Submit Post', 'This post is too short.');
+      if (this.state.text.length < 5) {
+        Alert.alert('Length Warning', 'This post is too short. Posts must be at least 5 characters');
         safe = false;
       }
       if (safe) {
         for (var i = 0; i < banned.length; i++) {
           if (this.state.text.toLowerCase().includes(banned[i])) {
             this.setState({showLoader: false}, () => {
-              Alert.alert('Cannot Post', 'Please remove profanity from post.');
+              Alert.alert('Post Error', 'We have detected some profanity in this post. Please remove it and try again');
             });
             safe = false;
             break;
@@ -105,23 +124,33 @@ class NewPostScreen extends Component {
         }
       }
       if (safe){
-        this.setState({showLoader: true});
-        let tagArray = [];
-        if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
-        const post = {
-          text: this.state.text,
-          tags: tagArray,
-          coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
-          user: this.props.navigation.state.params.user,
-        }
-        createPost(post, (callback) => {
-          // console.log(`callback from create: ${JSON.stringify(callback)}`);
-          EventEmitter.emit('refreshListView');
-          this.setState({showLoader: false}, () => {
-            this.props.navigation.goBack(null);
-          });
+        this.isPostTooRecent((res, err) => {
+          if (err) {
+            Alert.alert('Oh no!', 'Something went really wrong. Sorry about that!');
+          } else if (res === 'BAD') {
+            Alert.alert('Oops!', 'We only allow one post a minute. Please wait a few seconds and try again.');
+          } else {
+            this.setState({showLoader: true});
+            let tagArray = [];
+            if(findHashtags(this.state.text)) tagArray=findHashtags(this.state.text);
+            const post = {
+              text: this.state.text,
+              tags: tagArray,
+              coordinates: [this.props.navigation.state.params.long, this.props.navigation.state.params.lat],
+              user: this.props.navigation.state.params.user,
+            }
+            createPost(post, (callback) => {
+              // console.log(`callback from create: ${JSON.stringify(callback)}`);
+              EventEmitter.emit('refreshListView');
+              this.setState({showLoader: false}, () => {
+                this.props.navigation.goBack(null);
+              });
+            })
+          }
         })
       }
+
+
     }
   }
 

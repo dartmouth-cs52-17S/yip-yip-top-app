@@ -15,7 +15,6 @@ import { fetchPosts, searchPosts, getUserPosts } from '../api.js';
 import PostRow from './PostRow';
 import ErrorView from './ErrorView';
 
-const MIN_SCORE = -5; // also in PostDetail
 
 class PostsListView extends Component {
 
