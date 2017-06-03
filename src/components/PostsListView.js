@@ -39,6 +39,9 @@ class PostsListView extends Component {
     this._renderPaginationWaitingView = this._renderPaginationWaitingView.bind(this);
   }
 
+  componentWillMount() {
+  }
+
   triggerRefresh(isSegmentedChange) {
     // console.log('refresh triggered', this.listview);
 
@@ -65,8 +68,10 @@ class PostsListView extends Component {
 
 
   _onFetch(page = 1, callback, options) {
+    console.log('user', this.props.user);
+
     if (this.props.searchTags) {
-      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, (posts, error) => {
+      searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, this.props.user, (posts, error) => {
         if (error) {
           this.setState({error: true});
         } else {
@@ -101,7 +106,7 @@ class PostsListView extends Component {
 
     } else {
       // console.log('list sort by', this.props.sortBy, 'page', page);
-      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, (posts, error) => {
+      fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, this.props.user, (posts, error) => {
         callback([])
         if (error) {
           this.setState({error: true});
@@ -134,14 +139,6 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
-    let numComments = 0
-    console.log(rowData)
-    for (var comment in rowData.comments) {
-      if (rowData.comments[comment].score > MIN_SCORE) {
-        numComments += 1;
-      }
-    }
-    rowData.commentsLen = numComments;
     console.log(`num comments after is ${rowData.commentsLen}`)
     return (
       <PostRow key={rowData.id} post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {

@@ -30,7 +30,6 @@ import banned from '../banned';
 
 const vw = Dimensions.get('window').width;
 const CHAR_LIMIT = 90;
-const MIN_SCORE = 0; // also in PostsListView
 
 class PostDetail extends Component {
 
@@ -101,7 +100,7 @@ class PostDetail extends Component {
   }
 
   componentDidMount() {
-    this.fetchPost(this.props.navigation.state.params.post.id);
+    this.fetchPost(this.props.navigation.state.params.post._id);
     this.props.navigation.setParams({
       headerRight: <Icon type='font-awesome'
         name='flag'
@@ -117,16 +116,18 @@ class PostDetail extends Component {
   fetchPost(id) {
     let params=this.props.navigation.state.params;
 
-    getPost(id, (post, error) => {
+    getPost(id, params.user, (post, error) => {
+      console.log('in fetch post', id, params.user);
       if (error) {
+        console.log(error);
         this.setState({error: true});
       } else {
         const comments = post.comments;
         this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments), score: post.score });
-        if (this.state.post.upvoters.includes(params.user)) {
+        if (this.state.post.voted === 'UP') {
           this.setState({upvote: true});
           // console.log(this.state);
-        } else if (this.state.post.downvoters.includes(params.user)) {
+        } else if (this.state.post.voted === 'DOWN') {
           this.setState({downvote: true});
         }
         if (comments.length === 0) {
@@ -155,11 +156,16 @@ class PostDetail extends Component {
         }
       }
       if (safe){
-
         const fields = {comment: input, user: this.props.navigation.state.params.user};
-        editPost(this.props.navigation.state.params.post.id, fields, 'CREATE_COMMENT', (comment) => {
+        console.log('here',fields, this.props.navigation.state.params.post._id);
+        editPost(this.props.navigation.state.params.post._id, fields, 'CREATE_COMMENT', (comment, error) => {
+
+          if (error) {
+            console.log('error', error);
+          }
+          console.log('comment is', comment);
           this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
-          this.fetchPost(this.props.navigation.state.params.post.id);
+          this.fetchPost(this.props.navigation.state.params.post._id);
         });
       }
     }
@@ -167,21 +173,21 @@ class PostDetail extends Component {
 
   voteComment(commentId, action) {
     const fields = {commentId: commentId, user: this.props.navigation.state.params.user, action}
-    editPost(this.props.navigation.state.params.post.id, fields, action, () => {
+    editPost(this.props.navigation.state.params.post._id, fields, action, () => {
 
     });
   }
 
   deleteComment(commentId, action) {
     const fields = {commentId: commentId, action}
-    editPost(this.props.navigation.state.params.post.id, fields, action, () => {
+    editPost(this.props.navigation.state.params.post._id, fields, action, () => {
       this.setState({commentsLen:this.state.commentsLen - 1, empty: false});
-      this.fetchPost(this.props.navigation.state.params.post.id);
+      this.fetchPost(this.props.navigation.state.params.post._id);
     });
   }
   upvotePost() {
     let params=this.props.navigation.state.params;
-    editPost(params.post.id, { user: params.user }, 'UPVOTE_POST', () => {
+    editPost(params.post._id, { user: params.user }, 'UPVOTE_POST', () => {
       // console.log('upvote');
       EventEmitter.emit('refreshListView');
     });
@@ -203,7 +209,7 @@ class PostDetail extends Component {
 
   downvotePost() {
     let params=this.props.navigation.state.params;
-    editPost(params.post.id, { user: params.user }, 'DOWNVOTE_POST', () => {
+    editPost(params.post._id, { user: params.user }, 'DOWNVOTE_POST', () => {
       EventEmitter.emit('refreshListView');
     });
     if (!this.state.downvote) {
@@ -224,14 +230,10 @@ class PostDetail extends Component {
 
 
   renderCommentCell(comment) {
-    if (comment.score > MIN_SCORE) {
-      return (
-        <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)}
-         deleteComment={(commentId, action) => this.deleteComment(commentId, action)} user={this.props.navigation.state.params.user}/>
-      );
-    } else {
-      return false
-    }
+    return (
+      <Comment comment={comment} voteComment={(commentId, action) => this.voteComment(commentId, action)}
+       deleteComment={(commentId, action) => this.deleteComment(commentId, action)} user={this.props.navigation.state.params.user}/>
+    );
   }
 
   renderPostDetailView() {
