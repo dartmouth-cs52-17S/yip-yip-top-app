@@ -13,7 +13,7 @@ class AuthPhone extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: '+1',
+      text: '',
       buttonDisabled: false,
     };
   }
@@ -28,7 +28,7 @@ class AuthPhone extends React.Component {
         }
         // console.log('auth return');
         // console.log(data);
-        this.props.navigation.navigate('Passcode', {phone: this.state.text});
+        this.props.navigation.navigate('Passcode', {phone: '+1'.concat(this.state.text)});
       })
     } else {
       Alert.alert('Invalid Phone Number', 'Please enter your phone number and try again.');
@@ -45,11 +45,11 @@ class AuthPhone extends React.Component {
           />
           <Text style={styles.logoFont}> Yip Yip </Text>
         </View>
-        <Text style={styles.instructions}>Enter your phone number</Text>
-        <Text style={styles.instructions}>For example: +16036436135</Text>
+        <Text style={styles.instructions}> Enter your phone number </Text>
         <View style={styles.numArea}>
+          <Text style={styles.instructions}> +1 </Text>
           <TextInput
-            maxLength={12}
+            maxLength={10}
             keyboardType='numeric'
             style={styles.textArea}
             onChangeText={(text) => this.setState({text})}

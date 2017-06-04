@@ -34,7 +34,7 @@ class Tutorial extends React.Component {
     },{
       title: 'Explore',
       description: 'See what the buzz is, around you or at your pinned location.',
-      img: 'https://i.imgur.com/TRMNhHg.gif',
+      img: require('../../screenshots/feed.gif'),
       imgStyle: {
         height: 80 * 3,
         width: 100 * 2.5,
@@ -45,7 +45,7 @@ class Tutorial extends React.Component {
     },{
       title: 'Send a Yip',
       description: 'Want to share something? Send a yip to your location!',
-      img: 'https://i.imgur.com/yrhpEYc.gif',
+      img: require('../../screenshots/newPost.gif'),
       imgStyle: {
         height: 80 * 3,
         width: 100 * 2.5,
@@ -55,8 +55,8 @@ class Tutorial extends React.Component {
       level: 10,
     }, {
       title: 'Vote and Comment',
-      description: 'You get to shape the buzz, collectively!',
-      img: 'https://i.imgur.com/4F7lZmN.gif',
+      description: 'You get to shape the buzz, collectively! Note, once you vote, you have to upvote or downvote.',
+      img: require('../../screenshots/vote.gif'),
       imgStyle: {
         height: 70 * 3,
         width: 100 * 2.5,
