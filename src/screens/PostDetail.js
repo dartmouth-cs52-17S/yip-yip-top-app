@@ -88,7 +88,7 @@ class PostDetail extends Component {
 
     Alert.alert(
       'Report Post?',
-      'Our team will be notified',
+      'Our team will be notified.',
       [
         {text: 'Cancel', onPress: () => {}, style: 'cancel'},
         {text: 'Report', onPress: () => {
