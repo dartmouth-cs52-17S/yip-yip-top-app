@@ -93,15 +93,15 @@ class NewPostScreen extends Component {
       const lastPost = await AsyncStorage.getItem('@LastPost:key');
       // if (lastPost && now - lastPost < 0) {
       if (lastPost && now - lastPost < 60000) {
-        console.log('bad post', now, lastPost, now - lastPost);
+        // console.log('bad post', now, lastPost, now - lastPost);
         callback('BAD', null)
       } else {
         await AsyncStorage.setItem('@LastPost:key', now.toString());
-        console.log('good post');
+        // console.log('good post');
         callback('OK', null)
       }
     } catch (error) {
-      console.log('error post');
+      // console.log('error post');
       callback(null, error);
     }
   }

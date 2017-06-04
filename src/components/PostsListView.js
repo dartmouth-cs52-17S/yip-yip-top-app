@@ -65,7 +65,6 @@ class PostsListView extends Component {
 
 
   _onFetch(page = 1, callback, options) {
-    console.log('user', this.props.user);
 
     if (this.props.searchTags) {
       searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, this.props.user, (posts, error) => {
@@ -136,7 +135,6 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
-    console.log(`num comments after is ${rowData.commentsLen}`)
     return (
       <PostRow key={rowData.id} post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();

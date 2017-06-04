@@ -155,7 +155,6 @@ class PostDetail extends Component {
       }
       if (safe){
         const fields = {comment: input, user: this.props.navigation.state.params.user};
-        console.log('here',fields, this.props.navigation.state.params.post._id);
         editPost(this.props.navigation.state.params.post._id, fields, 'CREATE_COMMENT', (comment, error) => {
           this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
           this.fetchPost(this.props.navigation.state.params.post._id);

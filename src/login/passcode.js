@@ -26,7 +26,7 @@ class AuthCode extends React.Component {
       // console.log(`token is ${JSON.stringify(token)}`);
       this.props.navigation.navigate('Tutorial');
     } catch (error) {
-      console.log(`Count not save login. ${error}`);
+      // console.log(`Count not save login. ${error}`);
     }
   }
 

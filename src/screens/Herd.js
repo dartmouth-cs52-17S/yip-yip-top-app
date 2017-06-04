@@ -114,7 +114,7 @@ class HerdScreen extends Component {
       await AsyncStorage.setItem('@HerdLong:key', long.toString());
       callback(lat, long, null)
     } catch (error) {
-      console.log('Count not save key');
+      // console.log('Count not save key');
       callback(error);
     }
   }
