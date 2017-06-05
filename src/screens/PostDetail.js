@@ -35,7 +35,11 @@ class PostDetail extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'Herd',
-    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: <Icon type='font-awesome' name='flag' color='#6C56BA' size={25} style={{ marginRight: 10, padding: 5}} />,
+    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: <Icon type='font-awesome'
+            name='flag'
+            color='#6C56BA'
+            size={25}
+            style={{ marginRight: 10, padding: 5}} />,
     headerTintColor: '#6C56BA',
     headerTitleStyle: {
       fontFamily: 'Gill Sans',
@@ -156,9 +160,15 @@ class PostDetail extends Component {
       if (safe){
         const fields = {comment: input, user: this.props.navigation.state.params.user};
         editPost(this.props.navigation.state.params.post._id, fields, 'CREATE_COMMENT', (comment, error) => {
-          this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
           this.fetchPost(this.props.navigation.state.params.post._id);
-          EventEmitter.emit('refreshListView');
+          this.setState({commentsLen:this.state.commentsLen + 1, empty: false}, () => {
+            const newPost = {
+              ...this.state.post,
+              commentsLen: this.state.commentsLen
+            }
+            EventEmitter.emit('updatePost', newPost)
+          });
+
         });
       }
     }
@@ -174,17 +184,33 @@ class PostDetail extends Component {
   deleteComment(commentId, action) {
     const fields = {commentId: commentId, action}
     editPost(this.props.navigation.state.params.post._id, fields, action, () => {
-      this.setState({commentsLen:this.state.commentsLen - 1, empty: false});
       this.fetchPost(this.props.navigation.state.params.post._id);
+      this.setState({commentsLen:this.state.commentsLen - 1, empty: false}, () => {
+        const newPost = {
+          ...this.state.post,
+          commentsLen: this.state.commentsLen
+        }
+        EventEmitter.emit('updatePost', newPost)
+      });
     });
   }
 
   upvotePost() {
     let params=this.props.navigation.state.params;
     editPost(params.post._id, { user: params.user }, 'UPVOTE_POST', () => {
-      // console.log('upvote');
-      EventEmitter.emit('refreshListView');
     });
+
+    let newScore = this.state.score
+    this.state.post.voted === 'DOWN' ? newScore += 2 : newScore += 1
+
+    const newPost = {
+      ...this.state.post,
+      voted: 'UP',
+      score: newScore
+    }
+
+    EventEmitter.emit('updatePost', newPost);
+
     if (!this.state.upvote) {
       if (this.state.downvote) {
         this.setState({
@@ -204,8 +230,19 @@ class PostDetail extends Component {
   downvotePost() {
     let params=this.props.navigation.state.params;
     editPost(params.post._id, { user: params.user }, 'DOWNVOTE_POST', () => {
-      EventEmitter.emit('refreshListView');
     });
+
+    let newScore = this.state.score
+    this.state.post.voted === 'UP' ? newScore -= 2 : newScore -= 1
+
+    const newPost = {
+      ...this.state.post,
+      voted: 'DOWN',
+      score: newScore
+    }
+
+    EventEmitter.emit('updatePost', newPost);
+
     if (!this.state.downvote) {
       if (this.state.upvote) {
         this.setState({

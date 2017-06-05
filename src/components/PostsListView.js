@@ -64,7 +64,7 @@ class PostsListView extends Component {
   }
 
   updatePost(post) {
-    console.log('updating', post.voted);
+    // console.log('updating', post.voted);
 
     const newIndex = this.newPosts.findIndex(p => p._id == post._id)
     if (newIndex != null) {
@@ -82,10 +82,6 @@ class PostsListView extends Component {
     }
 
     this.triggerRefresh(true)
-    // console.log(index);
-    // let copyArr = [...this.newPosts]
-    // copyArr[index] = post
-
 
   }
 
@@ -169,7 +165,7 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
-    console.log('render', rowData.voted, rowData.text);
+    // console.log('render', rowData.voted, rowData.text);
     return (
       <PostRow key={rowData.id} post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
