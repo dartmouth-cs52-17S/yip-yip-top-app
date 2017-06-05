@@ -26,11 +26,15 @@ class PostsListView extends Component {
       error: false,
       empty: false,
       endOfResults: false,
+      forceUpdate: false,
+      newPosts: [],
+      topPosts: [],
+      commentPosts: []
     }
 
-    this.newPosts = []
-    this.topPosts = []
-    this.commentPosts = []
+    // this.newPosts = []
+    // this.topPosts = []
+    // this.commentPosts = []
 
     this.useCached = false
 
@@ -40,32 +44,72 @@ class PostsListView extends Component {
 
 
   triggerRefresh(isSegmentedChange) {
-    // console.log('refresh triggered', this.listview);
 
     let currentPostlist;
     if (this.props.sortBy === 'New') {
-      currentPostlist = this.newPosts;
+      currentPostlist = this.state.newPosts;
     } else if (this.props.sortBy === 'Top') {
-      currentPostlist = this.topPosts;
-    } else { currentPostlist = this.commentPosts }
+      currentPostlist = this.state.topPosts;
+    } else {
+      currentPostlist = this.state.commentPosts
+    }
 
     if (!isSegmentedChange || !currentPostlist) {
       this.useCached = false
     } else if (isSegmentedChange && currentPostlist.length != 0) {
-      // console.log(currentPostlist);
       this.useCached = true
     }
 
     this.setState({error: false, empty: false, endOfResults: false}, () => {
       if (this.listview) {
+        console.log('refreshing');
         this.listview._refresh();
       }
     });
   }
 
+  updatePost(post) {
+
+    console.log('post', post);
+    const id = post._id;
+
+    const newIndex = this.state.newPosts.findIndex(arrPost => arrPost._id === id)
+    if (newIndex != null) {
+      const copyArr = [...this.state.newPosts[0]]
+      copyArr[newIndex] = post
+      this.setState({newPosts: copyArr}, () => {
+        this.triggerRefresh(true)
+      })
+    }
+
+    const topIndex = this.state.topPosts.findIndex(arrPost => arrPost._id === id)
+    if (topIndex != null) {
+      const copyArr = this.state.topPosts
+      copyArr[topIndex] = post
+      this.setState({topPosts: copyArr})
+    }
+
+    const commIndex = this.state.commentPosts.findIndex(arrPost => arrPost._id === id)
+    if (commIndex != null) {
+      const copyArr = this.state.commentPosts
+      copyArr[commIndex] = post
+      this.setState({commentPosts: copyArr})
+    }
+
+
+
+  }
+
+  getCurrentPostList() {
+    if (this.props.sortBy === 'New') {
+      return this.state.newPosts
+    } else if (this.props.sortBy === 'Top') {
+      return this.state.topPosts
+    } else { return this.state.commentPosts }
+  }
+
 
   _onFetch(page = 1, callback, options) {
-
     if (this.props.searchTags) {
       searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, this.props.user, (posts, error) => {
         if (error) {
@@ -93,15 +137,17 @@ class PostsListView extends Component {
         callback(posts);
       })
     } else if (this.useCached) {
+      console.log('using cached');
       callback([])
       if (this.props.sortBy === 'New') {
-        callback(this.newPosts)
+        callback(this.state.newPosts.map( p => {
+          return Object.assign({}, p);
+        }));
       } else if (this.props.sortBy === 'Top') {
-        callback(this.topPosts)
-      } else { callback(this.commentPosts) }
+        callback(this.state.topPosts)
+      } else { callback(this.state.commentPosts) }
 
     } else {
-      // console.log('list sort by', this.props.sortBy, 'page', page);
       fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, this.props.user, (posts, error) => {
         callback([])
         if (error) {
@@ -115,11 +161,11 @@ class PostsListView extends Component {
         }
 
         if (this.props.sortBy === 'New') {
-          page === 1 ? this.newPosts = posts : this.newPosts = this.newPosts.concat(posts)
+          page === 1 ? this.setState({newPosts: posts}) : this.setState({ newPosts: this.state.newPosts.concat(posts)})
         } else if (this.props.sortBy === 'Top') {
-          page === 1 ? this.topPosts = posts : this.topPosts = this.topPosts.concat(posts)
+          page === 1 ? this.setState({topPosts: posts}) : this.setState({ newPosts: this.state.topPosts.concat(posts)})
         } else {
-          page === 1 ? this.commentPosts = posts : this.commentPosts = this.commentPosts.concat(posts)
+          page === 1 ? this.setState({commentPosts: posts}) : this.setState({ newPosts: this.state.commentPosts.concat(posts)})
         }
 
         callback(posts);
@@ -135,8 +181,9 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
+    console.log('renderRow', rowData);
     return (
-      <PostRow key={rowData.id} post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
+      <PostRow post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();
       }} manageProfile={this.props.manageProfile}/>
     );
@@ -258,6 +305,7 @@ class PostsListView extends Component {
             ref={ref => this.listview = ref}
             rowView={this._renderRowView.bind(this)}
             onFetch={this._onFetch}
+            forceUpdate={this.props.forceUpdate}
 
             pagination={true} // enable infinite scrolling using touch to load more
             refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android

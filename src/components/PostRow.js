@@ -45,8 +45,10 @@ class PostRow extends Component {
   }
 
   componentWillMount() {
+    console.log('mounting');
     this.setState({score: this.props.post.score});
   }
+
 
   upVote() {
     editPost(this.props.post._id, { user: this.props.user }, 'UPVOTE_POST', () => {
@@ -153,7 +155,7 @@ class PostRow extends Component {
               <Icon type="ionicon" name='ios-arrow-up' size={40} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
             </TouchableBounce>
 
-            <Text style={customStyles.score}> {this.state.score} </Text>
+            <Text style={customStyles.score}> {this.props.post.score} </Text>
             <TouchableBounce onPress={this.downVote}>
               <Icon type="ionicon" name='ios-arrow-down' size={40} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
             </TouchableBounce>

@@ -45,10 +45,17 @@ class Feed extends Component {
   }
 
   componentWillMount() {
-    EventEmitter.on('refreshListView', (val) => {
+    EventEmitter.on('refreshListView', () => {
       // this.setState({ refreshListView: true });
       if (this.child) {
         this.child.triggerRefresh();
+      }
+
+    })
+
+    EventEmitter.on('updatePost', (post) => {
+      if (this.child) {
+        this.child.updatePost(post);
       }
     })
 

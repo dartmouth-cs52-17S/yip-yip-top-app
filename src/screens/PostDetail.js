@@ -159,6 +159,7 @@ class PostDetail extends Component {
           this.setState({commentsLen:this.state.commentsLen + 1, empty: false});
           this.fetchPost(this.props.navigation.state.params.post._id);
           EventEmitter.emit('refreshListView');
+          // EventEmitter.emit('')
         });
       }
     }
@@ -183,20 +184,24 @@ class PostDetail extends Component {
     let params=this.props.navigation.state.params;
     editPost(params.post._id, { user: params.user }, 'UPVOTE_POST', () => {
       // console.log('upvote');
-      EventEmitter.emit('refreshListView');
     });
+
+    params.post.voted = 'UP'
+
     if (!this.state.upvote) {
       if (this.state.downvote) {
+        params.post.score += 2
         this.setState({
           upvote: true,
           downvote: false,
           score: this.state.score + 2
-        })
+        }, () => EventEmitter.emit('updatePost', params.post))
       } else {
+        params.post.score += 1
         this.setState({
           upvote: true,
           score: this.state.score + 1
-        })
+        }, () => EventEmitter.emit('updatePost', params.post))
       }
     }
   }
@@ -204,21 +209,28 @@ class PostDetail extends Component {
   downvotePost() {
     let params=this.props.navigation.state.params;
     editPost(params.post._id, { user: params.user }, 'DOWNVOTE_POST', () => {
-      EventEmitter.emit('refreshListView');
+      // EventEmitter.emit('refreshListView');
     });
+
+    params.post.voted = 'DOWN'
+
     if (!this.state.downvote) {
+
       if (this.state.upvote) {
+        params.post.score -= 2
         this.setState({
           upvote: false,
           downvote: true,
           score: this.state.score - 2
-        })
+        }, () => EventEmitter.emit('updatePost', params.post))
       } else {
+        params.post.score -= 1
         this.setState({
           downvote: true,
           score: this.state.score - 1
-        })
+        }, () => EventEmitter.emit('updatePost', params.post))
       }
+
     }
   }
 
