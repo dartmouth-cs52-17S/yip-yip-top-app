@@ -22,8 +22,8 @@ class AuthPhone extends React.Component {
     if (this.state.text.length === 10) {
       this.setState({buttonDisabled: true});
       startAuth('+1'.concat(this.state.text), (data, error) => {
+        this.setState({buttonDisabled: false});
         if (error) {
-          this.setState({buttonDisabled: false});
           Alert.alert('Something went wrong', 'We are probably down for maintenance. Please try again later');
         }
         // console.log('auth return');
@@ -99,18 +99,19 @@ const styles = StyleSheet.create({
     color: '#372769',
     textAlign: 'center',
     margin: 20,
-    marginBottom: 50,
+    marginBottom: 40,
   },
   numArea: {
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 15
+    margin: 15,
+    marginLeft: 0
   },
   textArea: {
     fontFamily: 'Gill Sans',
     color: '#372769',
     height: 40,
-    width: vw*0.6,
+    width: vw*0.5,
     padding: 5,
     borderColor: '#9C8FC4',
     borderWidth: 0.5

@@ -68,10 +68,12 @@ class HerdScreen extends Component {
     })
   }
 
-  setHerdPressed() {
+  setHerdPressed(setHanover) {
     navigator.geolocation.getCurrentPosition(
       (p) => {
-        this.saveLocation(p.coords.latitude, p.coords.longitude, (lat, long, err) => {
+        const saveLat = setHanover ? 43.70452 : p.coords.latitude;
+        const saveLong = setHanover ? -72.290145 : p.coords.longitude
+        this.saveLocation(saveLat, saveLong, (lat, long, err) => {
           if (err) {
             // console.log('Could not save location');
           } else {
@@ -183,6 +185,19 @@ class HerdScreen extends Component {
           containerViewStyle={{backgroundColor: 'transparent'}}
           onPress={() => this.setHerdPressed()}
            />
+
+         <Button
+           raised
+           icon={{name: 'map'}}
+           borderRadius={60}
+           title='Save Hanover, NH!'
+           backgroundColor='red'
+           fontFamily='Gill Sans'
+           fontSize={20}
+           buttonStyle={styles.button}
+           containerViewStyle={{backgroundColor: 'transparent'}}
+           onPress={() => this.setHerdPressed(true)}
+            />
       </View>
     )
 
