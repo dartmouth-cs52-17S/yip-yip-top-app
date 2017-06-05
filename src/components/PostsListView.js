@@ -63,6 +63,32 @@ class PostsListView extends Component {
     });
   }
 
+  updatePost(post) {
+    console.log('updating', post.voted);
+
+    const newIndex = this.newPosts.findIndex(p => p._id == post._id)
+    if (newIndex != null) {
+      this.newPosts[newIndex] = post
+    }
+
+    const topIndex = this.topPosts.findIndex(p => p._id == post._id)
+    if (topIndex != null) {
+      this.topPosts[topIndex] = post
+    }
+
+    const commIndex = this.commentPosts.findIndex(p => p._id == post._id)
+    if (commIndex != null) {
+      this.commentPosts[commIndex] = post
+    }
+
+    this.triggerRefresh(true)
+    // console.log(index);
+    // let copyArr = [...this.newPosts]
+    // copyArr[index] = post
+
+
+  }
+
 
   _onFetch(page = 1, callback, options) {
 
@@ -95,10 +121,18 @@ class PostsListView extends Component {
     } else if (this.useCached) {
       callback([])
       if (this.props.sortBy === 'New') {
-        callback(this.newPosts)
+        callback(this.newPosts.map( p => {
+          return Object.assign({}, p)
+        }))
       } else if (this.props.sortBy === 'Top') {
-        callback(this.topPosts)
-      } else { callback(this.commentPosts) }
+        callback(this.topPosts.map( p => {
+          return Object.assign({}, p)
+        }))
+      } else {
+        callback(this.commentPosts.map( p => {
+          return Object.assign({}, p)
+        }))
+      }
 
     } else {
       // console.log('list sort by', this.props.sortBy, 'page', page);
@@ -135,6 +169,7 @@ class PostsListView extends Component {
    * @param {object} rowData Row data
    */
   _renderRowView(rowData) {
+    console.log('render', rowData.voted, rowData.text);
     return (
       <PostRow key={rowData.id} post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();

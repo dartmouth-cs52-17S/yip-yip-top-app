@@ -19,72 +19,47 @@ class PostRow extends Component {
   constructor(props) {
     super(props);
 
-    if (this.props.post.voted === 'UP') {
-      this.state = {
-        score: this.props.post.score,
-        upvote: true,
-        downvote: false
-      }
-    } else if (this.props.post.voted === 'DOWN') {
-      this.state = {
-        score: this.props.post.score,
-        upvote: false,
-        downvote: true
-      }
-    } else {
-      this.state = {
-        score: this.props.post.score,
-        upvote: false,
-        downvote: false
-      }
-    }
-
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
     this.del = this.del.bind(this);
   }
 
-  componentWillMount() {
-    this.setState({score: this.props.post.score});
-  }
 
   upVote() {
+    if (this.props.post.voted === 'UP') { return }
+
     editPost(this.props.post._id, { user: this.props.user }, 'UPVOTE_POST', () => {
-      // console.log('upvote');
     });
-    if (!this.state.upvote) {
-      if (this.state.downvote) {
-        this.setState({
-          upvote: true,
-          downvote: false,
-          score: this.state.score + 2
-        })
-      } else {
-        this.setState({
-          upvote: true,
-          score: this.state.score + 1
-        })
-      }
-    }
+
+    let newScore = this.props.post.score
+    this.props.post.voted === 'DOWN' ? newScore += 2 : newScore += 1
+
+    const newPost = {
+      ...this.props.post,
+      voted: 'UP',
+      score: newScore,
+    };
+
+    EventEmitter.emit('updatePost', newPost);
   }
 
   downVote() {
+    if (this.props.post.voted === 'DOWN') { return }
+
     editPost(this.props.post._id, { user: this.props.user }, 'DOWNVOTE_POST', () => {
     });
-    if (!this.state.downvote) {
-      if (this.state.upvote) {
-        this.setState({
-          upvote: false,
-          downvote: true,
-          score: this.state.score - 2
-        })
-      } else {
-        this.setState({
-          downvote: true,
-          score: this.state.score - 1
-        })
-      }
-    }
+
+    let newScore = this.props.post.score
+    this.props.post.voted === 'UP' ? newScore -= 2 : newScore -= 1
+
+    const newPost = {
+      ...this.props.post,
+      voted: 'DOWN',
+      score: newScore,
+    };
+
+    EventEmitter.emit('updatePost', newPost);
+
   }
 
   del() {
@@ -109,6 +84,7 @@ class PostRow extends Component {
               )
       }}>delete </Text>
     }
+
     return (
       <TouchableHighlight underlayColor = '#D0CCDF' backgroundColor = 'F4F5F9'
         onPress={() => {
@@ -137,12 +113,12 @@ class PostRow extends Component {
           </View>
           <View style={customStyles.vote}>
             <TouchableBounce onPress={this.upVote}>
-              <Icon type="ionicon" name='ios-arrow-up' size={40} color={(this.state.upvote? '#DA5AA4':'#6C56BA')}/>
+              <Icon type="ionicon" name='ios-arrow-up' size={40} color={(this.props.post.voted === 'UP'? '#DA5AA4':'#6C56BA')}/>
             </TouchableBounce>
 
-            <Text style={customStyles.score}> {this.state.score} </Text>
+            <Text style={customStyles.score}> {this.props.post.score} </Text>
             <TouchableBounce onPress={this.downVote}>
-              <Icon type="ionicon" name='ios-arrow-down' size={40} color={(this.state.downvote? '#DA5AA4':'#6C56BA')}/>
+              <Icon type="ionicon" name='ios-arrow-down' size={40} color={(this.props.post.voted === 'DOWN'? '#DA5AA4':'#6C56BA')}/>
             </TouchableBounce>
           </View>
         </View>
