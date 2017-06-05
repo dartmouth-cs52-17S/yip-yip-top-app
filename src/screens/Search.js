@@ -14,6 +14,7 @@ import Button from 'react-native-button';
 
 import PostsListView from '../components/PostsListView';
 import { getTrendingTags } from '../api.js';
+import EventEmitter from 'react-native-eventemitter';
 
 
 const CHAR_LIMIT = 30;
@@ -34,6 +35,20 @@ class SearchScreen extends Component {
   }
 
   componentDidMount() {
+    EventEmitter.on('refreshListView', () => {
+      // this.setState({ refreshListView: true });
+      if (this.child) {
+        this.child.triggerRefresh();
+      }
+    })
+
+    EventEmitter.on('updatePost', (post) => {
+      console.log('search update');
+      if (this.child) {
+        this.child.updatePost(post);
+      }
+    })
+
     this.retrieveProfile((profile, err) => {
       if (profile) {
         // console.log(`in feed here is profile ${profile}`)

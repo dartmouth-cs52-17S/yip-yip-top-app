@@ -11,6 +11,7 @@ import {
 
 import { Button, Icon } from 'react-native-elements'
 import PostsListView from '../components/PostsListView';
+import EventEmitter from 'react-native-eventemitter';
 
 
 class HerdScreen extends Component {
@@ -35,6 +36,20 @@ class HerdScreen extends Component {
   }
 
   componentWillMount() {
+
+    EventEmitter.on('refreshListView', () => {
+      // this.setState({ refreshListView: true });
+      if (this.child) {
+        this.child.triggerRefresh();
+      }
+    })
+
+    EventEmitter.on('updatePost', (post) => {
+      if (this.child) {
+        this.child.updatePost(post);
+      }
+    })
+
 
     this.retrieveProfile((profile, err) => {
       if (profile) {
@@ -208,6 +223,7 @@ class HerdScreen extends Component {
       <View style={styles.container}>
         <PostsListView
           navigation={this.props.navigation}
+          ref={instance => {this.child = instance}}
           user={this.state.user}
           long={floatLong}
           lat={floatLat}/>

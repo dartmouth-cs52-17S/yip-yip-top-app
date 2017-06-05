@@ -53,6 +53,7 @@ class Feed extends Component {
     })
 
     EventEmitter.on('updatePost', (post) => {
+      console.log('update feed list view');
       if (this.child) {
         this.child.updatePost(post);
       }

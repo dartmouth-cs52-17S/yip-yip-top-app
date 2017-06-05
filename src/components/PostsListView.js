@@ -32,6 +32,8 @@ class PostsListView extends Component {
     this.topPosts = []
     this.commentPosts = []
 
+    this.otherPosts = []
+
     this.useCached = false
 
     this._onFetch = this._onFetch.bind(this);
@@ -40,14 +42,16 @@ class PostsListView extends Component {
 
 
   triggerRefresh(isSegmentedChange) {
-    // console.log('refresh triggered', this.listview);
+    console.log('refresh triggered');
 
     let currentPostlist;
     if (this.props.sortBy === 'New') {
       currentPostlist = this.newPosts;
     } else if (this.props.sortBy === 'Top') {
       currentPostlist = this.topPosts;
-    } else { currentPostlist = this.commentPosts }
+    } else if (this.props.sortBy === 'Comments') {
+      currentPostlist = this.commentPosts
+    } else { currentPostlist = this.otherPosts }
 
     if (!isSegmentedChange || !currentPostlist) {
       this.useCached = false
@@ -55,6 +59,8 @@ class PostsListView extends Component {
       // console.log(currentPostlist);
       this.useCached = true
     }
+
+    console.log('use cached?', this.useCached, currentPostlist);
 
     this.setState({error: false, empty: false, endOfResults: false}, () => {
       if (this.listview) {
@@ -81,6 +87,11 @@ class PostsListView extends Component {
       this.commentPosts[commIndex] = post
     }
 
+    const otherIndex = this.otherPosts.findIndex(p => p._id == post._id)
+    if (otherIndex != null) {
+      this.otherPosts[otherIndex] = post
+    }
+
     this.triggerRefresh(true)
 
   }
@@ -88,7 +99,7 @@ class PostsListView extends Component {
 
   _onFetch(page = 1, callback, options) {
 
-    if (this.props.searchTags) {
+    if (this.props.searchTags && !this.useCached) {
       searchPosts(this.props.long, this.props.lat, this.props.searchTags, page, this.props.user, (posts, error) => {
         if (error) {
           this.setState({error: true});
@@ -99,6 +110,7 @@ class PostsListView extends Component {
             this.setState({endOfResults: true});
           }
         }
+        page === 1 ? this.otherPosts = posts : this.otherPosts = this.otherPosts.concat(posts)
         callback(posts);
       })
     } else if (this.props.userId) {
@@ -112,6 +124,7 @@ class PostsListView extends Component {
             this.setState({endOfResults: true})
           }
         }
+        page === 1 ? this.otherPosts = posts : this.otherPosts = this.otherPosts.concat(posts)
         callback(posts);
       })
     } else if (this.useCached) {
@@ -124,8 +137,12 @@ class PostsListView extends Component {
         callback(this.topPosts.map( p => {
           return Object.assign({}, p)
         }))
-      } else {
+      } else if (this.props.sortBy === 'Comments') {
         callback(this.commentPosts.map( p => {
+          return Object.assign({}, p)
+        }))
+      } else {
+        callback(this.otherPosts.map( p => {
           return Object.assign({}, p)
         }))
       }
@@ -148,8 +165,10 @@ class PostsListView extends Component {
           page === 1 ? this.newPosts = posts : this.newPosts = this.newPosts.concat(posts)
         } else if (this.props.sortBy === 'Top') {
           page === 1 ? this.topPosts = posts : this.topPosts = this.topPosts.concat(posts)
-        } else {
+        } else if (this.props.sortBy === 'commentsLen') {
           page === 1 ? this.commentPosts = posts : this.commentPosts = this.commentPosts.concat(posts)
+        } else {
+          page === 1 ? this.otherPosts = posts : this.otherPosts = this.otherPosts.concat(posts)
         }
 
         callback(posts);
