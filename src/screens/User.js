@@ -12,6 +12,7 @@ import {
 import { Icon } from 'react-native-elements';
 
 import PostsListView from '../components/PostsListView';
+import EventEmitter from 'react-native-eventemitter';
 
 class ProfilePage extends Component {
 
@@ -26,13 +27,29 @@ class ProfilePage extends Component {
     />
   })
 
+  componentWillMount() {
+    EventEmitter.on('refreshListView', () => {
+      // this.setState({ refreshListView: true });
+      if (this.child) {
+        this.child.triggerRefresh();
+      }
+    })
+
+    EventEmitter.on('updatePost', (post) => {
+      console.log('update feed list view');
+      if (this.child) {
+        this.child.updatePost(post);
+      }
+    })
+  }
+
 
   render() {
     return (
       <View style={{flex: 1}}>
         <PostsListView
           userId={this.props.navigation.state.params.userId}
-
+          ref={instance => {this.child = instance}}
           manageProfile={true}
           user={this.props.navigation.state.params.userId}
           navigation={this.props.navigation}

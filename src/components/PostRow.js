@@ -26,6 +26,7 @@ class PostRow extends Component {
 
 
   upVote() {
+    // console.log(this.props.post._id, this.props.user);
     if (this.props.post.voted === 'UP') { return }
 
     editPost(this.props.post._id, { user: this.props.user }, 'UPVOTE_POST', () => {
