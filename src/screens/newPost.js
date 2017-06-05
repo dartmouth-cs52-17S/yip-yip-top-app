@@ -26,7 +26,7 @@ class NewPostScreen extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'New Post',
-    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: '',
+    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: <Icon type='font-awesome' name='send' color='#6C56BA' size={20} style={{ marginRight: 10, padding: 5}} />,
     headerLeft: <Icon type='font-awesome'
       name='close'
       color='#6C56BA'
@@ -68,7 +68,7 @@ class NewPostScreen extends Component {
     // console.log(`banned words are ${JSON.stringify(banned)}`);
     this.props.navigation.setParams({
       headerRight: <Icon type='font-awesome'
-        name='send-o'
+        name='send'
         color='#6C56BA'
         size={20}
         onPress={this.postSubmitPressed}

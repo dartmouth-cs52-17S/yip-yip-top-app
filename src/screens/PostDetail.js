@@ -35,7 +35,7 @@ class PostDetail extends Component {
 
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'Herd',
-    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: '',
+    headerRight: navigation.state.params && navigation.state.params.headerRight ? navigation.state.params.headerRight: <Icon type='font-awesome' name='flag' color='#6C56BA' size={25} style={{ marginRight: 10, padding: 5}} />,
     headerTintColor: '#6C56BA',
     headerTitleStyle: {
       fontFamily: 'Gill Sans',
