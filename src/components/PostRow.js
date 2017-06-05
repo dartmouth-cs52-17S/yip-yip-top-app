@@ -95,20 +95,7 @@ class PostRow extends Component {
   }
 
   render() {
-    let timeSince = moment(this.props.post.timestamp).fromNow().split(' ');
-    timeSince.splice(-1,1);
-    if (timeSince[0] === 'an') {
-      timeSince[0] = '1'
-    }
-    if (timeSince[1] === 'minutes') {
-      timeSince[1] = 'mins'
-    } else if (timeSince[1] === 'seconds') {
-      timeSince[1] = 'secs'
-    }
-    if (timeSince[2] === 'seconds') {
-      timeSince[2] = 'secs'
-    }
-    const time = timeSince.join(' ');
+    const time = moment(this.props.post.timestamp).fromNow();
     let del;
     if (this.props.manageProfile) {
       del = <Text style={{fontFamily: 'Gill Sans', color:'#DA5AA4', flex:1, fontSize: 15, marginTop:5}} onPress={() => {

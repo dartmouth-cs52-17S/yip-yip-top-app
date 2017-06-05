@@ -164,6 +164,9 @@ class PostsListView extends Component {
           <Text style={customStyles.actionsLabel}>
             End of Results
           </Text>
+          <Image
+            source={{uri: 'https://i.imgur.com/fdh8TNp.png'}}
+            style={customStyles.loadImg}/>
         </View>
       );
     }

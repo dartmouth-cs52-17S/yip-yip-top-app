@@ -55,20 +55,7 @@ class Comment extends Component {
 
   render() {
     const comm = this.props.comment;
-    let timeSince = moment(comm.timestamp).fromNow().split(' ');
-    timeSince.splice(-1,1);
-    if (timeSince[0] === 'an') {
-      timeSince[0] = '1'
-    }
-    if (timeSince[1] === 'minutes') {
-      timeSince[1] = 'mins'
-    } else if (timeSince[1] === 'seconds') {
-      timeSince[1] = 'secs'
-    }
-    if (timeSince[2] === 'seconds') {
-      timeSince[2] = 'secs'
-    }
-    const time = timeSince.join(' ');
+    const time = moment(comm.timestamp).fromNow();
     let del;
     if (comm.user == this.props.user){
       del = <Text style={{fontFamily: 'Gill Sans', color:'#DA5AA4', flex:1, fontSize: 15}} onPress={() => {
