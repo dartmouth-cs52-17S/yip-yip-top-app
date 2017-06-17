@@ -42,8 +42,6 @@ class PostsListView extends Component {
 
 
   triggerRefresh(isSegmentedChange) {
-    console.log('refresh triggered');
-
     let currentPostlist;
     if (this.props.sortBy === 'New') {
       currentPostlist = this.newPosts;
@@ -60,7 +58,7 @@ class PostsListView extends Component {
       this.useCached = true
     }
 
-    console.log('use cached?', this.useCached, currentPostlist);
+    // console.log('use cached?', this.useCached, currentPostlist);
 
     this.setState({error: false, empty: false, endOfResults: false}, () => {
       if (this.listview) {
@@ -113,22 +111,9 @@ class PostsListView extends Component {
         page === 1 ? this.otherPosts = posts : this.otherPosts = this.otherPosts.concat(posts)
         callback(posts);
       })
-    } else if (this.props.userId) {
-      getUserPosts(this.props.userId, page, (posts, error) => {
-        if (error) {
-          this.setState({error: true});
-        } else {
-          if (page === 1 && posts.length === 0) {
-            this.setState({empty: true});
-          } else if (posts.length === 0) {
-            this.setState({endOfResults: true})
-          }
-        }
-        page === 1 ? this.otherPosts = posts : this.otherPosts = this.otherPosts.concat(posts)
-        callback(posts);
-      })
-    } else if (this.useCached) {
       callback([])
+    }
+    else if (this.useCached) {
       if (this.props.sortBy === 'New') {
         callback(this.newPosts.map( p => {
           return Object.assign({}, p)
@@ -146,8 +131,25 @@ class PostsListView extends Component {
           return Object.assign({}, p)
         }))
       }
-
-    } else {
+    }
+    else if (this.props.userId) {
+      // console.log('user id for user posts', this.props.userId);
+      getUserPosts(this.props.userId, page, (posts, error) => {
+        if (error) {
+          this.setState({error: true});
+        } else {
+          if (page === 1 && posts.length === 0) {
+            this.setState({empty: true});
+          } else if (posts.length === 0) {
+            this.setState({endOfResults: true})
+          }
+        }
+        page === 1 ? this.otherPosts = posts : this.otherPosts = this.otherPosts.concat(posts)
+        callback(posts);
+      })
+    }
+    else {
+      // console.log('user id in main', this.props.user);
       // console.log('list sort by', this.props.sortBy, 'page', page);
       fetchPosts(this.props.long, this.props.lat, this.props.sortBy, page, this.props.user, (posts, error) => {
         callback([])
@@ -185,6 +187,7 @@ class PostsListView extends Component {
    */
   _renderRowView(rowData) {
     // console.log('render', rowData.voted, rowData.text);
+    // console.log('row user', this.props.user);
     return (
       <PostRow key={rowData.id} post={rowData} id={rowData.id} user={this.props.user} navigation={this.props.navigation} refresh={()=> {
         this.listview._refresh();

@@ -12,7 +12,7 @@ import {
 import { Button, Icon } from 'react-native-elements'
 import PostsListView from '../components/PostsListView';
 import EventEmitter from 'react-native-eventemitter';
-
+import ActionButton from 'react-native-action-button';
 
 class HerdScreen extends Component {
 
@@ -218,6 +218,14 @@ class HerdScreen extends Component {
 
     const floatLat = Number(this.state.lat);
     const floatLong = Number(this.state.long);
+
+    const actionButton = <ActionButton
+    buttonColor='#6C56BA'
+    onPress={() => { this.props.navigation.navigate('NewPost', { long: floatLong, lat: floatLat, user: this.state.user })}}
+    icon={<Icon type='font-awesome' name='plus' size={30} color={'white'}/>}
+    hideShadow={false}
+    size={60}
+    />
     // console.log('location herd', floatLat, floatLong);
     const herdListView = (
       <View style={styles.container}>
@@ -227,8 +235,10 @@ class HerdScreen extends Component {
           user={this.state.user}
           long={floatLong}
           lat={floatLat}/>
+        {actionButton}
       </View>
     )
+
 
     if (this.state.herdSet) {
       return herdListView;
