@@ -54,6 +54,7 @@ class Comment extends Component {
   }
 
   render() {
+    console.log(this.props.comment);
     const comm = this.props.comment;
     const time = moment(comm.timestamp).fromNow();
     let del;
@@ -70,8 +71,9 @@ class Comment extends Component {
       }}>
       delete</Text>
     }
+
     return (
-        <View style={customStyles.container}>
+        <View style={this.props.comment.posterId == this.props.user ? customStyles.containerOP : customStyles.container}>
           <View style={customStyles.icon}>
             <Icon reverse name={comm.icon} type='font-awesome' color={comm.color} />
           </View>
@@ -106,8 +108,27 @@ const customStyles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     width: 0.90 * vw,
     margin: 7,
-    marginBottom: 10,
+    marginBottom: 5,
     borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    alignSelf: 'center',
+    shadowColor: '#291D56',
+    shadowOffset: {height: 2},
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+  },
+
+  containerOP: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF',
+    width: 0.90 * vw,
+    margin: 7,
+    marginBottom: 5,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#6C56BA',
     alignItems: 'center',
     justifyContent: 'space-around',
     alignSelf: 'center',
