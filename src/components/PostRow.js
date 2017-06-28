@@ -101,7 +101,7 @@ class PostRow extends Component {
             <View style={customStyles.info}>
               <View style={customStyles.infoDetail}>
                 <Icon type='font-awesome' name='commenting-o' size={18} color={'#6C56BA'} margin={3} />
-                <Text style={customStyles.infoText}>{this.props.post.commentsLen} comments</Text>
+                <Text style={customStyles.infoText}>{this.props.post.commentsLen} </Text>
               </View>
               <View>
                 {del}
