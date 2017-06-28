@@ -43,7 +43,6 @@ class SearchScreen extends Component {
     })
 
     EventEmitter.on('updatePost', (post) => {
-      console.log('search update');
       if (this.child) {
         this.child.updatePost(post);
       }

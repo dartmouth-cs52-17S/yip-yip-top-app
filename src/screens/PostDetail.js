@@ -121,7 +121,7 @@ class PostDetail extends Component {
     let params=this.props.navigation.state.params;
 
     getPost(id, params.user, (post, error) => {
-      console.log('post', post);
+      // console.log('post', post);
       if (error) {
         this.setState({error: true});
       } else {
@@ -131,7 +131,6 @@ class PostDetail extends Component {
             posterId: post.user,
           })
         });
-        console.log(comments);
         this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments), score: post.score });
         if (this.state.post.voted === 'UP') {
           this.setState({upvote: true});
