@@ -73,7 +73,7 @@ class Comment extends Component {
     }
 
     return (
-        <View style={this.props.comment.posterId == this.props.user ? customStyles.containerOP : customStyles.container}>
+        <View style={this.props.comment.posterId === this.props.comment.user ? customStyles.containerOP : customStyles.container}>
           <View style={customStyles.icon}>
             <Icon reverse name={comm.icon} type='font-awesome' color={comm.color} />
           </View>
@@ -110,6 +110,7 @@ const customStyles = StyleSheet.create({
     margin: 7,
     marginBottom: 5,
     borderRadius: 10,
+    borderWidth: 0,
     alignItems: 'center',
     justifyContent: 'space-around',
     alignSelf: 'center',

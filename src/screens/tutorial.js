@@ -1,6 +1,9 @@
 import React from 'react';
 import AppIntro from 'react-native-app-intro';
+import { Dimensions } from 'react-native';
 
+const vw = Dimensions.get('window').width;
+const vh = Dimensions.get('window').height;
 
 class Tutorial extends React.Component {
 
@@ -20,12 +23,14 @@ class Tutorial extends React.Component {
 
   render() {
     const pageArray = [{
-      title: 'Welcome to Yip Yip,',
-      description: 'where you can share your thoughts with the people around you.',
+      title: 'Welcome!',
+      description: 'Welcome to Yip Yip, your community message board. Share your thoughts with the people around you.',
       img: 'https://i.imgur.com/gQIYpxd.png',
       imgStyle: {
-        height: 100 * 2,
-        width: 100 * 2,
+        height: vh * 0.35,
+        width: vw * 0.7,
+        resizeMode: 'contain',
+        marginTop: 15,
       },
       backgroundColor: '#F4F5F9',
       fontColor: '#3C3559',
@@ -33,33 +38,39 @@ class Tutorial extends React.Component {
       level: 15,
     },{
       title: 'Explore',
-      description: 'See what the buzz is, around you or at your pinned location.',
+      description: 'See what the buzz is, around you or at your saved location.',
       img: require('../../screenshots/feed.gif'),
       imgStyle: {
-        height: 80 * 3,
-        width: 100 * 2.5,
+        height: vh * 0.35,
+        width: vw * 0.7,
+        resizeMode: 'contain',
+        marginTop: 15,
       },
       backgroundColor: '#F4F5F9',
       fontColor: '#3C3559',
       level: 10,
     },{
       title: 'Send a Yip',
-      description: 'Want to share something? Send a yip to your location!',
+      description: 'Want to share something? Send a Yip to your location!',
       img: require('../../screenshots/newPost.gif'),
       imgStyle: {
-        height: 80 * 3,
-        width: 100 * 2.5,
+        height: vh * 0.35,
+        width: vw * 0.7,
+        resizeMode: 'contain',
+        marginTop: 15,
       },
       backgroundColor: '#F4F5F9',
       fontColor: '#3C3559',
       level: 10,
     }, {
       title: 'Vote and Comment',
-      description: 'You get to shape the buzz, collectively! Note, once you vote, you have to upvote or downvote.',
+      description: 'You get to shape the buzz, collectively!',
       img: require('../../screenshots/vote.gif'),
       imgStyle: {
-        height: 70 * 3,
-        width: 100 * 2.5,
+        height: vh * 0.35,
+        width: vw * 0.7,
+        resizeMode: 'contain',
+        marginTop: 15,
       },
       backgroundColor: '#F4F5F9',
       fontColor: '#3C3559',
