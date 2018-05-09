@@ -1,4 +1,4 @@
-# Yip Yip (Top App)
+# Yip Yip
 
 ![](https://images.typeform.com/images/F2ezbchbdK/image/default#.png)
 
