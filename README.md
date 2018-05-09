@@ -12,9 +12,11 @@ Importantly, we require that users signup with a phone number so there’s *acco
 
 ✅ If you want to be notified of our releases, please fill out [this form](https://yipwithme.typeform.com/to/ZzKVCb).
 
-🎨 You can view all of our mockups [here](https://dartmouth-cs52-17s.github.io/yip-yip-top-app/). Here's a screenshot of our actual app:
+🎨 You can view all of our mockups [here](https://dartmouth-cs52-17s.github.io/yip-yip-top-app/). Here are screenshots of our actual app:
 
-![](screenshots/actualScreenshot.png)
+<img src="screenshots/PhoneVerification.png" width="33%"> <img src="screenshots/Feed.png" width="33%">
+<img src="screenshots/NewPost.png" width="33%"><img src="screenshots/Details.png" width="33%">
+<img src="screenshots/Search.png" width="33%"><img src="screenshots/Heard.png" width="33%">
 
 <!--
 
