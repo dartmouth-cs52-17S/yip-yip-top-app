@@ -29,7 +29,6 @@ class ProfilePage extends Component {
 
   componentWillMount() {
     EventEmitter.on('refreshListView', () => {
-      // this.setState({ refreshListView: true });
       if (this.child) {
         this.child.triggerRefresh();
       }
@@ -41,7 +40,6 @@ class ProfilePage extends Component {
       }
     })
   }
-
 
   render() {
     return (

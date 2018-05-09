@@ -8,18 +8,14 @@ const vh = Dimensions.get('window').height;
 class Tutorial extends React.Component {
 
   onSkipBtnHandle = (index) => {
-    // console.log(index);
     this.props.navigation.navigate('Tabs');
   }
   doneBtnHandle = () => {
     this.props.navigation.navigate('Tabs');
   }
-  nextBtnHandle = (index) => {
-    // console.log(index);
-  }
-  onSlideChangeHandle = (index, total) => {
-    // console.log(index, total);
-  }
+  nextBtnHandle = (index) => {}
+
+  onSlideChangeHandle = (index, total) => {}
 
   render() {
     const pageArray = [{

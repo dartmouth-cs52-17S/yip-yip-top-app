@@ -39,7 +39,6 @@ class Comment extends Component {
 
 
   downVote(){
-    // console.log('downvote', this.state.upvote, this.state.downvote);
     if (this.state.upvote) {
       this.props.comment.score -= 2
     } else if (!this.state.downvote) {

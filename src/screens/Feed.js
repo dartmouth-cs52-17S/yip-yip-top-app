@@ -46,7 +46,6 @@ class Feed extends Component {
 
   componentWillMount() {
     EventEmitter.on('refreshListView', () => {
-      // this.setState({ refreshListView: true });
       if (this.child) {
         this.child.triggerRefresh();
       }
@@ -73,18 +72,13 @@ class Feed extends Component {
   componentDidMount() {
     this.retrieveProfile((profile, err) => {
       if (profile) {
-        // console.log(`in feed here is profile ${profile}`)
         this.setState({
           user: profile
-          // Byrne is "sms|5929b16d961bda2fafde538e"
         });
-      } else {
-        // console.log(`could not get profile in componentDidMount in Feed ${err}. state.user is ${this.state.user}`);
       }
     })
     navigator.geolocation.getCurrentPosition(
       (p) => {
-        // console.log('location feed', 'lat:', p.coords.latitude, 'long:', p.coords.longitude);
         this.setState({long: p.coords.longitude, lat: p.coords.latitude})
       },
       (error) => alert(JSON.stringify(error)),
@@ -113,8 +107,6 @@ class Feed extends Component {
         this.updateSortParam(val);
       }} />
 
-    // const modalButton = <Button title="Show modal" onPress={() => this.props.navigation.navigate('Settings')} />
-
     const actionButton = <ActionButton
       buttonColor='#6C56BA'
       onPress={() => { this.props.navigation.navigate('NewPost', { long: this.state.long, lat: this.state.lat, user: this.state.user })}}
@@ -139,7 +131,5 @@ class Feed extends Component {
     );
   }
 }
-
-
 
 export default Feed;

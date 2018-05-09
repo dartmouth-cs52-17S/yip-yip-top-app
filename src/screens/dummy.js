@@ -12,7 +12,6 @@ import styles from '../styles';
 class DummyComponent extends Component {
 
   render() {
-    // console.log('in dummy render');
     return (
       <View style={styles.container}>
         <StatusBar

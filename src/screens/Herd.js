@@ -38,7 +38,6 @@ class HerdScreen extends Component {
   componentWillMount() {
 
     EventEmitter.on('refreshListView', () => {
-      // this.setState({ refreshListView: true });
       if (this.child) {
         this.child.triggerRefresh();
       }
@@ -53,13 +52,9 @@ class HerdScreen extends Component {
 
     this.retrieveProfile((profile, err) => {
       if (profile) {
-        // console.log(`in feed here is profile ${profile}`)
         this.setState({
           user: profile
-          // Byrne is "sms|5929b16d961bda2fafde538e"
         });
-      } else {
-        // console.log(`could not get profile in componentDidMount in Feed ${err}. state.user is ${this.state.user}`);
       }
     })
 
@@ -90,9 +85,8 @@ class HerdScreen extends Component {
         const saveLong = setHanover ? -72.290145 : p.coords.longitude
         this.saveLocation(saveLat, saveLong, (lat, long, err) => {
           if (err) {
-            // console.log('Could not save location');
+            //TODO handle save location error
           } else {
-            // console.log('Saved location!');
             this.setState({
               herdSet: true,
               lat,
@@ -131,7 +125,6 @@ class HerdScreen extends Component {
       await AsyncStorage.setItem('@HerdLong:key', long.toString());
       callback(lat, long, null)
     } catch (error) {
-      // console.log('Count not save key');
       callback(error);
     }
   }
@@ -150,8 +143,6 @@ class HerdScreen extends Component {
               this.props.navigation.setParams({
                 headerRight: ''
               })
-            } else {
-                // console.log(err);
             }
           })
         }},
@@ -226,7 +217,6 @@ class HerdScreen extends Component {
     hideShadow={false}
     size={60}
     />
-    // console.log('location herd', floatLat, floatLong);
     const herdListView = (
       <View style={styles.container}>
         <PostsListView

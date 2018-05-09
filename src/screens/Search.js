@@ -36,7 +36,6 @@ class SearchScreen extends Component {
 
   componentDidMount() {
     EventEmitter.on('refreshListView', () => {
-      // this.setState({ refreshListView: true });
       if (this.child) {
         this.child.triggerRefresh();
       }
@@ -50,13 +49,9 @@ class SearchScreen extends Component {
 
     this.retrieveProfile((profile, err) => {
       if (profile) {
-        // console.log(`in feed here is profile ${profile}`)
         this.setState({
           user: profile
-          // Byrne is "sms|5929b16d961bda2fafde538e"
         });
-      } else {
-        // console.log(`could not get profile in componentDidMount in Feed ${err}. state.user is ${this.state.user}`);
       }
     })
     navigator.geolocation.getCurrentPosition(
@@ -124,7 +119,6 @@ class SearchScreen extends Component {
   }
 
   makeTrendingButtons(tags) {
-
     return tags.map((tag) => {
       return (
         <Button key={tag}
@@ -140,7 +134,6 @@ class SearchScreen extends Component {
   }
 
   render() {
-
     const searchBar = (
       <TextInput
         multiline={false}
@@ -201,7 +194,6 @@ class SearchScreen extends Component {
       );
     }
   }
-
 }
 
 

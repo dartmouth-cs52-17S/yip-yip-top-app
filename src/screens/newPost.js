@@ -11,8 +11,6 @@ import {
   AsyncStorage
 } from 'react-native';
 
-// import ActionButton from 'react-native-action-button';
-// import { height } from 'react-native-dimension';
 import { Icon } from 'react-native-elements';
 import { createPost } from '../api';
 import EventEmitter from 'react-native-eventemitter';
@@ -64,8 +62,6 @@ class NewPostScreen extends Component {
 
   componentWillMount () {
     this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
-    // console.log('setting params');
-    // console.log(`banned words are ${JSON.stringify(banned)}`);
     this.props.navigation.setParams({
       headerRight: <Icon type='font-awesome'
         name='send'
@@ -91,17 +87,13 @@ class NewPostScreen extends Component {
     try {
       const now = Date.now();
       const lastPost = await AsyncStorage.getItem('@LastPost:key');
-      // if (lastPost && now - lastPost < 0) {
       if (lastPost && now - lastPost < 60000) {
-        // console.log('bad post', now, lastPost, now - lastPost);
         callback('BAD', null)
       } else {
         await AsyncStorage.setItem('@LastPost:key', now.toString());
-        // console.log('good post');
         callback('OK', null)
       }
     } catch (error) {
-      // console.log('error post');
       callback(null, error);
     }
   }
@@ -141,7 +133,6 @@ class NewPostScreen extends Component {
               user: this.props.navigation.state.params.user,
             }
             createPost(post, (callback) => {
-              // console.log(`callback from create: ${JSON.stringify(callback)}`);
               EventEmitter.emit('refreshListView');
               this.setState({showLoader: false}, () => {
                 this.props.navigation.goBack(null);
@@ -150,8 +141,6 @@ class NewPostScreen extends Component {
           }
         })
       }
-
-
     }
   }
 
@@ -194,7 +183,6 @@ function findHashtags(text) {
   var regexp = /\B\#\w\w+\b/g;
   let result = text.match(regexp);
   if (result) {
-    // console.log(result);
     return result;
   } else {
     return false;

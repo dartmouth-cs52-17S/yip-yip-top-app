@@ -80,9 +80,7 @@ class PostDetail extends Component {
   }
 
   reportPostPressed() {
-    // console.log('report pressed');
     const report = {
-      // reporter: this.state.user,
       reporter: 'reporter',
       item: JSON.stringify(this.state.post),
       type: 'POST',
@@ -121,7 +119,6 @@ class PostDetail extends Component {
     let params=this.props.navigation.state.params;
 
     getPost(id, params.user, (post, error) => {
-      // console.log('post', post);
       if (error) {
         this.setState({error: true});
       } else {
@@ -134,7 +131,6 @@ class PostDetail extends Component {
         this.setState({ post, loading: false, dataSource: this.state.dataSource.cloneWithRows(comments), score: post.score });
         if (this.state.post.voted === 'UP') {
           this.setState({upvote: true});
-          // console.log(this.state);
         } else if (this.state.post.voted === 'DOWN') {
           this.setState({downvote: true});
         }
@@ -288,7 +284,6 @@ class PostDetail extends Component {
               <Icon type='font-awesome' name='hourglass-half' size={15} color={'#6C56BA'} margin={3} />
               <Text style={customStyles.infoText}>{moment(post.timestamp).fromNow()}</Text>
             </View>
-            {/* <Text style={{ color: '#de1224' }} onPress={() => this.reportPostPressed()}> Report </Text> */}
           </View>
         </View>
         <View style={customStyles.vote}>
